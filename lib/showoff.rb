@@ -9,6 +9,7 @@ here = File.expand_path(File.dirname(__FILE__))
 require "#{here}/showoff_utils"
 require "#{here}/commandline_parser"
 
+
 begin
   require 'RMagick'
 rescue LoadError
@@ -22,6 +23,9 @@ rescue LoadError
 end
 
 require 'tilt'
+
+require "#{here}/renderers/html_with_pygments"
+
 
 class ShowOff < Sinatra::Application
 
@@ -161,7 +165,9 @@ class ShowOff < Sinatra::Application
         else
           md += "<div class=\"#{content_classes.join(' ')}\" ref=\"#{name}\">\n"
         end
-        sl = Tilt[:markdown].new { slide.text }.render
+
+        sl = from_markdown(slide.text)
+        
         sl = update_image_paths(name, sl, static, pdf)
         md += sl
         md += "</div>\n"
@@ -170,6 +176,21 @@ class ShowOff < Sinatra::Application
         final = update_p_classes(final)
       end
       final
+    end
+    
+    def from_markdown(text)
+      # options = [:fenced_code => true, :generate_toc => true, :hard_wrap => true, :no_intraemphasis => true, :strikethrough => true ,:gh_blockcode => true, :autolink => true, :xhtml => true, :tables => true]
+      markdown = Redcarpet::Markdown.new(HTMLwithPygments,
+        :fenced_code_blocks => true,
+        :no_intra_emphasis => true,
+        :autolink => true,
+        :strikethrough => true,
+        :lax_html_blocks => true,
+        :superscript => true,
+        :hard_wrap => true,
+        :tables => true,
+        :xhtml => true)
+      markdown.render(text)
     end
 
     # find any lines that start with a <p>.(something) and turn them into <p class="something">
