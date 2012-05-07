@@ -4,9 +4,7 @@ require 'json'
 require 'nokogiri'
 require 'fileutils'
 require 'logger'
-
-require_relative "showoff_utils"
-require_relative "commandline_parser"
+require 'tilt'
 
 begin
   require 'RMagick'
@@ -20,8 +18,8 @@ rescue LoadError
   $stderr.puts 'pdf generation disabled - install pdfkit'
 end
 
-require 'tilt'
-
+require_relative "showoff_utils"
+require_relative "commandline_parser"
 require_relative "renderers/html_with_pygments"
 
 
