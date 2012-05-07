@@ -5,10 +5,8 @@ require 'nokogiri'
 require 'fileutils'
 require 'logger'
 
-here = File.expand_path(File.dirname(__FILE__))
-require "#{here}/showoff_utils"
-require "#{here}/commandline_parser"
-
+require_relative "showoff_utils"
+require_relative "commandline_parser"
 
 begin
   require 'RMagick'
@@ -24,7 +22,7 @@ end
 
 require 'tilt'
 
-require "#{here}/renderers/html_with_pygments"
+require_relative "renderers/html_with_pygments"
 
 
 class ShowOff < Sinatra::Application
@@ -167,7 +165,7 @@ class ShowOff < Sinatra::Application
         end
 
         sl = from_markdown(slide.text)
-        
+
         sl = update_image_paths(name, sl, static, pdf)
         md += sl
         md += "</div>\n"
@@ -177,7 +175,7 @@ class ShowOff < Sinatra::Application
       end
       final
     end
-    
+
     def from_markdown(text)
       # options = [:fenced_code => true, :generate_toc => true, :hard_wrap => true, :no_intraemphasis => true, :strikethrough => true ,:gh_blockcode => true, :autolink => true, :xhtml => true, :tables => true]
       markdown = Redcarpet::Markdown.new(HTMLwithPygments,
