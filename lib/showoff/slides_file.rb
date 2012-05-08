@@ -168,7 +168,7 @@ module ShowOff
 
     def from_markdown(text)
       # options = [:fenced_code => true, :generate_toc => true, :hard_wrap => true, :no_intraemphasis => true, :strikethrough => true ,:gh_blockcode => true, :autolink => true, :xhtml => true, :tables => true]
-      markdown = Redcarpet::Markdown.new(HTMLwithPygments,
+      markdown = Redcarpet::Markdown.new(Renderers::HTMLwithPygments,
         :fenced_code_blocks => true,
         :no_intra_emphasis => true,
         :autolink => true,
