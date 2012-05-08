@@ -3,7 +3,7 @@ require 'showoff/version'
 
 Gem::Specification.new do |s|
   s.name              = "showoff"
-  s.version           = SHOWOFF_VERSION
+  s.version           = ShowOff::VERSION
   s.date              = "2011-09-10"
   s.summary           = "The best damn presentation software a developer could ever love."
   s.homepage          = "http://github.com/schacon/showoff"
@@ -15,8 +15,6 @@ Gem::Specification.new do |s|
   s.files             = %w( README.rdoc Rakefile LICENSE )
   s.files            += Dir.glob("lib/**/*")
   s.files            += Dir.glob("bin/**/*")
-  s.files            += Dir.glob("views/**/*")
-  s.files            += Dir.glob("public/**/*")
   s.add_dependency      "sinatra", "~> 1.3"
   s.add_dependency      "redcarpet"
   s.add_dependency      "nokogiri"
