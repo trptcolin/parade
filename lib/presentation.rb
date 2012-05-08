@@ -10,11 +10,7 @@ class Presentation
   end
 
   def rootpath
-    if File.directory?(filepath)
-      File.dirname(filepath)
-    else
-      File.dirname(File.dirname(filepath))
-    end
+    File.directory?(filepath) ? filepath : File.dirname(filepath)
   end
 
   def contents
@@ -220,19 +216,20 @@ class Presentation
     def update_p_classes(markdown)
       markdown.gsub(/<p>\.(.*?) /, '<p class="\1">')
     end
-    
+
     def html_asset_path
       @html_asset_path ||= begin
-        rootpath.gsub(section.presentation.rootpath,'')
+        rootpath.gsub(section.presentation.rootpath,'image')
       end
     end
-    
+
     def image_asset_path(source_path)
       File.join(rootpath,source_path)
     end
 
     def update_image_paths(path, slide, static=false, pdf=false)
       html_asset_path
+
       slide.gsub(/img src=\"([^\/].*?)\"/) do |image_source|
         html_image_path = File.join(html_asset_path,$1)
         src      = "img src=\"#{html_image_path}\""
