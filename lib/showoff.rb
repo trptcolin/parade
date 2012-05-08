@@ -46,7 +46,7 @@ class ShowOff < Sinatra::Application
   end
 
   def presentation
-    Presentation.new :outline_filepath => File.join(settings.pres_dir,settings.pres_file)
+    Presentation.new :filepath => File.join(settings.pres_dir,settings.pres_file)
   end
 
   def initialize(app=nil)
@@ -130,7 +130,7 @@ class ShowOff < Sinatra::Application
     def index(static=false)
       if static
         @state = presentation.title
-        @slides = presentation.get_slides_html(static)
+        @slides = presentation.to_slides_html(static)
         @asset_path = "./"
       end
       erb :index
@@ -161,7 +161,7 @@ class ShowOff < Sinatra::Application
         assets << href if href
       end
 
-      slides = presentation.get_slides_html
+      slides = presentation.to_slides_html
       html = Nokogiri::XML.parse("<slides>" + slides + "</slides>")
       html.css('img').each do |link|
         href = clean_link(link['src'])
@@ -178,27 +178,27 @@ class ShowOff < Sinatra::Application
     end
 
     def slides(static=false)
-      presentation.get_slides_html(static)
+      presentation.to_slides_html(static)
     end
 
     def onepage(static=false)
-      @slides = presentation.get_slides_html(static)
+      @slides = presentation.to_slides_html(static)
       erb :onepage
     end
 
-    # def pdf(static=true)
-    #   @slides = get_slides_html(static, true)
-    #   @no_js = false
-    #   html = erb :onepage
-    #   # TODO make a random filename
-    #
-    #   # PDFKit.new takes the HTML and any options for wkhtmltopdf
-    #   # run `wkhtmltopdf --extended-help` for a full list of options
-    #   kit = PDFKit.new(html, ShowOffUtils.showoff_pdf_options(settings.pres_dir))
-    #
-    #   # Save the PDF to a file
-    #   file = kit.to_file('/tmp/preso.pdf')
-    # end
+    def pdf(static=true)
+      @slides = to_slides_html(static, true)
+      @no_js = false
+      html = erb :onepage
+      # TODO make a random filename
+    
+      # PDFKit.new takes the HTML and any options for wkhtmltopdf
+      # run `wkhtmltopdf --extended-help` for a full list of options
+      kit = PDFKit.new(html, ShowOffUtils.showoff_pdf_options(settings.pres_dir))
+    
+      # Save the PDF to a file
+      file = kit.to_file('/tmp/preso.pdf')
+    end
 
   end
 
