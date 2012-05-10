@@ -20,7 +20,7 @@ module ShowOff
     end
 
     def slides
-      files.map {|file| SlidesFile.new :filepath => file, :section => self }
+      files.map {|file| SlidesFile.new(:filepath => file, :section => self).to_slides }.flatten
     end
 
   end

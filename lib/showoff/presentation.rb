@@ -1,4 +1,7 @@
 require_relative "section"
+require_relative 'renderers/command_line_renderer'
+require_relative 'renderers/special_paragraph_renderer'
+require_relative 'renderers/update_image_paths'
 
 module ShowOff
   class Presentation
@@ -50,7 +53,10 @@ module ShowOff
     #
     #
     def to_slides_html(static = nil,pdf = nil)
-      sections.map {|section| section.slides.map {|slide| slide.to_html}}.flatten.join("\n")
+      slides_html = sections.map {|section| section.slides.map {|slide| slide.to_html}}.flatten.join("\n")
+      slides_html = Renderers::UpdateImagePaths.render(slides_html)
+      # slides_html = Renderers::CommandLineRenderer.render(slides_html)
+      slides_html = Renderers::SpecialParagraphRenderer.render(slides_html)
     end
 
   end
