@@ -3,15 +3,20 @@ require_relative 'slides_file'
 module ShowOff
   class Section
 
+    attr_accessor :outline
     attr_accessor :filepath
-    attr_accessor :presentation
+    
+    #
+    # Created with a path to a single configuration file or 
+    # 
+    # @param [Hash] params Description
+    #
+    def initialize(params = {})
+      params.each {|k,v| send("#{k}=",v) if respond_to? "#{k}=" }
+    end
 
     def rootpath
       File.directory?(filepath) ? filepath : File.dirname(filepath)
-    end
-
-    def initialize(params = {})
-      params.each {|k,v| send("#{k}=",v) if respond_to? "#{k}=" }
     end
 
     def files

@@ -11,11 +11,11 @@ module ShowOff
         ghf_css_path = File.join File.dirname(Pathname.new(__FILE__).realpath), '..',
           '..', 'views', 'ghf_marked.css'
 
-        '<style>' + File.read(ghf_css_path) + '</style><div class="md"><article>'
+        '<style>' + File.read(ghf_css_path) + '</style>'
       end
   
       def doc_footer
-        '</article></div>'
+        ''
       end
   
       def block_code(code, language)
