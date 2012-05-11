@@ -254,9 +254,11 @@ module ShowOff
      end
 
     get '/eval_ruby' do
-      return eval_ruby(params[:code]) if ENV['SHOWOFF_EVAL_RUBY']
-
-      return "Ruby Evaluation is off. To turn it on set ENV['SHOWOFF_EVAL_RUBY']"
+      if ENV['SHOWOFF_EVAL_RUBY']
+        eval_ruby(params[:code]) 
+      else
+        "Ruby Evaluation is off. To turn it on set ENV['SHOWOFF_EVAL_RUBY']"
+      end
     end
 
     get %r{(?:image|file)/(.*)} do
