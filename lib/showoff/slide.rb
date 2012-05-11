@@ -7,8 +7,11 @@ module ShowOff
     # TODO: Previously this was #{name}#{sequence}, this is likely needing to be set
     # by the slideshow itself to ensure that the content is unique and displayed
     # in the correct order.
-    attr_accessor :reference
     attr_accessor :sequence
+
+    def reference
+      "slide/#{sequence}"
+    end
 
     # Additional metadata about the slide can be provided here to help
     # construct the slide with the correct classes, ids, transitions, etc.
@@ -43,7 +46,8 @@ module ShowOff
 
     # @return [String] the CSS classes for the slide
     def classes
-      metadata.split(' ').delete_if {|i| i =~ /^(transition=.+)|^#/ }.join(" ")
+      metadata_classes = metadata.split(' ').delete_if {|i| i =~ /^(transition=.+)|^#/ }
+      (metadata_classes + ['content']).join(" ")
     end
 
     # @return [String] the transition style for the slide
