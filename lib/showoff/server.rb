@@ -1,4 +1,3 @@
-require_relative "commandline_parser"
 require_relative "presentation"
 
 module ShowOff

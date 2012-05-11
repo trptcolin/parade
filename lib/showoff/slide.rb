@@ -9,6 +9,7 @@ module ShowOff
     # in the correct order.
     attr_accessor :sequence
 
+    # TODO: this should instead be set by the section/presentation
     def reference
       "slide/#{sequence}"
     end
