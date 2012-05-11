@@ -53,9 +53,13 @@ module ShowOff
     #
     #
     def to_slides_html(static = nil,pdf = nil)
-      slides_html = sections.map {|section| section.slides.map {|slide| slide.to_html}}.flatten.join("\n")
+      slides_html = sections.map do |section|
+        section.slides.map do |slide|
+          Renderers::CommandLineRenderer.render(slide.to_html)
+        end
+      end.flatten.join("\n")
+
       slides_html = Renderers::UpdateImagePaths.render(slides_html)
-      # slides_html = Renderers::CommandLineRenderer.render(slides_html)
       slides_html = Renderers::SpecialParagraphRenderer.render(slides_html)
     end
 

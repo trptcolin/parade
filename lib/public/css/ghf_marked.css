@@ -6,7 +6,7 @@ pre, code {
 
 .highlight pre, pre {
 	background-color:#f8f8f8;
-	border:1px solid #ccc;
+/*  border:1px solid #ccc;*/
 	font-size:20px;
 	line-height:26px;
 	overflow:auto;
@@ -16,6 +16,18 @@ pre, code {
 	padding:6px 10px;
 }
 
+.highlight pre pre.command, .highlight pre pre.result {
+  margin: 0px;
+  border-radius:0px;
+  -moz-border-radius:0px;
+	-webkit-border-radius:0px;
+	padding:0px 0px;
+	border:0px solid #ccc;
+}
+
+.highlight pre pre.result {
+  color: #444;
+}
 
 
 code {
