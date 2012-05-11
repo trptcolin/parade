@@ -1,6 +1,20 @@
 module ShowOff
   module Renderers
+
+    #
+    # UpdateImagePaths is used to ensure the img source paths in the HTML
+    # content is properly prefaced with the "image" path as that is necessary
+    # for the Sinatra server to properly know that it is to return an image.
+    # 
+    # Additional processing of the image is provided if RMagick has been 
+    # installed. Namely it sets the size correctly.
+    #
     class UpdateImagePaths
+      
+      #
+      # @param [String] content HTML content that is parsed for image srcs
+      # @param [Hash] options additional parameters, at the moment it is unused.
+      #
       def self.render(content,options = {})
 
         content.gsub(/img src="\/?([^\/].*?)"/) do |image_source|

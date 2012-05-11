@@ -1,6 +1,10 @@
 module ShowOff
   module Parsers
 
+    #
+    # As multiple slides are contained within a markdown file, this parser
+    # will split the markdown along the specified slide marker.
+    # 
     class MarkdownSlideSplitter
 
       #
@@ -8,7 +12,7 @@ module ShowOff
       # separator defined by this class.
       #
       # @param [String] content content that is markdown format
-      #
+      # @return [Array] slides parsed from the markdown content
       def self.parse(content)
 
         # if there are no !SLIDE markers, then make every H1 define a new slide
