@@ -48,7 +48,8 @@ module ShowOff
 
     # @return [String] the transition style for the slide
     def transition
-      metadata[/.*transition=(.+).*/,1].to_s.gsub('>','')
+      parsed_transition = metadata[/.*transition=(.+).*/,1].to_s.gsub('>','')
+      parsed_transition.empty? ? "none" : parsed_transition
     end
 
     # @return [String] an id for the slide
