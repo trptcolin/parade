@@ -38,7 +38,7 @@ module ShowOff
         end
 
         slides.delete_if {|slide| slide.empty? }
-        slides.each_with_index {|slide,index| slide.sequence = index }
+        slides.each_with_index {|slide,index| slide.sequence = (index + 1) }
 
       end
     end
