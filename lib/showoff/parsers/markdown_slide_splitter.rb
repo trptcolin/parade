@@ -5,6 +5,10 @@ module ShowOff
     # As multiple slides are contained within a markdown file, this parser
     # will split the markdown along the specified slide marker.
     # 
+    # @todo this currently does too much at the moment. It should simply split
+    #   the markdown file along the slide markers and allow another parser
+    #   perform the work of creating the actual slide objects.
+    # 
     class MarkdownSlideSplitter
 
       #
