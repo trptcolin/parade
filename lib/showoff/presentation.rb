@@ -59,7 +59,7 @@ module ShowOff
         end
       end.flatten.join("\n")
 
-      slides_html = Renderers::UpdateImagePaths.render(slides_html)
+      slides_html = Renderers::UpdateImagePaths.render(slides_html, :rootpath => rootpath)
       slides_html = Renderers::SpecialParagraphRenderer.render(slides_html)
     end
 
