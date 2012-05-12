@@ -19,7 +19,7 @@ module ShowOff
 
         content.gsub(/img src="\/?([^\/].*?)"/) do |image_source|
           html_image_path = File.join("/","image",$1)
-          updated_image_source = %{img src="#{html_image_path}" }
+          updated_image_source = %{img src="#{html_image_path}"}
           # w, h     = get_image_size(image_asset_path($1))
           # src << %( width="#{w}" height="#{h}") if w and h
           updated_image_source
