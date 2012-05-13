@@ -3,6 +3,9 @@ require_relative 'helpers/metadata'
 module ShowOff
 
   #
+  # The Slide is the core class of the Presentation. The slide aggregates the 
+  # markdown content, the slide metadata, and the slide template to create the
+  # HTML representation of the slide for ShowOff.
   #
   class Slide
 
@@ -51,10 +54,23 @@ module ShowOff
       @content.to_s.strip == ""
     end
 
+    #
+    # A slide can contain various metadata to help define additional information
+    # about it.
+    #
+    # @see ShowOff::Helpers::Metadata
+    #
+    # @example Slide Metadata
+    #
+    #     !SlIDE transition=fade one two #id three
+    #
+    # @param [String] value raw metadata from the slide
+    #
     def metadata=(value)
       @metadata = Helpers::Metadata.parse(value)
     end
 
+    # @return [ShowOff::Helpers::Metadata] an instance of metadata for the slide.
     def metadata
       @metadata || Helpers::Metadata.new
     end
