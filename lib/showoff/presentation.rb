@@ -3,6 +3,9 @@ require_relative 'renderers/command_line_renderer'
 require_relative 'renderers/special_paragraph_renderer'
 require_relative 'renderers/update_image_paths'
 
+require_relative 'parsers/presentation_directory_parser'
+require_relative 'parsers/presentation_file_parser'
+
 module ShowOff
 
   #
@@ -17,35 +20,45 @@ module ShowOff
   #
   class Presentation
 
+    def self.parse(filepath)
+      return nil unless File.exists? filepath
+
+      presentation_data = if File.directory? filepath
+        Parsers::PresentationDirectoryParser.parse filepath
+      else
+        Parsers::PresentationFileParser.parse filepath
+      end
+
+      self.new :contents => presentation_data
+
+    end
+
+    attr_accessor :contents
     attr_accessor :filepath
 
     def initialize(params = {})
       params.each {|k,v| send("#{k}=",v) if respond_to? "#{k}=" }
     end
 
-    # @return [String] if the filepath is a folder then this returns itself
-    #   if it is a file then it returns the directory name.
-    def rootpath
-      File.directory?(filepath) ? filepath : File.dirname(filepath)
+    def filepath
+      contents[:filepath]
     end
+
+    alias_method :rootpath, :filepath
 
     # @return [Hash] the contents of the presentation. When this is a file it
     #   will be hash parsed from the file. When a directory it will be some
     #   default data.
-    def contents
-      if File.exists? filepath
-        file_data = File.read(filepath)
-        JSON.parse(file_data)
-      else
-        { 'name' => 'Presentation', 'sections' => ['.'] }
-      end
-
-      # TODO: there are defaults that need to be merged here as well
-    end
-
-    def directory
-      File.expand_path(File.dirname(filepath) || ".")
-    end
+    # def contents
+    #   if File.exists? filepath
+    #     file_data = File.read(filepath)
+    #     JSON.parse(file_data)
+    #   else
+    #     { 'name' => 'Presentation', 'sections' => ['.'] }
+    #   end
+    # 
+    #   # TODO: there are defaults that need to be merged here as well
+    # end
 
     # @return [String] the name of the presentation, defaults to 'Presentation'
     #   when no name has been specified in the file or when creating a
@@ -54,17 +67,11 @@ module ShowOff
       contents['name'] || "Presentation"
     end
 
-    # @return [Array<String>] an array of file paths to the section files
-    def section_files
-      pathpath = contents['section'] || "**/*.md"
-      Dir[File.join(directory,pathpath)]
-    end
-
     # @return [Array<Section>] an array of Section objects which have been
     #   loaded from the presentation file or directory.
     def sections
-      section_files.map do |filepath|
-        Section.new :filepath => filepath, :presentation => self
+      contents['sections'].map do |section|
+        Section.new section['section'].merge(:presentation => self)
       end
     end
 
