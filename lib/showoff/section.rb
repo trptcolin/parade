@@ -15,20 +15,8 @@ module ShowOff
   #
   class Section
 
-    # A section, when it is a folder path contains filepath information.
-    # This is essential information for ensuring images and other elements
-    # that require a correct path.
-    #
-    # @return [String] the filepath of the section. For sections
-    #   that are a single file or multiple files this is the same
-    #   filepath as the presentation. For folders, this is the folder
-    #   path.
-    attr_accessor :filepath
-
     # An instance of a presentation
     attr_accessor :presentation
-
-    alias_method :rootpath, :filepath
 
     #
     # Sections are often created from within a presentation to allow the
@@ -64,10 +52,6 @@ module ShowOff
         end
       end
     end
-    
-    def create_subsection(params)
-      Section.new params
-    end
 
     #
     # @return [Array<Slide>] an array of slides contained within the section
@@ -75,6 +59,12 @@ module ShowOff
     #
     def slides
       sections.map {|section| section.slides }.flatten
+    end
+
+    private
+
+    def create_subsection(params)
+      Section.new params
     end
 
   end

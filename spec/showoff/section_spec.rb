@@ -5,9 +5,8 @@ describe ShowOff::Section do
   let(:filepath) { "path/filepath" }
   let(:presentation) { mock('Presentation') }
 
-  subject { described_class.new :filepath => filepath, :presentation => presentation }
+  subject { described_class.new :presentation => presentation }
 
-  its(:filepath) { should eq filepath }
   its(:presentation) { should eq presentation }
 
   describe "#sections" do
