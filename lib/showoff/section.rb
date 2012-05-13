@@ -49,23 +49,32 @@ module ShowOff
       @sections || []
     end
 
+    #
+    # A section may contain sections which are files, `SlidesFiles`, and
+    # sub-sections which is a Hash that can also contain more sections information
+    #
+    # @param [Hash] subsections which contains sections and sub-sections
+    #
     def sections=(subsections)
       @sections = subsections.map do |section|
         if section['section'].is_a?(Hash)
-          Section.new section['section'].merge(:presentation => presentation)
+          create_subsection section['section'].merge(:presentation => presentation)
         else
           SlidesFile.new(:filepath => section['section'], :section => self)
         end
       end
     end
+    
+    def create_subsection(params)
+      Section.new params
+    end
 
     #
-    # @return [Array<Slide>] an array of slides contained within the section.
+    # @return [Array<Slide>] an array of slides contained within the section
+    #   and sub-sections of this section.
     #
     def slides
-      sections.map do |section|
-        section.slides
-      end.flatten
+      sections.map {|section| section.slides }
     end
 
   end
