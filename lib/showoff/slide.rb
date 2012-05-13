@@ -1,3 +1,5 @@
+require_relative 'helpers/metadata'
+
 module ShowOff
 
   #
@@ -14,13 +16,6 @@ module ShowOff
       "slide/#{sequence}"
     end
 
-    # Additional metadata about the slide can be provided here to help
-    # construct the slide with the correct classes, ids, transitions, etc.
-    attr_accessor :metadata
-
-    # The raw, unformatted slide content.
-    attr_accessor :content
-
     #
     # @param [Hash] params contains the parameters to help create the slide
     #   that is going to be displayed.
@@ -28,6 +23,17 @@ module ShowOff
     def initialize(params={})
       @content = ""
       params.each {|k,v| send("#{k}=",v) if respond_to? "#{k}=" }
+    end
+
+    # The raw, unformatted slide content.
+    attr_reader :content
+
+    #
+    # @param [String] value this is the new content initially is set or overrides
+    #   the existing content within the slide
+    #
+    def content=(value)
+      @content = "#{value}\n"
     end
 
     #
@@ -45,21 +51,27 @@ module ShowOff
       @content.to_s.strip == ""
     end
 
+    def metadata=(value)
+      @metadata = Helpers::Metadata.parse(value)
+    end
+
+    def metadata
+      @metadata || Helpers::Metadata.new
+    end
+
     # @return [String] the CSS classes for the slide
     def classes
-      metadata_classes = metadata.split(' ').delete_if {|i| i =~ /^(transition=.+)|^#/ }
-      (metadata_classes + ['content']).join(" ")
+      metadata.classes.join(" ")
     end
 
     # @return [String] the transition style for the slide
     def transition
-      parsed_transition = metadata[/.*transition=(.+).*/,1].to_s.gsub('>','')
-      parsed_transition.empty? ? "none" : parsed_transition
+      metadata.transition || "none"
     end
 
     # @return [String] an id for the slide
     def id
-      metadata.split(' ').find {|i| i =~ /^#.+/ }.to_s[1..-1]
+      metadata.id.to_s
     end
 
     # @return [String] HTML rendering of the slide's raw contents.
