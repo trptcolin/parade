@@ -39,13 +39,11 @@ module ShowOff
     #
     # @return [Array<Slide>] an array of Slide objects that have been parsed
     #   from the markdown content.
-    def to_slides
+    def slides
       content = Parsers::MarkdownImagePaths.parse(markdown_content,:path => rootpath.gsub(section.presentation.filepath,''))
       slides = Parsers::MarkdownSlideSplitter.parse(content)
       slides
     end
-    
-    alias_method :slides, :to_slides
 
   end
 end

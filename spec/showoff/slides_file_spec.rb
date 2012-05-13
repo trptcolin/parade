@@ -5,16 +5,16 @@ describe ShowOff::SlidesFile do
   subject { described_class.new :filepath => filepath, :section => section }
 
   let(:filepath) { 'filepath/slides.md' }
-  let(:section) { mock('Section', :presentation => mock(:rootpath => 'presentation')) }
+  let(:section) { mock('Section', :presentation => mock(:filepath => 'presentation')) }
 
   its(:filepath) { should eq filepath }
   its(:section) { should eq section }
 
-  let(:expected_rootpath) { File.dirname filepath }
+  let(:expected_filepath) { File.dirname filepath }
 
-  its(:rootpath) { should eq expected_rootpath }
+  its(:rootpath) { should eq expected_filepath }
 
-  describe "#to_slides" do
+  describe "#slides" do
     before do
       subject.stub(:markdown_content).and_return(markdown_content)
       ShowOff::Parsers::MarkdownImagePaths.stub(:parse).and_return(markdown_content)
@@ -24,7 +24,7 @@ describe ShowOff::SlidesFile do
     let(:markdown_content) { 'markdown content' }
 
     it "should return an array of Slides" do
-      subject.to_slides.should be_kind_of Enumerable
+      subject.slides.should be_kind_of Enumerable
     end
 
   end
