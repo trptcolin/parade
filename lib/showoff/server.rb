@@ -99,7 +99,7 @@ module ShowOff
       def index(static=false)
         if static
           @state = presentation.title
-          @slides = presentation.to_slides_html(static)
+          @slides = presentation.to_html
           @asset_path = "./"
         end
         erb :index
@@ -130,7 +130,7 @@ module ShowOff
           assets << href if href
         end
 
-        slides = presentation.to_slides_html
+        slides = presentation.to_html
         html = Nokogiri::XML.parse("<slides>" + slides + "</slides>")
         html.css('img').each do |link|
           href = clean_link(link['src'])
@@ -147,16 +147,16 @@ module ShowOff
       end
 
       def slides(static=false)
-        presentation.to_slides_html(static)
+        presentation.to_html
       end
 
       def onepage(static=false)
-        @slides = presentation.to_slides_html(static)
+        @slides = presentation.to_html
         erb :onepage
       end
 
       def pdf(static=true)
-        @slides = presentation.to_slides_html(static, true)
+        @slides = presentation.to_html
         @no_js = false
         html = erb :onepage
         # TODO make a random filename
