@@ -22,10 +22,6 @@ module ShowOff
     # Sections are often created from within a presentation to allow the
     # reference to the presentation to be passed to the section.
     #
-    # @example Creating a section with a filepath and presentation
-    #
-    #     Section.new :filepath => 'one', :presentation => self
-    #
     # @param [Hash] params a Hash of parameters which help define the Section
     #
     def initialize(params = {})
@@ -36,7 +32,7 @@ module ShowOff
     def sections
       @sections || []
     end
-
+    
     #
     # A section may contain sections which are files, `SlidesFiles`, and
     # sub-sections which is a Hash that can also contain more sections information
