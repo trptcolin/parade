@@ -23,10 +23,18 @@ module ShowOff
       params.each {|k,v| send("#{k}=",v) if respond_to? "#{k}=" }
     end
 
+    def title
+      filepath.gsub(section.presentation.filepath,'').gsub(/^\/|\.md/,'').gsub('/','_')
+    end
+    
+    def relative_path
+      rootpath.gsub(section.presentation.filepath,'')
+    end
+
     # @return [String] if the filepath is a folder then this returns itself
     #   if it is a file then it returns the directory name.
     def rootpath
-      File.directory?(filepath) ? filepath : File.dirname(filepath)
+      File.dirname(filepath)
     end
 
     # @return [String] the contents of the markdown file
@@ -40,9 +48,10 @@ module ShowOff
     # @return [Array<Slide>] an array of Slide objects that have been parsed
     #   from the markdown content.
     def slides
-      content = Parsers::MarkdownImagePaths.parse(markdown_content,:path => rootpath.gsub(section.presentation.filepath,''))
+      content = Parsers::MarkdownImagePaths.parse(markdown_content,:path => relative_path)
       slides = Parsers::MarkdownSlideSplitter.parse(content)
-      slides
+      
+      slides.each {|slide| slide.section = self }
     end
 
   end

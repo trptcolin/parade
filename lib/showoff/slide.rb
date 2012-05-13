@@ -14,9 +14,10 @@ module ShowOff
     # in the correct order.
     attr_accessor :sequence
 
-    # TODO: this should instead be set by the section/presentation
+    attr_accessor :section
+
     def reference
-      "slide/#{sequence}"
+      "#{section ? section.title : 'slide'}/#{sequence}"
     end
 
     #

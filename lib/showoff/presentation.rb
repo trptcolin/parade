@@ -35,9 +35,9 @@ module ShowOff
 
     #
     # Create a presentation instance
-    # 
+    #
     # @example Create Presentation with Contents
-    # 
+    #
     def initialize(params = {})
       params.each {|k,v| send("#{k}=",v) if respond_to? "#{k}=" }
     end
@@ -55,7 +55,7 @@ module ShowOff
     #   when no name has been specified in the file or when creating a
     #   presentation from a directory.
     def title
-      contents['name'] || "Presentation"
+      contents['name'] || contents['title'] || "Presentation"
     end
 
     # @return [Array<Section>] an array of Section objects which have been
@@ -69,12 +69,8 @@ module ShowOff
     # @return [String] the HTML content of the entire presentation.
     def to_html
 
-      slide_count = 1
-
       slides_html = sections.map do |section|
         section.slides.map do |slide|
-          slide.sequence = slide_count
-          slide_count = slide_count + 1
           Renderers::CommandLineRenderer.render(slide.to_html)
         end
       end.flatten.join("\n")
