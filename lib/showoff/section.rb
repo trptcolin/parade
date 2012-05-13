@@ -28,11 +28,7 @@ module ShowOff
     # An instance of a presentation
     attr_accessor :presentation
 
-    # @return [String] if the filepath is a folder then this returns itself
-    #   if it is a file then it returns the directory name.
-    def rootpath
-      File.directory?(filepath) ? filepath : File.dirname(filepath)
-    end
+    alias_method :rootpath, :filepath
 
     #
     # Sections are often created from within a presentation to allow the
@@ -45,25 +41,31 @@ module ShowOff
     # @param [Hash] params a Hash of parameters which help define the Section
     #
     def initialize(params = {})
+      presentation = params[:presentation]
       params.each {|k,v| send("#{k}=",v) if respond_to? "#{k}=" }
     end
 
-    #
-    # @return [Array<String>] an array of file names within the section. When
-    #   the section is a file or list of files it is simply the file itself. If
-    #   it is a directory it returns all the markdown files contained in any of
-    #   the sub-directories.
-    #
-    def files
-      filepaths = File.directory?(filepath) ? File.join(filepath,"**","*.md") : filepath
-      Dir[filepaths]
+    def sections
+      @sections || []
+    end
+
+    def sections=(subsections)
+      @sections = subsections.map do |section|
+        if section['section'].is_a?(Hash)
+          Section.new section['section'].merge(:presentation => presentation)
+        else
+          SlidesFile.new(:filepath => section['section'], :section => self)
+        end
+      end
     end
 
     #
     # @return [Array<Slide>] an array of slides contained within the section.
     #
     def slides
-      files.map {|file| SlidesFile.new(:filepath => file, :section => self).to_slides }.flatten
+      sections.map do |section|
+        section.slides
+      end.flatten
     end
 
   end

@@ -44,6 +44,8 @@ module ShowOff
       slides = Parsers::MarkdownSlideSplitter.parse(content)
       slides
     end
+    
+    alias_method :slides, :to_slides
 
   end
 end
