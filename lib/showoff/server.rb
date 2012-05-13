@@ -1,5 +1,5 @@
 require_relative "presentation"
-
+require_relative "../showoff_utils"
 module ShowOff
 
   class Server < Sinatra::Application
@@ -165,14 +165,14 @@ module ShowOff
       end
 
       def pdf(static=true)
-        @slides = to_slides_html(static, true)
+        @slides = presentation.to_slides_html(static, true)
         @no_js = false
         html = erb :onepage
         # TODO make a random filename
 
         # PDFKit.new takes the HTML and any options for wkhtmltopdf
         # run `wkhtmltopdf --extended-help` for a full list of options
-        kit = PDFKit.new(html, ShowOffUtils.showoff_pdf_options(settings.pres_dir))
+        kit = PDFKit.new(html, ::ShowOffUtils.showoff_pdf_options(settings.pres_dir))
 
         # Save the PDF to a file
         file = kit.to_file('/tmp/preso.pdf')
