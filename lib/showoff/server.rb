@@ -8,7 +8,7 @@ module ShowOff
     set :public_folder, File.dirname(__FILE__) + '/../public'
 
     set :verbose, false
-    set :pres_dir, '.'
+    set :presentation_directory, '.'
     set :pres_file, 'showoff.json'
 
     def logger
@@ -25,28 +25,19 @@ module ShowOff
     end
 
     def presentation
-      Presentation.parse File.join(settings.pres_dir,settings.pres_file)
+      Presentation.parse File.join(settings.presentation_directory,settings.pres_file)
     end
 
     def initialize(app=nil)
       super(app)
 
-      root_directory = File.expand_path(File.join(File.dirname(__FILE__), '..'))
-
-      settings.pres_dir ||= Dir.pwd
-      @root_path = "."
-
-      settings.pres_dir = File.expand_path(settings.pres_dir)
-
-      # if (settings.pres_file)
-      #   ShowOffUtils.presentation_config_file = settings.pres_file
-      # end
-
-      @pres_name = settings.pres_dir.split('/').pop
+      settings.presentation_directory ||= Dir.pwd
+      settings.presentation_directory = File.expand_path(settings.presentation_directory)
 
       require_ruby_files
 
-      # Default asset path
+      @root_path = "."
+      @pres_name = settings.presentation_directory.split('/').pop
       @asset_path = "./"
     end
 
@@ -56,20 +47,21 @@ module ShowOff
     end
 
     def require_ruby_files
-      Dir.glob("#{settings.pres_dir}/*.rb").map { |path| require path }
+      Dir.glob("#{settings.presentation_directory}/*.rb").map { |path| require path }
     end
 
     helpers do
+
       def css_files
-        Dir.glob("#{settings.pres_dir}/*.css").map { |path| File.basename(path) }
+        Dir.glob("#{settings.presentation_directory}/*.css").map { |path| File.basename(path) }
       end
 
       def js_files
-        Dir.glob("#{settings.pres_dir}/*.js").map { |path| File.basename(path) }
+        Dir.glob("#{settings.presentation_directory}/*.js").map { |path| File.basename(path) }
       end
 
       def preshow_files
-        Dir.glob("#{settings.pres_dir}/_preshow/*").map { |path| File.basename(path) }.to_json
+        Dir.glob("#{settings.presentation_directory}/_preshow/*").map { |path| File.basename(path) }.to_json
       end
 
       def inline_css(csses, pre = nil)
@@ -78,7 +70,7 @@ module ShowOff
           if pre
             css_file = File.join(File.dirname(__FILE__), '..', pre, css_file)
           else
-            css_file = File.join(settings.pres_dir, css_file)
+            css_file = File.join(settings.presentation_directory, css_file)
           end
           css_content += File.read(css_file)
         end
@@ -92,7 +84,7 @@ module ShowOff
           if pre
             js_file = File.join(File.dirname(__FILE__), '..', pre, js_file)
           else
-            js_file = File.join(settings.pres_dir, js_file)
+            js_file = File.join(settings.presentation_directory, js_file)
           end
           js_content += File.read(js_file)
         end
@@ -171,7 +163,7 @@ module ShowOff
 
         # PDFKit.new takes the HTML and any options for wkhtmltopdf
         # run `wkhtmltopdf --extended-help` for a full list of options
-        kit = PDFKit.new(html, ::ShowOffUtils.showoff_pdf_options(settings.pres_dir))
+        kit = PDFKit.new(html, ::ShowOffUtils.showoff_pdf_options(settings.presentation_directory))
 
         # Save the PDF to a file
         file = kit.to_file('/tmp/preso.pdf')
@@ -218,7 +210,7 @@ module ShowOff
           # Set up file dir
           file_dir = File.join(out, 'file')
           FileUtils.makedirs(file_dir)
-          pres_dir = showoff.settings.pres_dir
+          pres_dir = showoff.settings.presentation_directory
 
           # ..., copy all user-defined styles and javascript files
           Dir.glob("#{pres_dir}/*.{css,js}").each { |path|
@@ -246,23 +238,22 @@ module ShowOff
         end
       end
 
-     def eval_ruby code
-       eval(code).to_s
-     rescue => e
-       e.message
-     end
+    def eval_ruby(code)
+     eval(code).to_s
+    rescue => e
+     e.message
+    end
 
     get '/eval_ruby' do
       if ENV['SHOWOFF_EVAL_RUBY']
-        eval_ruby(params[:code]) 
+        eval_ruby(params[:code])
       else
         "Ruby Evaluation is off. To turn it on set ENV['SHOWOFF_EVAL_RUBY']"
       end
     end
-
     get %r{(?:image|file)/(.*)} do
       path = params[:captures].first
-      full_path = File.join(settings.pres_dir, path)
+      full_path = File.join(settings.presentation_directory, path)
       send_file full_path
     end
 
