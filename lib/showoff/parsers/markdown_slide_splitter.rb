@@ -37,7 +37,8 @@ module ShowOff
           line = lines.shift
 
           if line =~ /^<?!SLIDE(.*)>?/
-            current_slide = Slide.new(:metadata => $1)
+            metadata = Regexp.last_match(1).gsub(/>$/,'')
+            current_slide = Slide.new(:metadata => metadata)
             slides << current_slide
           else
             current_slide << line
