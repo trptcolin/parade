@@ -26,7 +26,6 @@ module ShowOff
 
     def presentation
       Presentation.parse File.join(settings.pres_dir,settings.pres_file)
-      # Presentation.new :filepath => File.join(settings.pres_dir,settings.pres_file)
     end
 
     def initialize(app=nil)
