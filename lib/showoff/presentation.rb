@@ -70,8 +70,13 @@ module ShowOff
 
     # @return [String] the HTML content of the entire presentation.
     def to_slides_html(static = nil,pdf = nil)
+      
+      slide_count = 1
+      
       slides_html = sections.map do |section|
         section.slides.map do |slide|
+          slide.sequence = slide_count
+          slide_count = slide_count + 1
           Renderers::CommandLineRenderer.render(slide.to_html)
         end
       end.flatten.join("\n")
