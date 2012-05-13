@@ -74,7 +74,7 @@ module ShowOff
     #   and sub-sections of this section.
     #
     def slides
-      sections.map {|section| section.slides }
+      sections.map {|section| section.slides }.flatten
     end
 
   end
