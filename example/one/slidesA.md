@@ -32,3 +32,13 @@ of the screen. The quick brown fox jumps over the lazy dog.
 .notes another dark side
 
 ![octocat](octocat.png)
+
+!SLIDE
+
+# Fourth Slide
+
+> This is quoted text
+
+* Bullets
+
+    > this is quoted text under a bullet
