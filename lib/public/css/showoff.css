@@ -9,7 +9,7 @@
   }
 
   #preso, .slide {
-      background: #fff;
+/*      background: #fff;*/
       width: 1024px;
       height: 768px;
       margin-left:auto;
@@ -195,7 +195,7 @@
 
 .subsection h1 {
     background: #008;
-    color: #fff;
+/*    color: #fff;*/
 	padding: .25em;
 }
 
@@ -342,7 +342,7 @@ a.fg-button { float:left; }
 #tips, #preshow_timer {
   display:inline;
   background-color:#000;
-  color:#fff;
+/*  color:#fff;*/
   font-size:3em;
   border:2px solid black;
   position: fixed;
@@ -380,7 +380,7 @@ a.fg-button { float:left; }
   }
 
   #preso, .slide {
-      background: #fff;
+/*      background: #fff;*/
       width: 600px;
       height: 600px;
       margin-left:auto;
