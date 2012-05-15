@@ -6,9 +6,9 @@ module ShowOff
     class PresentationFileParser
 
       def self.parse(filepath)
-        
+
         file_rootpath = File.dirname(filepath)
-        
+
         presentation_data = JSON.parse(File.read(filepath))
         presentation_data.merge!(:filepath => file_rootpath)
         presentation_data
@@ -21,8 +21,8 @@ module ShowOff
             if File.exists?(section_path) and File.directory?(section_path)
               section['section'] = PresentationDirectoryParser.parse(section_path)
             end
-          end
 
+          end
         end
 
         presentation_data

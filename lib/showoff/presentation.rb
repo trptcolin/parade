@@ -62,12 +62,34 @@ module ShowOff
     #   loaded from the presentation file or directory.
     def sections
       contents['sections'].map do |section|
-        Section.new section['section'].merge(:presentation => self)
+        if section.is_a? Hash
+
+          if section['section'] and not section['section'].is_a? Hash
+
+            file_sections = Array(section['section']).map do |file_section|
+              { 'section' => File.expand_path(File.join(filepath,file_section)) }
+            end
+
+            section['section'] = { 'sections' => file_sections }
+            puts %{
+
+              Updated Section: #{section} #{section.class}
+
+            }
+
+          end
+
+          Section.new section['section'].merge(:presentation => self)
+        else
+          Array(section).each do |file_section|
+            # Section.new
+          end
+        end
       end
     end
-    
+
     def renderers
-      [ Renderers::UpdateImagePaths.new(:rootpath => filepath), 
+      [ Renderers::UpdateImagePaths.new(:rootpath => filepath),
         Renderers::SpecialParagraphRenderer ]
     end
 
