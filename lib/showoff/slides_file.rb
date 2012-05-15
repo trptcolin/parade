@@ -26,7 +26,7 @@ module ShowOff
     def title
       filepath.gsub(section.presentation.filepath,'').gsub(/^\/|\.md/,'').gsub('/','_')
     end
-    
+
     def relative_path
       rootpath.gsub(section.presentation.filepath,'')
     end
@@ -50,7 +50,7 @@ module ShowOff
     def slides
       content = Parsers::MarkdownImagePaths.parse(markdown_content,:path => relative_path)
       slides = Parsers::MarkdownSlideSplitter.parse(content)
-      
+
       slides.each {|slide| slide.section = self }
     end
 

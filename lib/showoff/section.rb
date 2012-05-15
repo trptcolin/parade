@@ -32,7 +32,7 @@ module ShowOff
     def sections
       @sections || []
     end
-    
+
     #
     # A section may contain sections which are files, `SlidesFiles`, and
     # sub-sections which is a Hash that can also contain more sections information
@@ -55,6 +55,20 @@ module ShowOff
     #
     def slides
       sections.map {|section| section.slides }.flatten
+    end
+
+    def renderers
+      [ Renderers::CommandLineRenderer ]
+    end
+
+    # @return [String] HTML representation of the section
+    def to_html
+      slides.map do |slide|
+        slide_html = slide.to_html
+        renderers.each {|render| slide_html = render.render(slide_html) }
+        slide_html
+
+      end.join("\n")
     end
 
     private

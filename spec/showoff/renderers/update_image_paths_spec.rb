@@ -2,7 +2,6 @@ require_relative 'spec_helper'
 
 describe ShowOff::Renderers::UpdateImagePaths do
 
-  subject { ShowOff::Renderers::UpdateImagePaths }
   let(:content) { IMG_WITH_SRC }
 
   context "when given html content with images" do

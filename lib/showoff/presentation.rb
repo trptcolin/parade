@@ -65,18 +65,17 @@ module ShowOff
         Section.new section['section'].merge(:presentation => self)
       end
     end
+    
+    def renderers
+      [ Renderers::UpdateImagePaths.new(:rootpath => filepath), 
+        Renderers::SpecialParagraphRenderer ]
+    end
 
     # @return [String] the HTML content of the entire presentation.
     def to_html
-
-      slides_html = sections.map do |section|
-        section.slides.map do |slide|
-          Renderers::CommandLineRenderer.render(slide.to_html)
-        end
-      end.flatten.join("\n")
-
-      slides_html = Renderers::UpdateImagePaths.render(slides_html, :rootpath => filepath)
-      slides_html = Renderers::SpecialParagraphRenderer.render(slides_html)
+      slides_html = sections.map {|section| section.to_html }.join("\n")
+      renderers.each {|renderer| slides_html = renderer.render(slides_html) }
+      slides_html
     end
 
   end

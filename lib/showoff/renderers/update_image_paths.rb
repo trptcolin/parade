@@ -11,19 +11,32 @@ module ShowOff
     #
     class UpdateImagePaths
 
+      attr_accessor :rootpath
+
+      def initialize(params = {})
+        params.each {|k,v| send("#{k}=",v) if respond_to? "#{k}=" }
+      end
+
       #
       # @param [String] content HTML content that is parsed for image srcs
       # @param [Hash] options additional parameters, at the moment it is unused.
       #
       def self.render(content,options = {})
+        self.new(options).render(content)
+      end
 
-        rootpath = options[:rootpath] || "."
+      def render(content,options = {})
+
+        render_rootpath = options[:rootpath] || rootpath || "."
 
         content.gsub(/img src="\/?([^\/].*?)"/) do |image_source|
-          html_image_path = File.join("/","image",$1)
+
+          image_name = Regexp.last_match(1)
+
+          html_image_path = File.join("/","image",image_name)
           updated_image_source = %{img src="#{html_image_path}"}
 
-          html_asset_path = File.join(rootpath,$1)
+          html_asset_path = File.join(render_rootpath,image_name)
           width, height = get_image_size(html_asset_path)
           updated_image_source << %( width="#{width}" height="#{height}") if width and height
 
@@ -31,9 +44,11 @@ module ShowOff
         end
       end
 
+      def get_image_size(path) ; end
+
       if defined?(Magick)
 
-        def self.get_image_size(path)
+        def get_image_size(path)
           unless cached_image_size.key?(path)
 
             image = Magick::Image.ping(path).first
@@ -49,12 +64,11 @@ module ShowOff
           cached_image_size[path]
         end
 
-        def self.cached_image_size
+        def cached_image_size
           @cached_image_size ||= {}
         end
 
-      else
-        def self.get_image_size(path) ; end
+
       end
 
     end
