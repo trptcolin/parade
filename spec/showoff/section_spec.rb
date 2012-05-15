@@ -44,4 +44,20 @@ describe ShowOff::Section do
 
     end
   end
+
+  describe "#to_html" do
+    before do
+      subject.stub(:slides).and_return(slides)
+      subject.stub(:renderers).and_return([])
+    end
+    
+    let(:slides) do
+      [ mock('Slide',:to_html => 'slide A html'), mock('Slide2',:to_html => 'slide B html')]
+    end
+
+    let(:expected_html) { "slide A html\nslide B html" }
+
+    its(:to_html) { should eq expected_html }
+
+  end
 end

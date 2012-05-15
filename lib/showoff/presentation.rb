@@ -62,21 +62,42 @@ module ShowOff
     #   loaded from the presentation file or directory.
     def sections
       contents['sections'].map do |section|
-        Section.new section['section'].merge(:presentation => self)
+        if section.is_a? Hash
+
+          if section['section'] and not section['section'].is_a? Hash
+
+            file_sections = Array(section['section']).map do |file_section|
+              { 'section' => File.expand_path(File.join(filepath,file_section)) }
+            end
+
+            section['section'] = { 'sections' => file_sections }
+            puts %{
+
+              Updated Section: #{section} #{section.class}
+
+            }
+
+          end
+
+          Section.new section['section'].merge(:presentation => self)
+        else
+          Array(section).each do |file_section|
+            # Section.new
+          end
+        end
       end
+    end
+
+    def renderers
+      [ Renderers::UpdateImagePaths.new(:rootpath => filepath),
+        Renderers::SpecialParagraphRenderer ]
     end
 
     # @return [String] the HTML content of the entire presentation.
     def to_html
-
-      slides_html = sections.map do |section|
-        section.slides.map do |slide|
-          Renderers::CommandLineRenderer.render(slide.to_html)
-        end
-      end.flatten.join("\n")
-
-      slides_html = Renderers::UpdateImagePaths.render(slides_html, :rootpath => filepath)
-      slides_html = Renderers::SpecialParagraphRenderer.render(slides_html)
+      slides_html = sections.map {|section| section.to_html }.join("\n")
+      renderers.each {|renderer| slides_html = renderer.render(slides_html) }
+      slides_html
     end
 
   end

@@ -2,6 +2,7 @@
   "name": "Something",
   "description": "Example Presentation",
   "sections": [
+    {"section":"intro.md"},
     {"section":"one"},
     {"section":"two"},
     {"section":"three"}
