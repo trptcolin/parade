@@ -105,7 +105,11 @@ module ShowOff
         :xhtml => true)
       markdown.render(content.to_s)
     end
-
+    
+    def slides
+      self
+    end
+    
     # @return [ERB] an ERB template that this slide will be rendered into
     def template_file
       erb_template_file = File.join File.dirname(__FILE__), "..", "views", "slide.erb"

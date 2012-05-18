@@ -13,7 +13,7 @@ describe ShowOff::Parsers::DSL do
 
     describe "the presentation parsed" do
       before do
-        ShowOff::Parsers::PresentationFilepathParser.stub(:parse).and_return { mock('section') }
+        ShowOff::Parsers::PresentationFilepathParser.stub(:parse) { SLIDES_WITH_H1 }
       end
 
       let(:presentation) { subject.parse(contents) }

@@ -9,7 +9,7 @@ module ShowOff
 
     set :verbose, false
     set :presentation_directory, '.'
-    set :pres_file, 'showoff.json'
+    set :pres_file, 'showoff'
 
     def logger
       @logger ||= begin
@@ -25,7 +25,9 @@ module ShowOff
     end
 
     def presentation
-      Presentation.parse File.join(settings.presentation_directory,settings.pres_file)
+      pres_filepath = File.join(settings.presentation_directory,settings.pres_file)
+      contents = File.read pres_filepath
+      Parsers::DSL.parse contents, :rootpath => pres_filepath
     end
 
     def initialize(app=nil)

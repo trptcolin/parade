@@ -1,5 +1,6 @@
 require_relative 'presentation_directory_parser'
 require_relative 'presentation_file_parser'
+require_relative 'slides_file_content_parser'
 
 module ShowOff
   module Parsers
@@ -11,11 +12,22 @@ module ShowOff
         return nil unless File.exists? filepath
 
         if File.directory? filepath
-          Parsers::PresentationDirectoryParser.parse filepath
+          PresentationDirectoryParser.parse filepath
         else
-          Parsers::PresentationFileParser.parse filepath
+
+          if presentation_file?(filepath)
+            PresentationFileParser.parse filepath
+          else
+            SlidesFileContentParser.parse filepath
+          end
+
         end
 
+      end
+
+
+      def self.presentation_file?(filepath)
+        File.basename(filepath) == "showoff"
       end
 
     end

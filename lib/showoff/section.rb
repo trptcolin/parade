@@ -1,4 +1,3 @@
-require_relative 'slides_file'
 
 module ShowOff
 
@@ -14,9 +13,18 @@ module ShowOff
   # @example Section with a folder path
   #
   class Section
+    attr_accessor :title
 
     # An instance of a presentation
     attr_accessor :presentation
+
+    def add_section(content)
+      sections << content
+    end
+
+    def sections
+      @sections ||= []
+    end
 
     #
     # Sections are often created from within a presentation to allow the
@@ -29,52 +37,25 @@ module ShowOff
       params.each {|k,v| send("#{k}=",v) if respond_to? "#{k}=" }
     end
 
-    def sections
-      @sections || []
-    end
-
-    #
-    # A section may contain sections which are files, `SlidesFiles`, and
-    # sub-sections which is a Hash that can also contain more sections information
-    #
-    # @param [Hash] subsections which contains sections and sub-sections
-    #
-    def sections=(subsections)
-      @sections = subsections.map do |section|
-        if section['section'].is_a?(Hash)
-          create_subsection section['section'].merge(:presentation => presentation)
-        else
-          SlidesFile.new(:filepath => section['section'], :section => self)
-        end
-      end
-    end
-
     #
     # @return [Array<Slide>] an array of slides contained within the section
     #   and sub-sections of this section.
     #
     def slides
-      sections.map {|section| section.slides }.flatten
+      sections.flatten.map {|section| section.slides }.flatten
     end
 
-    def renderers
-      [ Renderers::CommandLineRenderer ]
-    end
+    # def renderers
+    #   [ Renderers::CommandLineRenderer ]
+    # end
 
     # @return [String] HTML representation of the section
     def to_html
-      slides.map do |slide|
-        slide_html = slide.to_html
-        renderers.each {|render| slide_html = render.render(slide_html) }
-        slide_html
-
-      end.join("\n")
-    end
-
-    private
-
-    def create_subsection(params)
-      Section.new params
+      sections.map do |section_or_slide|
+        Array(section_or_slide.flatten).map {|s_or_s| s_or_s.to_html }
+        # renderers.each {|render| slide_html = render.render(slide_html) }
+        # slide_html
+      end.flatten.join("\n")
     end
 
   end
