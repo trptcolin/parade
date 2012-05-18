@@ -5,6 +5,7 @@ require_relative 'renderers/update_image_paths'
 
 require_relative 'parsers/presentation_directory_parser'
 require_relative 'parsers/presentation_file_parser'
+require_relative 'parsers/dsl'
 
 module ShowOff
 
