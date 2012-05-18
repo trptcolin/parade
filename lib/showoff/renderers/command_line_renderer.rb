@@ -7,25 +7,25 @@ module ShowOff
     # Slides that have been marked as 'commandline' will be processed here to
     # ensure that the command portion is played out as if typed. Followed by
     # the result which appears after the command is completed.
-    # 
+    #
     # @example Slide marker to denote a command-line slide
-    # 
+    #
     #     !SLIDE commandline incremental
-    # 
-    # 
+    #
+    #
     # To denote the command, it needs to be prefaced with a `$`. The remaining
     # code is considered to be the result.
-    # 
+    #
     # @example Contents of a slide to show a command and a result
-    # 
+    #
     #     ```bash
     #     $ git commit -am 'incremental bullet points working'
     #     [master ac5fd8a] incremental bullet points working
     #      2 files changed, 32 insertions(+), 5 deletions(-)
     #     ```
-    # 
+    #
     class CommandLineRenderer
-      
+
       #
       # @param [String] html_content the html content of a single slide that
       #   will have the commandline rendered correctly if it is a class on
@@ -35,7 +35,7 @@ module ShowOff
       #
       def self.render(html_content)
 
-        html = Nokogiri::XML.parse(html_content)
+        html = Nokogiri::XML.fragment(html_content)
         parser = CommandlineParser.new
 
         html.css('.commandline pre').each do |code|
@@ -66,7 +66,7 @@ module ShowOff
           transform.apply(tree)
         end
 
-        html.root.to_s
+        html.to_s
 
       end
 

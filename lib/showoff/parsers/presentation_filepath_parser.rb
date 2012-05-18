@@ -7,18 +7,18 @@ module ShowOff
 
     class PresentationFilepathParser
 
-      def self.parse(filepath)
+      def self.parse(filepath,options = {})
 
         return nil unless File.exists? filepath
 
         if File.directory? filepath
-          PresentationDirectoryParser.parse filepath
+          PresentationDirectoryParser.parse filepath, options
         else
 
           if presentation_file?(filepath)
-            PresentationFileParser.parse filepath
+            PresentationFileParser.parse filepath, options
           else
-            SlidesFileContentParser.parse filepath
+            SlidesFileContentParser.parse filepath, options
           end
 
         end

@@ -1,3 +1,4 @@
+require_relative 'renderers/update_image_paths'
 
 module ShowOff
 
@@ -15,16 +16,15 @@ module ShowOff
   class Section
     attr_accessor :title
 
-    # An instance of a presentation
-    attr_accessor :presentation
+    attr_reader :sections
+
+    attr_accessor :rootpath
 
     def add_section(content)
-      sections << content
+      (@sections ||= []) << content.compact.flatten
+      @sections = @sections.compact.flatten
     end
 
-    def sections
-      @sections ||= []
-    end
 
     #
     # Sections are often created from within a presentation to allow the
@@ -37,25 +37,18 @@ module ShowOff
       params.each {|k,v| send("#{k}=",v) if respond_to? "#{k}=" }
     end
 
-    #
-    # @return [Array<Slide>] an array of slides contained within the section
-    #   and sub-sections of this section.
-    #
-    def slides
-      sections.flatten.map {|section| section.slides }.flatten
+    def renderers
+      [ Renderers::UpdateImagePaths.new(:rootpath => rootpath) ]
     end
 
-    # def renderers
-    #   [ Renderers::CommandLineRenderer ]
-    # end
 
     # @return [String] HTML representation of the section
     def to_html
       sections.map do |section_or_slide|
-        Array(section_or_slide.flatten).map {|s_or_s| s_or_s.to_html }
-        # renderers.each {|render| slide_html = render.render(slide_html) }
-        # slide_html
-      end.flatten.join("\n")
+        renderers.inject(section_or_slide.to_html) do |content,renderer|
+          renderer.render(content)
+        end
+      end.join("\n")
     end
 
   end

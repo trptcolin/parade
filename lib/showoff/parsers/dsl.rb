@@ -1,3 +1,4 @@
+require_relative '../section'
 require_relative 'presentation_filepath_parser'
 
 module ShowOff
@@ -7,7 +8,7 @@ module ShowOff
       attr_accessor :rootpath
 
       def rootpath=(value)
-        @rootpath = File.directory?(value) ? value : File.dirname(value)
+        current_section.rootpath = File.directory?(value) ? value : File.dirname(value)
       end
 
       def current_section
@@ -23,8 +24,8 @@ module ShowOff
       def section(*filepaths,&block)
 
         section_content = Array(filepaths).flatten.compact.map do |filepath|
-          filepath = File.join(rootpath,filepath)
-          PresentationFilepathParser.parse(filepath)
+          filepath = File.join(current_section.rootpath,filepath)
+          PresentationFilepathParser.parse(filepath,:rootpath => current_section.rootpath)
         end
 
         current_section.add_section section_content

@@ -3,8 +3,8 @@ module ShowOff
 
     class PresentationFileParser
 
-      def self.parse(filepath)
-        DSL.parse File.read(filepath)
+      def self.parse(filepath,options = {})
+        DSL.parse File.read(filepath,options)
       end
 
     end

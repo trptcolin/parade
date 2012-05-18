@@ -1,9 +1,11 @@
 require_relative 'helpers/metadata'
-
+require_relative 'renderers/html_with_pygments'
+require_relative 'renderers/command_line_renderer'
+require_relative 'renderers/special_paragraph_renderer'
 module ShowOff
 
   #
-  # The Slide is the core class of the Presentation. The slide aggregates the 
+  # The Slide is the core class of the Presentation. The slide aggregates the
   # markdown content, the slide metadata, and the slide template to create the
   # HTML representation of the slide for ShowOff.
   #
@@ -91,25 +93,24 @@ module ShowOff
       metadata.id.to_s
     end
 
+    def pre_renderers
+      [ Renderers::HTMLwithPygments ]
+    end
+
+    def post_renderers
+      [ Renderers::SpecialParagraphRenderer,
+        Renderers::CommandLineRenderer ]
+    end
+
     # @return [String] HTML rendering of the slide's raw contents.
     def content_as_html
-      markdown = Redcarpet::Markdown.new(Renderers::HTMLwithPygments,
-        :fenced_code_blocks => true,
-        :no_intra_emphasis => true,
-        :autolink => true,
-        :strikethrough => true,
-        :lax_html_blocks => true,
-        :superscript => true,
-        :hard_wrap => true,
-        :tables => true,
-        :xhtml => true)
-      markdown.render(content.to_s)
+      pre_renderers.inject(content) {|content,renderer| renderer.render(content) }
     end
-    
+
     def slides
       self
     end
-    
+
     # @return [ERB] an ERB template that this slide will be rendered into
     def template_file
       erb_template_file = File.join File.dirname(__FILE__), "..", "views", "slide.erb"
@@ -118,7 +119,8 @@ module ShowOff
 
     # @return [String] the HTML representation of the slide
     def to_html
-      template_file.result(binding)
+      content = template_file.result(binding)
+      post_renderers.inject(content) {|content,renderer| renderer.render(content) }
     end
 
   end
