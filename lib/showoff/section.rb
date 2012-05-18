@@ -3,29 +3,45 @@ require_relative 'renderers/update_image_paths'
 module ShowOff
 
   #
-  # Within a ShowOff Presention file, sections can be defined. These sections
-  # can either be a markdown file, an arrary of markdown files, or a folder
-  # path which may contain markdown files.
+  # A ShowOff presentation is composed of a Section that may also be composed
+  # of many slides and sub-sections (child sections) of slides.
   #
   class Section
 
     def initialize
       @post_renderers = []
     end
-
+    
+    # @return [String] the title of the section
     attr_accessor :title
+    
+    # @return [Array<#slides>] returns an array of a Section objects or array
+    #   of Slide objects.
     attr_reader :sections
-
-    attr_accessor :root_path
-    attr_accessor :current_path
-
+    
+    #
+    # Append slides or sections to this setion.
+    # 
+    # @param [Slide,Section,Array<Section>,Array<Slide>] content this any 
+    #   slide or section that you want to add to this section.
+    #
     def add_section(content)
       (@sections ||= []) << Array(content).compact.flatten
       @sections = @sections.compact.flatten
     end
 
-    attr_accessor :post_renderers
+    attr_accessor :root_path
+    attr_accessor :current_path
     
+    # @return [Array<#render>] returns a list of Renderers that will perform
+    #   their renderering on the slides after the slides have all habe been
+    #   rendered.
+    attr_reader :post_renderers
+    
+    #
+    # @param [#render] renderer add a renderer, any object responding to
+    #   #render, that will process the slides HTML content.
+    #
     def add_post_renderer(renderer)
       @post_renderers << renderer
     end

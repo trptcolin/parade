@@ -5,7 +5,7 @@ module ShowOff
 
       def self.parse(filepath,options = {})
         options.merge!(:current_path => File.dirname(filepath))
-        DSL.parse File.read(filepath), options
+        Dsl.parse File.read(filepath), options
       end
 
     end

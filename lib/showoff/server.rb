@@ -29,7 +29,7 @@ module ShowOff
     def presentation
       pres_filepath = File.join(settings.presentation_directory,settings.pres_file)
       contents = File.read pres_filepath
-      root_section = Parsers::DSL.parse contents, :root_path => pres_filepath
+      root_section = Parsers::Dsl.parse contents, :root_path => pres_filepath
 
       root_section.add_post_renderer Renderers::UpdateImagePaths.new :root_path => File.dirname(pres_filepath)
       root_section
