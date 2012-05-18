@@ -8,7 +8,7 @@ describe ShowOff::Renderers::UpdateImagePaths do
     before do
       subject.stub(:get_image_size).and_return([nil, nil])
     end
-    
+
     let(:expected_content) { EXPECTED_IMG_WITH_SRC }
 
     it "should update the img src paths correctly" do
@@ -26,7 +26,7 @@ describe ShowOff::Renderers::UpdateImagePaths do
         let(:expected_content) { EXPECTED_IMG_WITH_W_AND_H }
 
         it "should update the img src paths correctly" do
-          subject.render(content, :rootpath => "/home/application/").should eq expected_content
+          subject.render(content, :root_path => "/home/application/").should eq expected_content
         end
       end
     end

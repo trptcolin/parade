@@ -5,10 +5,15 @@ module ShowOff
   module Parsers
 
     class DSLSection
-      attr_accessor :rootpath
+      attr_reader :root_path
+      attr_reader :current_path
 
-      def rootpath=(value)
-        current_section.rootpath = File.directory?(value) ? value : File.dirname(value)
+      def root_path=(value)
+        current_section.root_path = File.directory?(value) ? value : File.dirname(value)
+      end
+      
+      def current_path=(value)
+        current_section.current_path = File.directory?(value) ? value : File.dirname(value)
       end
 
       def current_section
@@ -24,8 +29,8 @@ module ShowOff
       def section(*filepaths,&block)
 
         section_content = Array(filepaths).flatten.compact.map do |filepath|
-          filepath = File.join(current_section.rootpath,filepath)
-          PresentationFilepathParser.parse(filepath,:rootpath => current_section.rootpath)
+          filepath = File.join(current_section.current_path,filepath)
+          PresentationFilepathParser.parse(filepath,:root_path => current_section.root_path)
         end
 
         current_section.add_section section_content
@@ -38,7 +43,8 @@ module ShowOff
 
       def parse(contents,options = {})
         presentation = DSLSection.new
-        presentation.rootpath = options[:rootpath]
+        presentation.root_path = options[:root_path]
+        presentation.current_path = options[:current_path] || options[:root_path]
 
         config = Proc.new { eval(contents) }
         presentation.instance_eval(&config)

@@ -1,5 +1,6 @@
 require_relative "../showoff_utils"
 require_relative "parsers/dsl"
+require_relative 'renderers/update_image_paths'
 
 module ShowOff
 
@@ -28,7 +29,10 @@ module ShowOff
     def presentation
       pres_filepath = File.join(settings.presentation_directory,settings.pres_file)
       contents = File.read pres_filepath
-      Parsers::DSL.parse contents, :rootpath => pres_filepath
+      root_section = Parsers::DSL.parse contents, :root_path => pres_filepath
+
+      root_section.add_post_renderer Renderers::UpdateImagePaths.new :root_path => File.dirname(pres_filepath)
+      root_section
     end
 
     def initialize(app=nil)
