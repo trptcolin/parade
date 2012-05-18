@@ -30,9 +30,6 @@ module ShowOff
       @sections = @sections.compact.flatten
     end
 
-    attr_accessor :root_path
-    attr_accessor :current_path
-    
     # @return [Array<#render>] returns a list of Renderers that will perform
     #   their renderering on the slides after the slides have all habe been
     #   rendered.

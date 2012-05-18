@@ -40,8 +40,8 @@ module ShowOff
       def section(*filepaths,&block)
 
         section_content = Array(filepaths).flatten.compact.map do |filepath|
-          filepath = File.join(current_section.current_path,filepath)
-          PresentationFilepathParser.parse(filepath,:root_path => current_section.root_path)
+          filepath = File.join(current_path,filepath)
+          PresentationFilepathParser.parse(filepath,:root_path => root_path)
         end
 
         current_section.add_section section_content
@@ -59,7 +59,7 @@ module ShowOff
       #   of this presentation of where it is being served.
       #
       def root_path=(value)
-        current_section.root_path = File.directory?(value) ? value : File.dirname(value)
+        @root_path = File.directory?(value) ? value : File.dirname(value)
       end
 
       # @return [String] the current path is the path for the current section
@@ -72,7 +72,7 @@ module ShowOff
       #   for this particular section of the presentation being served.
       #
       def current_path=(value)
-        current_section.current_path = File.directory?(value) ? value : File.dirname(value)
+        @current_path = File.directory?(value) ? value : File.dirname(value)
       end
 
       # @return [Section] the current section being built.
