@@ -9,24 +9,30 @@ module ShowOff
   class Section
 
     def initialize(params = {})
-      @title = "Section"
+      @description = ""
       @post_renderers = []
       @sections = []
       params.each {|k,v| send("#{k}=",v) if respond_to? "#{k}=" }
     end
 
+    attr_writer :title
+    
     # @return [String] the title of the section
-    attr_accessor :title
+    def title
+      @title ? @title : (section ? section.title : "Section")
+    end
+
+    # @return [String] the description of the section
+    attr_accessor :description
 
     # @return [Array<#slides>] returns an array of a Section objects or array
     #   of Slide objects.
     attr_reader :sections
 
-    
+
     # @return [Section] the parent section of this section. nil if this is a
     #   root section.
     attr_accessor :section
-
 
     #
     # Append slides or sections to this setion.
@@ -34,11 +40,23 @@ module ShowOff
     # @param [Slide,Section,Array<Section>,Array<Slide>] content this any
     #   slide or section that you want to add to this section.
     #
-    def add_section(content)
-      @sections = @sections + Array(content).compact.flatten.map do |content|
-        content.section = self
-        content
+    def add_section(sub_sections)
+      sub_sections = Array(sub_sections).compact.flatten.map do |sub_section|
+        sub_section.section = self
+        sub_section
       end
+      @sections = @sections + sub_sections
+      sub_sections
+    end
+
+    def add_slides(slides)
+      sub_slides = Array(slides).compact.flatten.map do |slide|
+        slide.section = self
+        slide
+      end
+      
+      @sections = @sections + sub_slides
+      sub_slides
     end
 
     # @return [Array<#render>] returns a list of Renderers that will perform

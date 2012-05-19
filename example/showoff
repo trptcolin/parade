@@ -1,9 +1,13 @@
 
-title "Something"
+title "Example Presentation"
 
-# description "Example Presentation"
+description "Several showoff examples to assist with showing others how to get
+  started with ShowOff"
 
-section "intro.md"
+section "intro.md" do
+  title "Introduction"
+end
+
 section "one"
 section "two"
 section "three"

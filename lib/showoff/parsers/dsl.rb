@@ -22,6 +22,14 @@ module ShowOff
         builder.current_section
       end
 
+      def self.build(section,options = {},&config)
+        builder = new
+        builder.options = options
+        builder.current_section = section
+        builder.instance_eval(&config)
+        builder.current_section
+      end
+
       #
       # This is used within the DSL to set the title of the current section.
       #
@@ -29,6 +37,15 @@ module ShowOff
       #
       def title(new_title)
         current_section.title = new_title
+      end
+
+      #
+      # This is used within the DSL to set the description of the current section.
+      #
+      # @param [String] new_description the description for the setion.
+      #
+      def description(new_description)
+        current_section.description = new_description
       end
 
       #
@@ -42,7 +59,13 @@ module ShowOff
           PresentationFilepathParser.parse(filepath,options)
         end
 
-        current_section.add_section section_content
+        sub_sections = current_section.add_section section_content
+
+        sub_sections.each do |sub_section|
+          self.class.build(sub_section,options,&block) if block
+        end
+        
+
         section_content
       end
 
@@ -68,6 +91,8 @@ module ShowOff
           root_path
         end
       end
+
+      attr_writer :current_section
 
       # @return [Section] the current section being built.
       def current_section
