@@ -23,10 +23,6 @@ module ShowOff
       settings.presentation_directory = File.expand_path(settings.presentation_directory)
 
       require_ruby_files
-
-      @root_path = "."
-      @pres_name = settings.presentation_directory.split('/').pop
-      @asset_path = "./"
     end
 
     def self.pres_dir_current
@@ -39,7 +35,11 @@ module ShowOff
     end
 
     helpers do
-
+      
+      def asset_path
+        "./"
+      end
+      
       def css_files
         Dir.glob("#{settings.presentation_directory}/*.css").map { |path| File.basename(path) }
       end
