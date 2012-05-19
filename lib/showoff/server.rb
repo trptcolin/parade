@@ -13,15 +13,19 @@ module ShowOff
     set :public_folder, File.dirname(__FILE__) + '/../public'
 
     set :verbose, false
-    set :presentation_directory, '.'
-    set :pres_file, 'showoff'
+
+    set :presentation_directory do
+      File.expand_path Dir.pwd
+    end
+
+    set :presentation_file, 'showoff'
+
+    set :presentation_filepath do
+      File.join(settings.presentation_directory,settings.presentation_file)
+    end
 
     def initialize(app=nil)
       super(app)
-
-      settings.presentation_directory ||= Dir.pwd
-      settings.presentation_directory = File.expand_path(settings.presentation_directory)
-
       require_ruby_files
     end
 
@@ -30,11 +34,11 @@ module ShowOff
     end
 
     helpers do
-      
+
       def asset_path
         "./"
       end
-      
+
       def css_files
         Dir.glob("#{settings.presentation_directory}/*.css").map { |path| File.basename(path) }
       end
@@ -76,11 +80,10 @@ module ShowOff
       end
 
       def presentation
-        pres_filepath = File.join(settings.presentation_directory,settings.pres_file)
-        contents = File.read pres_filepath
-        root_section = Parsers::Dsl.parse contents, :root_path => pres_filepath
+        contents = File.read settings.presentation_filepath
+        root_section = Parsers::Dsl.parse contents, :root_path => settings.presentation_filepath
 
-        root_section.add_post_renderer Renderers::UpdateImagePaths.new :root_path => File.dirname(pres_filepath)
+        root_section.add_post_renderer Renderers::UpdateImagePaths.new :root_path => settings.presentation_directory
         root_section
       end
 
