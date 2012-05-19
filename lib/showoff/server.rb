@@ -20,9 +20,6 @@ module ShowOff
 
     set :presentation_file, 'showoff'
 
-    set :presentation_filepath do
-      File.join(settings.presentation_directory,settings.presentation_file)
-    end
 
     def initialize(app=nil)
       super(app)
@@ -31,6 +28,11 @@ module ShowOff
 
     def require_ruby_files
       Dir.glob("#{settings.presentation_directory}/*.rb").map { |path| require path }
+    end
+    
+    def load_presentation
+      Parsers::PresentationDirectoryParser.parse settings.presentation_directory,
+        :root_path => settings.presentation_directory, :showoff_file => settings.presentation_file
     end
 
     helpers do
@@ -80,9 +82,7 @@ module ShowOff
       end
 
       def presentation
-        contents = File.read settings.presentation_filepath
-        root_section = Parsers::Dsl.parse contents, :root_path => settings.presentation_filepath
-
+        root_section = load_presentation
         root_section.add_post_renderer Renderers::UpdateImagePaths.new :root_path => settings.presentation_directory
         root_section
       end

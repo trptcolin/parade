@@ -9,6 +9,7 @@ module ShowOff
   class Section
 
     def initialize(params = {})
+      @title = "Section"
       @post_renderers = []
       @sections = []
       params.each {|k,v| send("#{k}=",v) if respond_to? "#{k}=" }
