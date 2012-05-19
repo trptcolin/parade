@@ -102,9 +102,9 @@ command :serve do |c|
   c.default_value "localhost"
   c.flag [:h,:host]  
 
-  c.desc 'JSON file used to describe presentation'
+  c.desc 'Showoff file used to describe presentation'
   c.default_value "showoff"
-  c.flag [:f, :pres_file]
+  c.flag [:f, :file]
 
   c.action do |global_options,options,args|
 
@@ -121,7 +121,7 @@ To run it from presenter view, go to: [ #{url}/presenter ]
 -------------------------
 
 "
-    ShowOff::Server.run! :host => options[:h], :port => options[:p].to_i, :pres_file => options[:f], :presentation_directory => args[0], :verbose => options[:verbose]
+    ShowOff::Server.run! :host => options[:h], :port => options[:p].to_i, :presentation_file => options[:f], :presentation_directory => args[0], :verbose => options[:verbose]
   end
 end
 
@@ -157,15 +157,6 @@ command [:add,:new] do |c|
                            :number => !options[:u],
                            :code => options[:s],
                            :type => options[:t])
-  end
-end
-
-desc 'Generate static version of presentation'
-arg_name 'name'
-long_desc 'Creates a static, one page version of the presentation as {name}.html'
-command [:static] do |c|
-  c.action do |global_options,options,args|
-    ShowOff.do_static(args[0])
   end
 end
 

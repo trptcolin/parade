@@ -14,8 +14,7 @@ module ShowOff
       #
       def self.parse(contents,options = {})
         builder = new
-        builder.root_path = options[:root_path]
-        builder.current_path = options[:current_path] || options[:root_path]
+        builder.options = options
 
         config = Proc.new { eval(contents) }
         builder.instance_eval(&config)
@@ -38,41 +37,36 @@ module ShowOff
       # this section.
       #
       def section(*filepaths,&block)
-
         section_content = Array(filepaths).flatten.compact.map do |filepath|
           filepath = File.join(current_path,filepath)
-          PresentationFilepathParser.parse(filepath,:root_path => root_path)
+          PresentationFilepathParser.parse(filepath,options)
         end
 
         current_section.add_section section_content
         section_content
       end
 
+      # @return [Hash] configuration options that the DSL class will use
+      #   and pass to other file and directory parsers to ensure the
+      #   path information is presevered correctly.
+      attr_accessor :options
 
       # @return [String] the root path where the presentation is being served
       #   from. This path is necessary to ensure that images have the correct
       #   image path built for it.
-      attr_reader :root_path
-
-      #
-      # @param [String] value is a directory or a file that is the root path
-      #   of this presentation of where it is being served.
-      #
-      def root_path=(value)
-        @root_path = File.directory?(value) ? value : File.dirname(value)
+      def root_path
+        File.directory?(options[:root_path]) ? options[:root_path] : File.dirname(options[:root_path])
       end
 
       # @return [String] the current path is the path for the current section
       #   this usually differs from the root_path when parsing sections defined
       #   within a section (a sub-section).
-      attr_reader :current_path
-
-      #
-      # @param [String] value is a directory or a file that is the root path
-      #   for this particular section of the presentation being served.
-      #
-      def current_path=(value)
-        @current_path = File.directory?(value) ? value : File.dirname(value)
+      def current_path
+        if options[:current_path]
+          File.directory?(options[:current_path]) ? options[:current_path] : File.dirname(options[:current_path])
+        else
+          root_path
+        end
       end
 
       # @return [Section] the current section being built.
