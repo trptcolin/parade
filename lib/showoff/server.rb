@@ -99,10 +99,6 @@ module ShowOff
         js_content
       end
 
-      def inline_all_js(jses_directory)
-         inline_js(Dir.entries(File.join(File.dirname(__FILE__), '..', jses_directory)).find_all{|filename| filename.length > 2 }, jses_directory)
-      end
-
       def index(static=false)
         if static
           @state = presentation.title
