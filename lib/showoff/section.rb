@@ -21,6 +21,12 @@ module ShowOff
     #   of Slide objects.
     attr_reader :sections
 
+    
+    # @return [Section] the parent section of this section. nil if this is a
+    #   root section.
+    attr_accessor :section
+
+
     #
     # Append slides or sections to this setion.
     #
