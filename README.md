@@ -77,6 +77,12 @@ gaps with regards to the implementation.
 
 ### The Bad
 
+* Showoff File Format
+
+    > Replacing *showoff.json* with *showoff* breaks support with all existing
+    showoff presentations.
+
+
 * Onepage
 
     > Currently this is crashing when I am using this feature. However, I never
@@ -161,18 +167,16 @@ markdown files contained within the directories or sub-directories.
 ### Serving specific files
 
 To include certain files, specify an order, duplicate slides, you will need to
-define a `showoff.json` file. Within that file, you may define specific files,
+define a `showoff` file. Within that file, you may define specific files,
 specific folders, and the order of the presentation.
 
-```json
-{
-  "name": "My Presentation",
-  "description": "Example Presentation",
-  "sections": [
-    {"section":"intro.md"}
-    {"section":"content"} /* content in this case is a sub-directory of files */
-  ]
-}
+```ruby
+
+title "My Presentation"
+
+section "intro.md"
+
+# `content` in this case is  directory
 ```
 
 # Slide Format
@@ -528,7 +532,7 @@ Serves the showoff presentation in the current directory
 ### options for serve
 These options are specified *after* the command.
 
-[`-f, --pres_file=arg`] Presentation file <i>(default: `showoff.json`)</i>
+[`-f, --pres_file=arg`] Presentation file <i>(default: `showoff`)</i>
 [`-h, --host=arg`] Host or ip to run on <i>( default: `localhost`)</i>
 [`-p, --port=arg`] Port on which to run <i>( default: `9090`)</i>
 
