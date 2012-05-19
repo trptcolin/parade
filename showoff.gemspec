@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.summary           = "The best damn presentation software a developer could ever love."
   s.homepage          = "http://github.com/schacon/showoff"
   s.email             = "schacon@gmail.com"
-  s.authors           = ["Scott Chacon"]
+  s.authors           = ["Scott Chacon", "Franklin Webber"]
   s.has_rdoc          = false
   s.require_path      = "lib"
   s.executables       = %w( showoff )

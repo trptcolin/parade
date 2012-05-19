@@ -103,7 +103,7 @@ command :serve do |c|
   c.flag [:h,:host]  
 
   c.desc 'JSON file used to describe presentation'
-  c.default_value "showoff.json"
+  c.default_value "showoff"
   c.flag [:f, :pres_file]
 
   c.action do |global_options,options,args|

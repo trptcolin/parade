@@ -1,3 +1,5 @@
+require_relative '../slide'
+
 module ShowOff
   module Parsers
 

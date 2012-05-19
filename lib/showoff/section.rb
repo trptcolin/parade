@@ -1,80 +1,65 @@
-require_relative 'slides_file'
+require_relative 'renderers/update_image_paths'
 
 module ShowOff
 
   #
-  # Within a ShowOff Presention file, sections can be defined. These sections
-  # can either be a markdown file, an arrary of markdown files, or a folder
-  # path which may contain markdown files.
-  #
-  # @example Section with a markdown file
-  #
-  # @example Section with multiple markdown files
-  #
-  # @example Section with a folder path
+  # A ShowOff presentation is composed of a Section that may also be composed
+  # of many slides and sub-sections (child sections) of slides.
   #
   class Section
 
-    # An instance of a presentation
-    attr_accessor :presentation
-
-    #
-    # Sections are often created from within a presentation to allow the
-    # reference to the presentation to be passed to the section.
-    #
-    # @param [Hash] params a Hash of parameters which help define the Section
-    #
     def initialize(params = {})
-      presentation = params[:presentation]
+      @post_renderers = []
+      @sections = []
       params.each {|k,v| send("#{k}=",v) if respond_to? "#{k}=" }
     end
 
-    def sections
-      @sections || []
-    end
+    # @return [String] the title of the section
+    attr_accessor :title
+
+    # @return [Array<#slides>] returns an array of a Section objects or array
+    #   of Slide objects.
+    attr_reader :sections
+
+    
+    # @return [Section] the parent section of this section. nil if this is a
+    #   root section.
+    attr_accessor :section
+
 
     #
-    # A section may contain sections which are files, `SlidesFiles`, and
-    # sub-sections which is a Hash that can also contain more sections information
+    # Append slides or sections to this setion.
     #
-    # @param [Hash] subsections which contains sections and sub-sections
+    # @param [Slide,Section,Array<Section>,Array<Slide>] content this any
+    #   slide or section that you want to add to this section.
     #
-    def sections=(subsections)
-      @sections = subsections.map do |section|
-        if section['section'].is_a?(Hash)
-          create_subsection section['section'].merge(:presentation => presentation)
-        else
-          SlidesFile.new(:filepath => section['section'], :section => self)
-        end
+    def add_section(content)
+      @sections = @sections + Array(content).compact.flatten.map do |content|
+        content.section = self
+        content
       end
     end
 
-    #
-    # @return [Array<Slide>] an array of slides contained within the section
-    #   and sub-sections of this section.
-    #
-    def slides
-      sections.map {|section| section.slides }.flatten
-    end
+    # @return [Array<#render>] returns a list of Renderers that will perform
+    #   their renderering on the slides after the slides have all habe been
+    #   rendered.
+    attr_reader :post_renderers
 
-    def renderers
-      [ Renderers::CommandLineRenderer ]
+    #
+    # @param [#render] renderer add a renderer, any object responding to
+    #   #render, that will process the slides HTML content.
+    #
+    def add_post_renderer(renderer)
+      @post_renderers << renderer
     end
 
     # @return [String] HTML representation of the section
     def to_html
-      slides.map do |slide|
-        slide_html = slide.to_html
-        renderers.each {|render| slide_html = render.render(slide_html) }
-        slide_html
-
+      sections.map do |section_or_slide|
+        post_renderers.inject(section_or_slide.to_html) do |content,renderer|
+          renderer.render(content)
+        end
       end.join("\n")
-    end
-
-    private
-
-    def create_subsection(params)
-      Section.new params
     end
 
   end
