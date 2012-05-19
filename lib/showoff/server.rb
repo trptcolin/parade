@@ -4,6 +4,7 @@ require_relative 'renderers/update_image_paths'
 
 require_relative 'features/live_ruby'
 require_relative 'features/pdf_presentation'
+require_relative 'features/preshow'
 
 module ShowOff
 
@@ -50,10 +51,6 @@ module ShowOff
 
       def js_files
         Dir.glob("#{settings.presentation_directory}/*.js").map { |path| File.basename(path) }
-      end
-
-      def preshow_files
-        Dir.glob("#{settings.presentation_directory}/_preshow/*").map { |path| File.basename(path) }.to_json
       end
 
       def inline_css(csses, pre = nil)
@@ -121,6 +118,7 @@ module ShowOff
 
     include LiveRuby
     include PDFPresentation
+    include Preshow
 
   end
 
