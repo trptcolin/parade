@@ -25,11 +25,6 @@ module ShowOff
       require_ruby_files
     end
 
-    def self.pres_dir_current
-      opt = {:pres_dir => Dir.pwd}
-      ShowOff.set opt
-    end
-
     def require_ruby_files
       Dir.glob("#{settings.presentation_directory}/*.rb").map { |path| require path }
     end
