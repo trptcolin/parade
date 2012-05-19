@@ -57,11 +57,20 @@ gaps with regards to the implementation.
 
 ### The Good
 
-* Modular Design
+* Modular Design for Parsers and Renderers
 
-    > The work here is the initial teasing out concepts and classes form the
-    original implementation that left most of the logic within the core
-    Sinatra application object.
+    > Removed most of the file and directory parsing from the core server
+      file. Also the various renderers that perform work on slides were
+      extracted giving home to be able to enable, disable, and eventually
+      add more.
+
+
+* Feature Modularity
+
+    > _Live ruby code evaluation_, _pdf_ support, and the _preshow_ features
+      are all contained in modules that are included in the server. Making it
+      easier to disable an eventually gem or disable or enable.
+
 
 * Github Flavored Markdown
 
@@ -69,6 +78,7 @@ gaps with regards to the implementation.
     additional construct of using `@@@ LANGUAGE` within the code samples.
     Essentially your markdown can now adhere to more accepted markdown
     standards.
+
 
 * Showoff File Format
 
@@ -82,6 +92,10 @@ gaps with regards to the implementation.
     > Replacing *showoff.json* with *showoff* breaks support with all existing
     showoff presentations.
 
+* Preshow feature changed
+
+    > The directory structure is no longer `_preshow`, I saw no reason why that
+    could not be a regularly named directory `preshow`.
 
 * Onepage
 
