@@ -116,13 +116,6 @@ module ShowOff
         erb :presenter
       end
 
-      def clean_link(href)
-        if href && href[0, 1] == '/'
-          href = href[1, href.size]
-        end
-        href
-      end
-
       def slides(static=false)
         presentation.to_html
       end
@@ -136,6 +129,7 @@ module ShowOff
         @slides = presentation.to_html
         @no_js = false
         html = erb :onepage
+        
         # TODO make a random filename
 
         # PDFKit.new takes the HTML and any options for wkhtmltopdf
