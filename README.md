@@ -70,6 +70,11 @@ gaps with regards to the implementation.
     Essentially your markdown can now adhere to more accepted markdown
     standards.
 
+* Showoff File Format
+
+    > I replaced the existing *showoff.json* with *showoff* and implemented
+    a DSL to provide current support and the ability to perform future features.
+
 ### The Bad
 
 * Onepage
