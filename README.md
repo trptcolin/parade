@@ -581,34 +581,52 @@ talk that was given, or all the available slides, plus supplementary
 material. And I want the presenter (me) to be able to push each
 presentation to Heroku or GitHub pages for archiving super easily.
 
-- pdf with notes
-- presenter view
-  - timer (time left, percent done, percent time done)
-- editing slides
-- webpage
-- clean up js
-- clean up ruby
-- showoff add
-  - add slides of images directory (refactor script/import_images.rb)
-- simple highlighting (highlight region of slide / click to highlight)
-- presenter tools
-  - preview column
-  - preview
-- audience interface
-  - slide download / git clone
-  - static version download
-  - questions / comments system
-  - audience vote-based presentation builder, results live view
-- simple animations (image from A to B)
-- squeeze-to-fit style
-- extract Version into a separate file, so we can include it in gemspec without pulling in the universe
+
+## Presenter Tools
+
+* simple highlighting (highlight region of slide / click to highlight)
+* timer (time left, percent done, percent time done)
+* editing slides
+* preview
+* let you write on the slide with your mouse, madden-style via canvas
+
+## Presentation Layout
+
+* theme support
+* squeeze-to-fit style
+* simple animations (image from A to B)
 * show a timer - elapsed / remaining
 * perform simple animations of images moving between keyframes
-* show synchronized, hidden notes on another browser (like an iphone)
+* automatically resize text to fit screen [see Alex's shrink.js]
+
+## Output Formats
+
+* pdf with notes
+* webpage
+* let audience members download slides, code samples or other supplementary
+  material
+
+## Clean up
+
+* More modularity with presentation filters and renderers to allow presenters
+  to create custom ones for the particular slide show
+* Modular approach to features
+* Clean up Javascript
+
+## Console Commands
+
+* showoff add - add slides of images directory (refactor 
+script/import_images.rb)
+
+## Interaction
+
+* questions / comments system
+* audience vote-based presentation builder, results live view
 * show audience questions / comments (twitter or direct)
 * let audience members go back / catch up as you talk
 * let audience members vote on sections (?)
+
+## Platforms
+
+* show synchronized, hidden notes on another browser (like an iphone)
 * broadcast itself on Bonjour
-* let audience members download slides, code samples or other supplementary material
-* let you write on the slide with your mouse, madden-style via canvas
-* automatically resize text to fit screen [see Alex's shrink.js]
