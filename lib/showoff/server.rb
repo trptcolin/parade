@@ -2,6 +2,9 @@ require_relative "../showoff_utils"
 require_relative "parsers/dsl"
 require_relative 'renderers/update_image_paths'
 
+require_relative 'features/live_ruby'
+require_relative 'features/pdf_presentation'
+
 module ShowOff
 
   class Server < Sinatra::Application
@@ -12,19 +15,6 @@ module ShowOff
     set :verbose, false
     set :presentation_directory, '.'
     set :pres_file, 'showoff'
-
-    def logger
-      @logger ||= begin
-        log = Logger.new(STDOUT)
-        log.formatter = proc { |severity,datetime,progname,msg| "#{progname} #{msg}\n" }
-        log.level = settings.verbose ? Logger::DEBUG : Logger::WARN
-        log
-      end
-    end
-
-    def debug(message)
-      logger.debug(message)
-    end
 
     def presentation
       pres_filepath = File.join(settings.presentation_directory,settings.pres_file)
@@ -99,12 +89,7 @@ module ShowOff
         js_content
       end
 
-      def index(static=false)
-        if static
-          @state = presentation.title
-          @slides = presentation.to_html
-          @asset_path = "./"
-        end
+      def index
         erb :index
       end
 
@@ -112,45 +97,12 @@ module ShowOff
         erb :presenter
       end
 
-      def slides(static=false)
+      def slides
         presentation.to_html
       end
 
-      def onepage(static=false)
-        @slides = presentation.to_html
-        erb :onepage
-      end
-
-      def pdf(static=true)
-        @slides = presentation.to_html
-        @no_js = false
-        html = erb :onepage
-        
-        # TODO make a random filename
-
-        # PDFKit.new takes the HTML and any options for wkhtmltopdf
-        # run `wkhtmltopdf --extended-help` for a full list of options
-        kit = PDFKit.new(html, ::ShowOffUtils.showoff_pdf_options(settings.presentation_directory))
-
-        # Save the PDF to a file
-        file = kit.to_file('/tmp/preso.pdf')
-      end
-
     end
 
-    def eval_ruby(code)
-     eval(code).to_s
-    rescue => e
-     e.message
-    end
-
-    get '/eval_ruby' do
-      if ENV['SHOWOFF_EVAL_RUBY']
-        eval_ruby(params[:code])
-      else
-        "Ruby Evaluation is off. To turn it on set ENV['SHOWOFF_EVAL_RUBY']"
-      end
-    end
     get %r{(?:image|file)/(.*)} do
       path = params[:captures].first
       full_path = File.join(settings.presentation_directory, path)
@@ -171,6 +123,15 @@ module ShowOff
         end
       end
     end
+
+    def onepage
+      @slides = presentation.to_html
+      erb :onepage
+    end
+
+    include LiveRuby
+    include PDFPresentation
+
   end
 
 end
