@@ -123,36 +123,6 @@ module ShowOff
         href
       end
 
-      def assets_needed
-        assets = ["index", "slides"]
-
-        index = erb :index
-        html = Nokogiri::XML.parse(index)
-        html.css('head link').each do |link|
-          href = clean_link(link['href'])
-          assets << href if href
-        end
-        html.css('head script').each do |link|
-          href = clean_link(link['src'])
-          assets << href if href
-        end
-
-        slides = presentation.to_html
-        html = Nokogiri::XML.parse("<slides>" + slides + "</slides>")
-        html.css('img').each do |link|
-          href = clean_link(link['src'])
-          assets << href if href
-        end
-
-        css = Dir.glob("#{settings.public_folder}/**/*.css").map { |path| path.gsub(settings.public_folder + '/', '') }
-        assets << css
-
-        js = Dir.glob("#{settings.public_folder}/**/*.js").map { |path| path.gsub(settings.public_folder + '/', '') }
-        assets << js
-
-        assets.uniq.join("\n")
-      end
-
       def slides(static=false)
         presentation.to_html
       end
