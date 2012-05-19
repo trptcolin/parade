@@ -16,15 +16,6 @@ module ShowOff
     set :presentation_directory, '.'
     set :pres_file, 'showoff'
 
-    def presentation
-      pres_filepath = File.join(settings.presentation_directory,settings.pres_file)
-      contents = File.read pres_filepath
-      root_section = Parsers::Dsl.parse contents, :root_path => pres_filepath
-
-      root_section.add_post_renderer Renderers::UpdateImagePaths.new :root_path => File.dirname(pres_filepath)
-      root_section
-    end
-
     def initialize(app=nil)
       super(app)
 
@@ -89,18 +80,22 @@ module ShowOff
         js_content
       end
 
-      def index
-        erb :index
+      def presentation
+        pres_filepath = File.join(settings.presentation_directory,settings.pres_file)
+        contents = File.read pres_filepath
+        root_section = Parsers::Dsl.parse contents, :root_path => pres_filepath
+
+        root_section.add_post_renderer Renderers::UpdateImagePaths.new :root_path => File.dirname(pres_filepath)
+        root_section
       end
 
-      def presenter
-        erb :presenter
+      def title
+        presentation.title
       end
 
       def slides
         presentation.to_html
       end
-
     end
 
     get %r{(?:image|file)/(.*)} do
@@ -109,23 +104,19 @@ module ShowOff
       send_file full_path
     end
 
-    get %r{/(.*)} do
-      @title = presentation.title
-      what = params[:captures].first
-      what = 'index' if "" == what
-      @asset_path = (env['SCRIPT_NAME'] || '').gsub(/\/?$/, '/').gsub(/^\//, '')
-      if (what != "favicon.ico")
-        data = send(what)
-        if data.is_a?(File)
-          send_file data.path
-        else
-          data
-        end
-      end
+    get "/slides" do
+      slides
     end
 
-    def onepage
-      @slides = presentation.to_html
+    get "/" do
+      erb :index
+    end
+
+    get "/presenter" do
+      erb :presenter
+    end
+
+    get "/onepage" do
       erb :onepage
     end
 

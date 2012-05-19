@@ -1,5 +1,5 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <title><%= @title %></title>
+  <title><%= title %></title>
 
   <meta name="viewport" content="width=device-width"/>
 
@@ -34,6 +34,6 @@
 
   <script type="text/javascript">
   $(function(){
-      setupPreso(<%= @slides.nil? ? "true" : "false"%>, '<%= @asset_path %>');
+      setupPreso(<%= slides.nil? ? "true" : "false"%>, '<%= @asset_path %>');
   });
   </script>
