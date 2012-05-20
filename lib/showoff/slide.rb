@@ -17,6 +17,10 @@ module ShowOff
     attr_accessor :sequence
 
     attr_accessor :section
+    
+    def title
+      section ? section.title : "Slide"
+    end
 
     def reference
       "#{section ? section.title : 'slide'}/#{sequence}"

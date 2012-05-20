@@ -22,6 +22,14 @@ module ShowOff
         builder.current_section
       end
 
+      def self.build(section,options = {},&config)
+        builder = new
+        builder.options = options
+        builder.current_section = section
+        builder.instance_eval(&config)
+        builder.current_section
+      end
+
       #
       # This is used within the DSL to set the title of the current section.
       #
@@ -32,19 +40,36 @@ module ShowOff
       end
 
       #
+      # This is used within the DSL to set the description of the current section.
+      #
+      # @param [String] new_description the description for the setion.
+      #
+      def description(new_description)
+        current_section.description = new_description
+      end
+
+      #
       # This is used by the DSL to add additional sections. Adds the specified
       # slides or sub-sections, defined by their filepaths, as a subsection of
       # this section.
       #
       def section(*filepaths,&block)
-        section_content = Array(filepaths).flatten.compact.map do |filepath|
-          filepath = File.join(current_path,filepath)
-          PresentationFilepathParser.parse(filepath,options)
+
+        if block
+          sub_section = Section.new :title => filepaths.flatten.compact.join(" ")
+          section_content = self.class.build sub_section, options, &block
+        else
+          section_content = Array(filepaths).flatten.compact.map do |filepath|
+            filepath = File.join(current_path,filepath)
+            PresentationFilepathParser.parse(filepath,options)
+          end
         end
 
         current_section.add_section section_content
         section_content
       end
+
+      alias_method :slides, :section
 
       # @return [Hash] configuration options that the DSL class will use
       #   and pass to other file and directory parsers to ensure the
@@ -68,6 +93,8 @@ module ShowOff
           root_path
         end
       end
+
+      attr_writer :current_section
 
       # @return [Section] the current section being built.
       def current_section
