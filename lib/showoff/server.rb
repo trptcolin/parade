@@ -36,7 +36,6 @@ module ShowOff
         :root_path => settings.presentation_directory, :showoff_file => settings.presentation_file
 
       root_node.add_post_renderer Renderers::UpdateImagePaths.new :root_path => settings.presentation_directory
-      require 'ruby-debug' ; debugger
       root_node
     end
 

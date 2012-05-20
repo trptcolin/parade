@@ -35,10 +35,10 @@ module ShowOff
     attr_accessor :section
 
     #
-    # Append slides or sections to this setion.
+    # Append sections to this section.
     #
-    # @param [Slide,Section,Array<Section>,Array<Slide>] content this any
-    #   slide or section that you want to add to this section.
+    # @param [Section,Array<Section>] content this any section that you want to 
+    #   add to this section.
     #
     def add_section(sub_sections)
       sub_sections = Array(sub_sections).compact.flatten.map do |sub_section|
@@ -49,6 +49,12 @@ module ShowOff
       sub_sections
     end
 
+    #
+    # Append slides to this setion.
+    #
+    # @param [Slide,Array<Slide>] content this any section that you want to 
+    #   add to this section.
+    #
     def add_slides(slides)
       sub_slides = Array(slides).compact.flatten.map do |slide|
         slide.section = self
@@ -57,6 +63,14 @@ module ShowOff
       
       @sections = @sections + sub_slides
       sub_slides
+    end
+    
+    # @return [Array<Slide>] the slides contained within this section and any
+    #   sub-section.
+    def slides
+      sections.map do |section_or_slide|
+        section_or_slide.slides
+      end.flatten
     end
 
     # @return [Array<#render>] returns a list of Renderers that will perform

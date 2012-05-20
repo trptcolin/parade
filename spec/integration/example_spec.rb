@@ -46,7 +46,7 @@ describe "Loading the Example Presentation", :integration => true do
     let(:section) { subject.sections[2] }
 
     let(:title) { default_title }
-    let(:slide_count) { 4 }
+    let(:slide_count) { 8 }
 
     it_should_behave_like "a properly parsed section"
   end
@@ -64,7 +64,7 @@ describe "Loading the Example Presentation", :integration => true do
     let(:section) { subject.sections[4] }
 
     let(:title) { default_title }
-    let(:slide_count) { 8 }
+    let(:slide_count) { 4 }
 
     it_should_behave_like "a properly parsed section"
   end

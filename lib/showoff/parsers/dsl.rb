@@ -54,20 +54,22 @@ module ShowOff
       # this section.
       #
       def section(*filepaths,&block)
-        section_content = Array(filepaths).flatten.compact.map do |filepath|
-          filepath = File.join(current_path,filepath)
-          PresentationFilepathParser.parse(filepath,options)
+
+        if block
+          sub_section = Section.new :title => filepaths.flatten.compact.join(" ")
+          section_content = self.class.build sub_section, options, &block
+        else
+          section_content = Array(filepaths).flatten.compact.map do |filepath|
+            filepath = File.join(current_path,filepath)
+            PresentationFilepathParser.parse(filepath,options)
+          end
         end
 
-        sub_sections = current_section.add_section section_content
-
-        sub_sections.each do |sub_section|
-          self.class.build(sub_section,options,&block) if block
-        end
-        
-
+        current_section.add_section section_content
         section_content
       end
+
+      alias_method :slides, :section
 
       # @return [Hash] configuration options that the DSL class will use
       #   and pass to other file and directory parsers to ensure the

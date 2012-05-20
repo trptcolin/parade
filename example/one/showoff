@@ -1,3 +1,3 @@
 
-section "slidesA.md"
-section "slidesB.md"
+slides "slidesA.md"
+slides "slidesB.md"
