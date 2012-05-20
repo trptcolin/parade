@@ -192,8 +192,30 @@ specific folders, and the order of the presentation.
 
 ```ruby
 title "My Presentation"
-section "intro.md"
+slides "intro.md"
 section "directory_name"
+```
+
+> **slides** and **section** are exactly the same, however you may choose to 
+  use one over the other depending of you are mentioning a specific file of 
+  slides or a directory which could contain another `showoff` or be considered
+  a section.
+
+You can so define sub sections with a title and slides or additional sections.
+
+```ruby
+
+title "My Presentation"
+
+section "Introduction" do
+slides "intro.md"
+end
+
+section "Code Samples" do
+slides "ruby"
+slides "javascript"
+section "coffeescript"
+end
 ```
 
 # Slide Format
