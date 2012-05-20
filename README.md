@@ -97,29 +97,22 @@ gaps with regards to the implementation.
     > The directory structure is no longer `_preshow`, I saw no reason why that
     could not be a regularly named directory `preshow`.
 
-* Onepage
+* Onepage and Static
 
-    > Currently this is crashing when I am using this feature. However, I never
-    required this feature so I have not been concerned with fixing it in the
-    work that I have done.
+    > I have removed this feature. I never used it and the work I started to
+    complete caused it initially to break.
 
-* Static
+* PDF
 
-    > This is likely crashing as well. Again it is a feature I was not using
-    so I have not been concerned with fixing it.
+    > PDF support never worked when the user requested the route because of
+    an issue with single-threaded requesting of resources. Essentially you
+    could go to 'http://localhost:9090/pdf' and bring the presenting system
+    to a halt. I removed the feature for the moment.
 
 * Command-Line Utilities
 
     > I have never used them to generate a presentation so I may have likely
     broken some of that functionality.
-
-### The Ugly
-
-* PDF Support
-
-    > PDF support was never great to begin with when you started to use custom
-    stylesheets and now it's likely worse then before when even using the
-    standard styles. This is a lower priority issue for me at the moment.
 
 
 # Installation and Usage
