@@ -133,7 +133,7 @@ and create a presentation out of them.
 >  By default showoff will split slides along lines that start with a single `#`
 
 
-## Slide Show Commands
+### Slide Show Commands
 
 You can manage the presentation with the following keys:
 
@@ -209,6 +209,8 @@ section "Code Samples" do
   section "coffeescript"
 end
 ```
+
+#### Showoff Language Reference
 
 > ### title "title name"
 >
