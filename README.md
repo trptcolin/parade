@@ -210,6 +210,32 @@ section "Code Samples" do
 end
 ```
 
+> ### title "title name"
+>
+> Allows you to specify a title for your presentation or for the sub-section
+>
+> ### description "description"
+>
+> Allows you to specify a description for your presentation or for the 
+> sub-section.
+>
+> ### encoding "encoding-name"
+>
+> You can provide an *encoding* line to force the document to be encoded when
+> it is loaded. Essentially the parsed markdown content will have 
+> [force_encoding](http://rubydoc.info/stdlib/core/String:force_encoding)
+> called on it.
+>
+> ### slides|section "slides filename or folder name"
+>
+> Specify a file or folder to load in the presentation
+>
+> ### slides|section "title" do ; end
+>
+> When a block is provided to the *slides* or *section* keyword, the first
+> arguments becomes the title and you define within the block the files 
+> contained within the section
+
 # Slide Format
 
 ## Slide Separators
