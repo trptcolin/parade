@@ -228,7 +228,7 @@ end
 > [force_encoding](http://rubydoc.info/stdlib/core/String:force_encoding)
 > called on it.
 >
-> ### (slides | section) "slides filename or folder name"
+> ### (slides | section) "filename or folder name"
 >
 > Specify a file or folder to load in the presentation
 >
