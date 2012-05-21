@@ -228,11 +228,11 @@ end
 > [force_encoding](http://rubydoc.info/stdlib/core/String:force_encoding)
 > called on it.
 >
-> ### slides|section "slides filename or folder name"
+> ### (slides | section) "slides filename or folder name"
 >
 > Specify a file or folder to load in the presentation
 >
-> ### slides|section "title" do ; end
+> ### (slides | section) "title" do ; end
 >
 > When a block is provided to the *slides* or *section* keyword, the first
 > arguments becomes the title and you define within the block the files 
