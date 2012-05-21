@@ -110,8 +110,7 @@ gaps with regards to the implementation.
 
 * Command-Line Utilities
 
-    > I have never used them to generate a presentation so I may have likely
-    broken some of that functionality.
+    > Removed most of the existing command-line utilities
 
 ### The Ugly
 
@@ -208,13 +207,13 @@ You can so define sub sections with a title and slides or additional sections.
 title "My Presentation"
 
 section "Introduction" do
-slides "intro.md"
+  slides "intro.md"
 end
 
 section "Code Samples" do
-slides "ruby"
-slides "javascript"
-section "coffeescript"
+  slides "ruby"
+  slides "javascript"
+  section "coffeescript"
 end
 ```
 
@@ -222,7 +221,7 @@ end
 
 ## Slide Separators
 
-### Separator: \#
+### Separator: #
 
 Slides are simply markdown format. As stated previously, slides will be
 separated along the `#`elements within your document.
