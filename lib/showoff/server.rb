@@ -52,34 +52,6 @@ module ShowOff
         Dir.glob("#{settings.presentation_directory}/*.js").map { |path| File.basename(path) }
       end
 
-      def inline_css(csses, pre = nil)
-        css_content = '<style type="text/css">'
-        csses.each do |css_file|
-          if pre
-            css_file = File.join(File.dirname(__FILE__), '..', pre, css_file)
-          else
-            css_file = File.join(settings.presentation_directory, css_file)
-          end
-          css_content += File.read(css_file)
-        end
-        css_content += '</style>'
-        css_content
-      end
-
-      def inline_js(jses, pre = nil)
-        js_content = '<script type="text/javascript">'
-        jses.each do |js_file|
-          if pre
-            js_file = File.join(File.dirname(__FILE__), '..', pre, js_file)
-          else
-            js_file = File.join(settings.presentation_directory, js_file)
-          end
-          js_content += File.read(js_file)
-        end
-        js_content += '</script>'
-        js_content
-      end
-
       def presentation
         load_presentation
       end

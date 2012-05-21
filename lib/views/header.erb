@@ -31,9 +31,3 @@
   <% js_files.each do |js_file| %>
     <script type="text/javascript" src="<%= asset_path %>file/<%= js_file %>"></script>
   <% end %>
-
-  <script type="text/javascript">
-  $(function(){
-      setupPreso(<%= slides.nil? ? "true" : "false"%>, '<%= asset_path %>');
-  });
-  </script>
