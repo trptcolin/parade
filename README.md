@@ -214,7 +214,7 @@ end
 
 ## Slide Separators
 
-### Separator: #
+### Separator: **#**
 
 Slides are simply markdown format. As stated previously, slides will be
 separated along the `#`elements within your document.
