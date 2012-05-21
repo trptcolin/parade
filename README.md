@@ -542,38 +542,6 @@ Serves the showoff presentation in the current directory
 >
 > showoff serve
 
-# External Tools
-
-## ZSH completion
-You can complete commands and options in ZSH, by installing a script:
-
-    mkdir -p $HOME/.zsh/Completion
-    cp script/_showoff $HOME/.zsh/Completion
-    echo 'fpath=(~/.zsh/Completion $fpath)' >> $HOME/.zshrc
-
-## `bash` completion
-
-You can complete commands for showoff by putting the following in your `.bashrc` (or whatever
-you use when starting `bash`):
-
-    complete -F get_showoff_commands
-    function get_showoff_commands()
-    {
-        if [ -z $2 ] ; then
-            COMPREPLY=(`showoff help -c`)
-        else
-            COMPREPLY=(`showoff help -c $2`)
-        fi
-    }
-
-## Editor Support
-
-* TextMate Bundle - Showoff.tmdbundle - Dr Nic Williams
-  http://github.com/drnic/Showoff.tmbundle
-
-* Emacs major-mode - showoff-mode - Nick Parker
-  http://github.com/developernotes/showoff-mode
-
 # Future Plans
 
 I really want this to evolve into a dynamic presentation software server,
@@ -616,11 +584,6 @@ presentation to Heroku or GitHub pages for archiving super easily.
   to create custom ones for the particular slide show
 * Modular approach to features
 * Clean up Javascript
-
-## Console Commands
-
-* showoff add - add slides of images directory (refactor 
-script/import_images.rb)
 
 ## Interaction
 
