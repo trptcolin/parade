@@ -71,6 +71,14 @@ module ShowOff
 
       alias_method :slides, :section
 
+      #
+      # @param [String] content_encoding the content encoding to force on the 
+      #   parsed data.
+      #
+      def encoding(content_encoding)
+        @options[:encoding] = content_encoding
+      end
+
       # @return [Hash] configuration options that the DSL class will use
       #   and pass to other file and directory parsers to ensure the
       #   path information is presevered correctly.

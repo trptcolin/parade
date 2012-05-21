@@ -8,6 +8,7 @@ module ShowOff
       def self.parse(filepath,options = {})
         slides_content = File.read(filepath)
 
+        slides_content.force_encoding(options[:encoding])
         relative_path = File.dirname(filepath).gsub(options[:root_path],'')
 
         slides_content = MarkdownImagePaths.parse(slides_content,:path => relative_path)
