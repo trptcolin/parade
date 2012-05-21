@@ -4,6 +4,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <%= erb :header %>
+  <script type="text/javascript">
+  $(function(){
+      setupPreso(<%= slides.nil? ? "true" : "false"%>, '<%= asset_path %>');
+  });
+  </script>
 </head>
 
 <body>
