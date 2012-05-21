@@ -491,54 +491,46 @@ showoff command_name [command-specific options] [--] arguments...
 
 Shows list of commands or help for one command
 
-## showoff create dir_name
+## showoff generate presentation
 
 Create new showoff presentation
 
 This command helps start a new showoff presentation by setting up the proper directory structure for you.  It takes the directory name you would like showoff to create for you.
 
 > ### Options
->
-> These options are specified *after* the command.
 > 
-> *-d, --slidedir=arg* Slide directory name (default: *one*)
+> dir:"directory_name" - the name of the directory you want to generate the 
+>   presentation (defaults to *presentation*)
 >
-> *-n, --nosamples* Do not create sample slides
+> title:"Presentation Title" - the title of the presentation
 >
-> ### Aliases
->
-> showoff init [title]
+> description:"Presentation Description" - a description of the presentation
 
-## showoff add [title]
+## showoff generate outline
 
-Add a new slide at the end in a given directory
+Create new showoff outline file
 
-Outputs or creates a new slide. With `-d` and `-n`, a new slide is created in
-the given directory, numbered to appear as the last slide in that directory (use
-`-u` to avoid numbering). Without those, outputs the slide markdown to standard
-out (useful for shelling out from your editor). You may also specify a source
-file to use for a code slide.
+Within the existing directory create a **showoff** file that contains some 
+sample sections and slide references to get you started with creating 
+your customized presentation.
 
 > ### Options
 >
-> These options are specified *after* the command.
-> 
-> *-d, --dir=dir* Slide directory (where to put a new slide file)
+> title:"Presentation Title" - the title of the presentation
 >
-> *-n, --name=basename* Slide name (name of the new slide file)
+> description:"Presentation Description" - a description of the presentation
 >
-> *-s, --source=path to file* Include code from the given file as the slide body
->
-> *-t, --style, --type=valid showoff style/type* Slide Type/Style (default: 
-> *title*)
->
-> *-u, --nonumber* Do not number the slide, use the given name verbatim
->
-> ### Aliases
->
-> showoff new [title]
+> outline:"custom outline filename" - if you want to specify a custom outline
+>   filename (i.e. override the default **showoff** filename).
 
-## showoff serve
+## showoff generate rackup
+
+Create new rackup file
+
+Within the existing directory create a **config.ru** file that contains the
+default code necessary to serve this code on Heroku and other destinations.
+
+## showoff server
 
 Serves the showoff presentation in the current directory
 
@@ -551,26 +543,12 @@ Serves the showoff presentation in the current directory
 > *-h, --host=arg* Host or IP to serve on (default *localhost*)
 >
 > *-p, --port=arg* The port to serve one (default: *9090*)
-
-## showoff heroku heroku_name
-
-Setup your presentation to serve on Heroku
-
-Creates the Gemfile and config.ru file needed to push a showoff pres to heroku.  It will then run heroku create for you to register the new project on heroku and add the remote for you.  Then all you need to do is commit the new created files and run git push heroku to deploy.
-
-## showoff github
-
-Generates a static version of your site and puts it in a gh-pages branch for static serving on GitHub.
-
-> ### Options
 >
-> These options are specified *after* the command.
-> 
-> *-f, --force* force overwrite of existing Gemfile/.gems and config.ru files if 
-> they exist
+> ### Aliases
 >
-> *-p, --password=arg* add password protection to your github site
+> showoff s
 >
+> showoff serve
 
 # External Tools
 

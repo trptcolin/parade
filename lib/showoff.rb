@@ -19,3 +19,4 @@ rescue LoadError
 end
 
 require_relative 'showoff/server'
+require_relative 'showoff/utilities'

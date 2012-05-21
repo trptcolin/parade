@@ -1,4 +1,3 @@
-require_relative "../showoff_utils"
 require_relative "parsers/dsl"
 require_relative 'renderers/update_image_paths'
 
