@@ -1,4 +1,5 @@
 require_relative 'helpers/template_generator'
+require_relative 'renderers/inline_images'
 
 module ShowOff
 
@@ -65,6 +66,8 @@ module ShowOff
       end
 
       # root_node.add_post_renderer Renderers::UpdateImagePaths.new :root_path => root_path
+
+      root_node.add_post_renderer Renderers::InlineImages
 
       template_options = {  'erb_template_file' => File.join(File.dirname(__FILE__), "..", "views", "#{options['template']}.erb"),
                             'slides' => root_node.to_html }
