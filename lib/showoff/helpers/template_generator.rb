@@ -17,7 +17,11 @@ module ShowOff
     # @param [String] filepath the filepath to load
     #
     def asset_template(type,filepath)
-      InlineAssetTemplateGenerator.new :type => type, :filepath => filepath
+      if type == :css
+        CSSTemplateGenerator.new :filepath => filepath
+      else type == :js
+        JSTemplateGenerator.new :filepath => filepath
+      end
     end
 
     #
@@ -77,20 +81,34 @@ module ShowOff
     end
   end
 
+  class CSSTemplateGenerator < TemplateGenerator
+
+    def content
+      content_filepath = File.exists?(filepath) ? filepath : File.join(File.dirname(__FILE__), "..", "..", "public", "css", filepath)
+      parser = CssParser::Parser.new
+      parser.load_file!(content_filepath)
+      parser.to_s
+    end
+
+    def erb_template_file
+      File.join File.dirname(__FILE__), "..", "..", "views", "inline_css.erb"
+    end
+
+  end
+
   #
   # Provides a way to inline particular assets witin the content. This is used
   # to inline the javascript and css.
   #
-  class InlineAssetTemplateGenerator < TemplateGenerator
+  class JSTemplateGenerator < TemplateGenerator
 
     def content
-      content_filepath = File.exists?(filepath) ? filepath : File.join(File.dirname(__FILE__), "..", "..", "public", type.to_s, filepath)
-      puts "Loading #{content_filepath}"
+      content_filepath = File.exists?(filepath) ? filepath : File.join(File.dirname(__FILE__), "..", "..", "public", "js", filepath)
       File.read content_filepath
     end
 
     def erb_template_file
-      File.join File.dirname(__FILE__), "..", "..", "views", "inline_#{type}.erb"
+      File.join File.dirname(__FILE__), "..", "..", "views", "inline_js.erb"
     end
 
   end

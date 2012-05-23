@@ -5,6 +5,7 @@ require 'nokogiri'
 require 'fileutils'
 require 'logger'
 require 'tilt'
+require 'css_parser'
 
 begin
   require 'RMagick'
