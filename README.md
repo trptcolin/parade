@@ -97,21 +97,10 @@ gaps with regards to the implementation.
     > The directory structure is no longer `_preshow`, I saw no reason why that
     could not be a regularly named directory `preshow`.
 
-* Onepage and Static
-
-    > I have removed this feature. I never used it and the work I started to
-    complete caused it initially to break.
-
-* PDF
-
-    > PDF support never worked when the user requested the route because of
-    an issue with single-threaded requesting of resources. Essentially you
-    could go to 'http://localhost:9090/pdf' and bring the presenting system
-    to a halt. I removed the feature for the moment.
-
 * Command-Line Utilities
 
-    > Removed most of the existing command-line utilities
+    > Removed most of the existing command-line utilities to generate slides
+      push to Heroku and push to Github.
 
 
 # Installation and Usage
@@ -188,8 +177,8 @@ slides "intro.md"
 section "directory_name"
 ```
 
-> **slides** and **section** are exactly the same, however you may choose to 
-  use one over the other depending of you are mentioning a specific file of 
+> **slides** and **section** are exactly the same, however you may choose to
+  use one over the other depending of you are mentioning a specific file of
   slides or a directory which could contain another `showoff` or be considered
   a section.
 
@@ -490,8 +479,8 @@ Create new showoff presentation
 This command helps start a new showoff presentation by setting up the proper directory structure for you.  It takes the directory name you would like showoff to create for you.
 
 > ### Options
-> 
-> dir:"directory_name" - the name of the directory you want to generate the 
+>
+> dir:"directory_name" - the name of the directory you want to generate the
 >   presentation (defaults to *presentation*)
 >
 > title:"Presentation Title" - the title of the presentation
@@ -502,8 +491,8 @@ This command helps start a new showoff presentation by setting up the proper dir
 
 Create new showoff outline file
 
-Within the existing directory create a **showoff** file that contains some 
-sample sections and slide references to get you started with creating 
+Within the existing directory create a **showoff** file that contains some
+sample sections and slide references to get you started with creating
 your customized presentation.
 
 > ### Options
@@ -529,7 +518,7 @@ Serves the showoff presentation in the current directory
 > ### Options
 >
 > These options are specified *after* the command.
-> 
+>
 > *-f, --file=arg* Presentation file (default: *showoff*)
 >
 > *-h, --host=arg* Host or IP to serve on (default *localhost*)
