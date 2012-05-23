@@ -74,6 +74,29 @@ To run it from presenter view, go to: [ #{url}/presenter ]
   end
 end
 
+desc 'Output the presentation in a particular format'
+arg_name 'format_type'
+arg_name '[pres_dir]'
+long_desc "#{ShowOff::Utilities.statics.map {|k,v| "#{k} - #{v}" }.join("\n\n")}"
+command [:static] do |c|
+
+  c.desc "Force creation of the asset, even if one already exists with a similar name"
+  c.switch [:f, :force]
+
+  c.action do |global,local,args|
+    
+    format_type = args.shift
+    filepath = args.shift
+    key_value_args = args.map {|arg| key, value = arg.split(/:|=/) ; [ key, value ] }.flatten
+    parsed_arguments = Hash[*key_value_args]
+    all_parameters = global.merge(local).merge(parsed_arguments)
+    
+    all_parameters.merge!('filepath' => (filepath || "."))
+    ShowOff::Utilities.static(format_type,all_parameters) if format_type
+  end
+
+end
+
 pre do |global,command,options,args|
   # Pre logic here
   # Return true to proceed; false to abourt and not call the

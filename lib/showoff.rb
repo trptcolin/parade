@@ -15,7 +15,7 @@ end
 begin
   require 'pdfkit'
 rescue LoadError
-  $stderr.puts 'pdf generation disabled - please install `pdfkit`'
+  $stderr.puts 'pdf generation disabled - please install `pdfkit` and `wkhtmltopdf-binary`'
 end
 
 require_relative 'showoff/server'
