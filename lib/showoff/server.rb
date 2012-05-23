@@ -43,11 +43,11 @@ module ShowOff
       def css(filepath)
         %{<link rel="stylesheet" href="css/#{filepath}" type="text/css"/>}
       end
-      
+
       def js(filepath)
         %{<script type="text/javascript" src="js/#{filepath}"></script>}
       end
-      
+
       def asset_path
         "./"
       end
@@ -71,6 +71,7 @@ module ShowOff
       def slides
         presentation.to_html
       end
+
     end
 
     get %r{(?:image|file)/(.*)} do
