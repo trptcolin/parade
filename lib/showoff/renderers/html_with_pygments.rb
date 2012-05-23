@@ -1,5 +1,4 @@
 require 'redcarpet'
-require 'pathname'
 require 'pygments.rb'
 
 module ShowOff
