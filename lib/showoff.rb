@@ -36,6 +36,7 @@ rescue LoadError
   PDFKit and wkhtmltopdf-binary are required to provide PDF output
 --------------------------------------------------------------------------------
 }
+end
 
 require_relative 'showoff/server'
 require_relative 'showoff/utilities'
