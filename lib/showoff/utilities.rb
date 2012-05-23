@@ -16,7 +16,8 @@ module ShowOff
     end
 
     def static_html(options)
-      html_content = onepage_html(options)
+      options.merge!('template' => 'onepage')
+      html_content = html_from_template(options)
 
       output_file = options[:output] || default_html_output
 
@@ -32,8 +33,9 @@ module ShowOff
     end
 
     def static_pdf(options)
+      options.merge!('template' => 'pdf')
 
-      html_content = onepage_html(options)
+      html_content = html_from_template(options)
       kit = PDFKit.new(html_content,:page_size => 'Letter', :orientation => 'Landscape')
 
       output_file = options[:output] || default_pdf_output
@@ -49,7 +51,7 @@ module ShowOff
       "presentation.pdf"
     end
 
-    def onepage_html(options)
+    def html_from_template(options)
       filepath = options['filepath']
 
       return unless File.exists? filepath
@@ -64,7 +66,7 @@ module ShowOff
 
       # root_node.add_post_renderer Renderers::UpdateImagePaths.new :root_path => root_path
 
-      template_options = {  'erb_template_file' => File.join(File.dirname(__FILE__), "..", "views", "onepage.erb"),
+      template_options = {  'erb_template_file' => File.join(File.dirname(__FILE__), "..", "views", "#{options['template']}.erb"),
                             'slides' => root_node.to_html }
 
       render_template template_options
