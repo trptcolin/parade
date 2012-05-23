@@ -48,10 +48,6 @@ module ShowOff
         %{<script type="text/javascript" src="js/#{filepath}"></script>}
       end
 
-      def asset_path
-        "./"
-      end
-
       def css_files
         Dir.glob("#{settings.presentation_directory}/*.css").map { |path| File.basename(path) }
       end
