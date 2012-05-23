@@ -36,10 +36,6 @@ module ShowOff
       html_content = onepage_html(options)
       kit = PDFKit.new(html_content,:page_size => 'Letter', :orientation => 'Landscape')
 
-      ['reset.css','showoff.css','theme/ui.all.css','ghf_marked.css','onepage.css','pdf.css'].each do |css_file|
-        kit.stylesheets << File.join(File.dirname(__FILE__),"..","public","css",css_file)
-      end
-
       output_file = options[:output] || default_pdf_output
 
       return if (File.exists?(output_file) and not options.key?(:force))
