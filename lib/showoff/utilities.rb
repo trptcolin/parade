@@ -5,10 +5,80 @@ module ShowOff
   module Utilities
     extend self
 
+    def statics
+      { "html" => "Output into a single HTML file",
+        "pdf" => "Output into a PDF format" }
+    end
+
+    def static(output_type,options)
+      puts "Generating #{output_type} with #{options}"
+      send "static_#{output_type}", options
+    end
+
+    def static_html(options)
+      html_content = onepage_html(options)
+
+      output_file = options[:output] || default_html_output
+
+      return if (File.exists?(output_file) and not options.key?(:force))
+
+      File.open(output_file,'w') {|file| file.puts html_content }
+
+      puts "Saved HTML to #{output_file}"
+    end
+
+    def default_html_output
+      "presentation.html"
+    end
+
+    def static_pdf(options)
+
+      html_content = onepage_html(options)
+      kit = PDFKit.new(html_content,:page_size => 'Letter', :orientation => 'Landscape')
+
+      ['reset.css','showoff.css','theme/ui.all.css','ghf_marked.css','onepage.css','pdf.css'].each do |css_file|
+        kit.stylesheets << File.join(File.dirname(__FILE__),"..","public","css",css_file)
+      end
+
+      output_file = options[:output] || default_pdf_output
+
+      return if (File.exists?(output_file) and not options.key?(:force))
+
+      kit.to_file(output_file)
+
+      puts "Saved PDF to #{output_file}"
+    end
+
+    def default_pdf_output
+      "presentation.pdf"
+    end
+
+    def onepage_html(options)
+      filepath = options['filepath']
+
+      return unless File.exists? filepath
+
+      if File.directory? filepath
+        root_path = filepath
+        root_node = Parsers::PresentationDirectoryParser.parse filepath, :root_path => ".", :showoff_file => "showoff"
+      else
+        root_path = File.dirname filepath
+        root_node = Parsers::PresentationFileParser.parse filepath, :root_path => root_path
+      end
+
+      # root_node.add_post_renderer Renderers::UpdateImagePaths.new :root_path => root_path
+
+      template_options = {  'erb_template_file' => File.join(File.dirname(__FILE__), "..", "views", "onepage.erb"),
+                            'slides' => root_node.to_html }
+
+      render_template template_options
+    end
+
+
     def generators
       { "presentation" => "A presentation folder with outline file",
-         "outline" => "A generic presentation file (i.e. #{default_outline_filename})",
-         "rackup" => "A default rackup file (i.e. #{rackup_filename})" }
+        "outline" => "A generic presentation file (i.e. #{default_outline_filename})",
+        "rackup" => "A default rackup file (i.e. #{rackup_filename})" }
     end
 
     def generate(asset_name,options)

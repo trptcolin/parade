@@ -40,6 +40,14 @@ module ShowOff
 
     helpers do
 
+      def css(filepath)
+        %{<link rel="stylesheet" href="css/#{filepath}" type="text/css"/>}
+      end
+      
+      def js(filepath)
+        %{<script type="text/javascript" src="js/#{filepath}"></script>}
+      end
+      
       def asset_path
         "./"
       end
