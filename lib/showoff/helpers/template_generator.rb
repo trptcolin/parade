@@ -3,13 +3,13 @@ require 'ostruct'
 module ShowOff
 
   #
-  # TemplateGenator uses ERB to generate a template and uses itself as the 
+  # TemplateGenator uses ERB to generate a template and uses itself as the
   # reference as the binding. This template generator is being used primarily
   # as a way to generate static versions of the content in HTML.
-  # 
+  #
   # When created an :erb_template_file needs to be specified in the Hash, all
   # other fields are dependent on what is contained within the template itself
-  # 
+  #
   class TemplateGenerator < OpenStruct
 
     #
@@ -39,6 +39,22 @@ module ShowOff
       asset_template(:css,filepath).render
     end
 
+    def custom_css_files
+      if custom_asset_path
+        Dir.glob("#{custom_asset_path}**/*.css").map do |path|
+          asset_template(:css,path).render
+        end.join("\n")
+      end
+    end
+
+    def custom_js_files
+      if custom_asset_path
+        Dir.glob("#{custom_asset_path}**/*.js").map do |path|
+          asset_template(:js,path).render
+        end.join("\n")
+      end
+    end
+
     #
     # To provide support of having references to other templates, this will
     # handle erb method calls and in-line that template's content
@@ -54,7 +70,7 @@ module ShowOff
 
     #
     # @return [Types] the HTML content of the template specified
-    # 
+    #
     def render
       template_file = ERB.new File.read(erb_template_file)
       template_file.result(binding)
@@ -64,11 +80,12 @@ module ShowOff
   #
   # Provides a way to inline particular assets witin the content. This is used
   # to inline the javascript and css.
-  # 
+  #
   class InlineAssetTemplateGenerator < TemplateGenerator
 
     def content
-      content_filepath = File.join File.dirname(__FILE__), "..", "..", "public", type.to_s, filepath
+      content_filepath = File.exists?(filepath) ? filepath : File.join(File.dirname(__FILE__), "..", "..", "public", type.to_s, filepath)
+      puts "Loading #{content_filepath}"
       File.read content_filepath
     end
 
