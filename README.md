@@ -79,6 +79,13 @@ gaps with regards to the implementation.
     Essentially your markdown can now adhere to more accepted markdown
     standards.
 
+* Static HTML and PDF
+
+    > All javascript, stylesheets, and images are embedded into the static HTML
+    and PDF output. This allows the static HTML to better represent the 
+    presentation. This includes any custom javascript, css, or images defined
+    within the presentation. This also embeds locally defined images within the
+    CSS.
 
 * Showoff File Format
 
@@ -100,7 +107,8 @@ gaps with regards to the implementation.
 * Command-Line Utilities
 
     > Removed most of the existing command-line utilities to generate slides
-      push to Heroku and push to Github.
+      push to Heroku and push to Github. I believe the functionality could
+      be returned with a complete overhaul of the command-line interface.
 
 
 # Installation and Usage
