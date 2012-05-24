@@ -24,7 +24,7 @@ module ShowOff
 
       end
 
-      include ShowOff::Helpers::EncodeImage
+      extend ShowOff::Helpers::EncodeImage
 
     end
   end
