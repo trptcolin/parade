@@ -60,7 +60,7 @@ module ShowOff
       if File.directory? filepath
         root_path = filepath
         root_node = Parsers::PresentationDirectoryParser.parse filepath, :root_path => ".",
-          :showoff_file => options['showoff_file']
+          :showoff_file => (Array(options['showoff_file']) + [ "showoff", "showoff.json" ]).compact.uniq
       else
         root_path = File.dirname filepath
         root_node = Parsers::PresentationFileParser.parse filepath, :root_path => root_path

@@ -9,18 +9,6 @@ module ShowOff
 
   class Server < Sinatra::Application
 
-    set :views, File.dirname(__FILE__) + '/../views'
-    set :public_folder, File.dirname(__FILE__) + '/../public'
-
-    set :verbose, false
-
-    set :presentation_directory do
-      File.expand_path Dir.pwd
-    end
-
-    set :presentation_file, [ 'showoff', 'showoff.json' ]
-
-
     def initialize(app=nil)
       super(app)
       require_ruby_files
@@ -30,9 +18,24 @@ module ShowOff
       Dir.glob("#{settings.presentation_directory}/*.rb").map { |path| require path }
     end
 
+    set :views, File.dirname(__FILE__) + '/../views'
+    set :public_folder, File.dirname(__FILE__) + '/../public'
+
+    set :verbose, false
+
+    set :presentation_directory do
+      File.expand_path Dir.pwd
+    end
+
+    set :default_presentation_files, [ 'showoff', 'showoff.json' ]
+
+    def presentation_files
+      (Array(settings.presentation_file) + settings.default_presentation_files).compact.uniq
+    end
+
     def load_presentation
       root_node = Parsers::PresentationDirectoryParser.parse settings.presentation_directory,
-        :root_path => settings.presentation_directory, :showoff_file => settings.presentation_file
+        :root_path => settings.presentation_directory, :showoff_file => presentation_files
 
       root_node.add_post_renderer Renderers::UpdateImagePaths.new :root_path => settings.presentation_directory
       root_node

@@ -46,10 +46,6 @@ command [:s,:serve,:server] do |c|
   c.default_value "localhost"
   c.flag [:h,:host]
 
-  c.desc 'Showoff file used to describe presentation'
-  c.default_value [ "showoff", "showoff.json" ]
-  c.flag [:f, :file]
-
   c.action do |global_options,options,args|
 
     url = "http://#{options[:h]}:#{options[:p].to_i}"
@@ -65,10 +61,17 @@ To run it from presenter view, go to: [ #{url}/presenter ]
 -------------------------
 
 "
+    presentation_filepath = args[0]
+
+    unless File.directory?(presentation_filepath)
+      filename = File.basename(presentation_filepath)
+      presentation_filepath = File.dirname(presentation_filepath)
+    end
+
     ShowOff::Server.run! :host => options[:h],
       :port => options[:p].to_i,
-      :presentation_file => options[:f],
-      :presentation_directory => args[0],
+      :presentation_directory => presentation_filepath,
+      :presentation_file => filename,
       :verbose => options[:verbose]
 
   end
@@ -83,19 +86,21 @@ command [:static] do |c|
   c.desc "Force creation of the asset, even if one already exists with a similar name"
   c.switch [:f, :force]
 
-  c.desc 'Showoff file used to describe presentation'
-  c.default_value [ "showoff", "showoff.json" ]
-  c.flag [:file]
-  
   c.action do |global,local,args|
-    
+
     format_type = args.shift
-    filepath = args.shift
+    presentation_filepath = args.shift || "."
+    
+    unless File.directory?(presentation_filepath)
+      filename = File.basename(presentation_filepath)
+      presentation_filepath = File.dirname(presentation_filepath)
+    end
+    
     key_value_args = args.map {|arg| key, value = arg.split(/:|=/) ; [ key, value ] }.flatten
     parsed_arguments = Hash[*key_value_args]
     all_parameters = global.merge(local).merge(parsed_arguments)
-    
-    all_parameters.merge!('filepath' => (filepath || "."), 'showoff_file' => local[:file])
+
+    all_parameters.merge!('filepath' => presentation_filepath, 'showoff_file' => filename)
     ShowOff::Utilities.static(format_type,all_parameters) if format_type
   end
 
