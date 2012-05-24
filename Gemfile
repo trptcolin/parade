@@ -17,7 +17,7 @@ group :test, :development do
 end
 
 #
-# Optional to provid image resizing functionality
+# Optional to provide image embedding and resizing functionality
 # 
 group :images do
   gem "rmagick"

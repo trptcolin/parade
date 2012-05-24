@@ -5,6 +5,7 @@ require 'nokogiri'
 require 'fileutils'
 require 'logger'
 require 'tilt'
+require 'css_parser'
 
 begin
   require 'RMagick'
@@ -38,5 +39,6 @@ rescue LoadError
 }
 end
 
+require_relative 'showoff/helpers/encode_image'
 require_relative 'showoff/server'
 require_relative 'showoff/utilities'

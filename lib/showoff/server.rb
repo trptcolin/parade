@@ -48,12 +48,22 @@ module ShowOff
         %{<script type="text/javascript" src="js/#{filepath}"></script>}
       end
 
-      def css_files
-        Dir.glob("#{settings.presentation_directory}/*.css").map { |path| File.basename(path) }
+      def custom_css_files
+        Dir.glob("#{settings.presentation_directory}/**/*.css").map do |path|
+
+          relative_path = path.gsub(settings.presentation_directory,'file')
+
+          %{<link rel="stylesheet" href="#{relative_path}" type="text/css"/>}
+        end.join("\n")
       end
 
-      def js_files
-        Dir.glob("#{settings.presentation_directory}/*.js").map { |path| File.basename(path) }
+      def custom_js_files
+        Dir.glob("#{settings.presentation_directory}/**/*.js").map do |path|
+
+          relative_path = path.gsub(settings.presentation_directory,'file')
+
+          %{<script type="text/javascript" src="#{relative_path}"></script>}
+        end.join("\n")
       end
 
       def presentation

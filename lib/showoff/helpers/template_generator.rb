@@ -3,21 +3,24 @@ require 'ostruct'
 module ShowOff
 
   #
-  # TemplateGenator uses ERB to generate a template and uses itself as the 
+  # TemplateGenator uses ERB to generate a template and uses itself as the
   # reference as the binding. This template generator is being used primarily
   # as a way to generate static versions of the content in HTML.
-  # 
+  #
   # When created an :erb_template_file needs to be specified in the Hash, all
   # other fields are dependent on what is contained within the template itself
-  # 
+  #
   class TemplateGenerator < OpenStruct
 
     #
-    # @param [String,Symbol] type js for javascript, css for stylesheets
     # @param [String] filepath the filepath to load
     #
-    def asset_template(type,filepath)
-      InlineAssetTemplateGenerator.new :type => type, :filepath => filepath
+    def css_template(filepath)
+      CSSTemplateGenerator.new :filepath => filepath
+    end
+
+    def js_template(filepath)
+      JSTemplateGenerator.new :filepath => filepath
     end
 
     #
@@ -26,7 +29,7 @@ module ShowOff
     # @param [String] filepath the filepath to the javascript file
     # @return [String] HTML content that is inlined javascript data
     def js(filepath)
-      asset_template(:js,filepath).render
+      js_template(filepath).render
     end
 
     #
@@ -36,7 +39,23 @@ module ShowOff
     # @return [String] HTML content that is inlined stylesheet data
     #
     def css(filepath)
-      asset_template(:css,filepath).render
+      css_template(filepath).render
+    end
+
+    def custom_css_files
+      if custom_asset_path
+        Dir.glob("#{custom_asset_path}**/*.css").map do |path|
+          css_template(path).render
+        end.join("\n")
+      end
+    end
+
+    def custom_js_files
+      if custom_asset_path
+        Dir.glob("#{custom_asset_path}**/*.js").map do |path|
+          js_template(path).render
+        end.join("\n")
+      end
     end
 
     #
@@ -54,7 +73,7 @@ module ShowOff
 
     #
     # @return [Types] the HTML content of the template specified
-    # 
+    #
     def render
       template_file = ERB.new File.read(erb_template_file)
       template_file.result(binding)
@@ -62,18 +81,48 @@ module ShowOff
   end
 
   #
-  # Provides a way to inline particular assets witin the content. This is used
-  # to inline the javascript and css.
+  # Generate inline CSS assets. Using CssParser it is able to traverse imports
+  # to ensure all CSS is inlined within the document.
   # 
-  class InlineAssetTemplateGenerator < TemplateGenerator
+  # Also embeds all images contained within the CSS into the inlined CSS.
+  # 
+  class CSSTemplateGenerator < TemplateGenerator
+    include Helpers::EncodeImage
 
     def content
-      content_filepath = File.join File.dirname(__FILE__), "..", "..", "public", type.to_s, filepath
+      content_filepath = File.exists?(filepath) ? filepath : File.join(File.dirname(__FILE__), "..", "..", "public", "css", filepath)
+      parser = CssParser::Parser.new
+      parser.load_file!(content_filepath)
+
+      css_contents = parser.to_s
+
+      css_contents.gsub(/url\([\s"']*([^\)"'\s]*)[\s"']*\)/m) do |image_uri|
+        image_name = Regexp.last_match(1)
+        image_path = File.join File.dirname(content_filepath), image_name
+        base64_data = image_path_to_base64(image_path)
+        "url(#{base64_data})"
+      end
+
+    end
+
+    def erb_template_file
+      File.join File.dirname(__FILE__), "..", "..", "views", "inline_css.erb"
+    end
+
+  end
+
+  #
+  # Inline the specified javascript
+  #
+  class JSTemplateGenerator < TemplateGenerator
+
+    def content
+      content_filepath = File.exists?(filepath) ? filepath : File.join(File.dirname(__FILE__), "..", "..", "public", "js", filepath)
       File.read content_filepath
     end
 
     def erb_template_file
-      File.join File.dirname(__FILE__), "..", "..", "views", "inline_#{type}.erb"
+      File.join File.dirname(__FILE__), "..", "..", "views", "inline_js.erb"
     end
 
   end

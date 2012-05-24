@@ -1,4 +1,3 @@
-require 'base64'
 
 module ShowOff
   module Renderers
@@ -14,10 +13,10 @@ module ShowOff
         content.gsub(/img src="\/?([^\/].*?)"/) do |image_source|
           image_name = Regexp.last_match(1)
 
-          type, data = image_data(image_name)
+          base64_data = image_path_to_base64(image_name)
 
-          if type and data
-            %{img src="data:image/#{type};base64,#{data}"}
+          if base64_data
+            %{img src="#{base64_data}"}
           else
             image_source
           end
@@ -25,18 +24,7 @@ module ShowOff
 
       end
 
-      def self.image_data
-        $stderr.puts "Please install `rmagick` to allow images to be included in content"
-        nil
-      end
-
-      if defined?(Magick)
-        def self.image_data(path)
-          magick_image = Magick::Image.read(path).first
-          [ magick_image.format, Base64.encode64(magick_image.to_blob) ]
-        end
-      end
-
+      include ShowOff::Helpers::EncodeImage
 
     end
   end

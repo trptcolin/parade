@@ -65,11 +65,10 @@ module ShowOff
         root_node = Parsers::PresentationFileParser.parse filepath, :root_path => root_path
       end
 
-      # root_node.add_post_renderer Renderers::UpdateImagePaths.new :root_path => root_path
-
       root_node.add_post_renderer Renderers::InlineImages
 
       template_options = {  'erb_template_file' => File.join(File.dirname(__FILE__), "..", "views", "#{options['template']}.erb"),
+                            'custom_asset_path' => root_path,
                             'slides' => root_node.to_html }
 
       render_template template_options
