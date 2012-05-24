@@ -39,5 +39,6 @@ rescue LoadError
 }
 end
 
+require_relative 'showoff/helpers/encode_image'
 require_relative 'showoff/server'
 require_relative 'showoff/utilities'

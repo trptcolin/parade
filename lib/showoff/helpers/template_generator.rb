@@ -13,15 +13,14 @@ module ShowOff
   class TemplateGenerator < OpenStruct
 
     #
-    # @param [String,Symbol] type js for javascript, css for stylesheets
     # @param [String] filepath the filepath to load
     #
-    def asset_template(type,filepath)
-      if type == :css
-        CSSTemplateGenerator.new :filepath => filepath
-      else type == :js
-        JSTemplateGenerator.new :filepath => filepath
-      end
+    def css_template(filepath)
+      CSSTemplateGenerator.new :filepath => filepath
+    end
+
+    def js_template(filepath)
+      JSTemplateGenerator.new :filepath => filepath
     end
 
     #
@@ -30,7 +29,7 @@ module ShowOff
     # @param [String] filepath the filepath to the javascript file
     # @return [String] HTML content that is inlined javascript data
     def js(filepath)
-      asset_template(:js,filepath).render
+      js_template(filepath).render
     end
 
     #
@@ -40,13 +39,13 @@ module ShowOff
     # @return [String] HTML content that is inlined stylesheet data
     #
     def css(filepath)
-      asset_template(:css,filepath).render
+      css_template(filepath).render
     end
 
     def custom_css_files
       if custom_asset_path
         Dir.glob("#{custom_asset_path}**/*.css").map do |path|
-          asset_template(:css,path).render
+          css_template(path).render
         end.join("\n")
       end
     end
@@ -54,7 +53,7 @@ module ShowOff
     def custom_js_files
       if custom_asset_path
         Dir.glob("#{custom_asset_path}**/*.js").map do |path|
-          asset_template(:js,path).render
+          js_template(path).render
         end.join("\n")
       end
     end
@@ -81,13 +80,29 @@ module ShowOff
     end
   end
 
+  #
+  # Generate inline CSS assets. Using CssParser it is able to traverse imports
+  # to ensure all CSS is inlined within the document.
+  # 
+  # Also embeds all images contained within the CSS into the inlined CSS.
+  # 
   class CSSTemplateGenerator < TemplateGenerator
+    include Helpers::EncodeImage
 
     def content
       content_filepath = File.exists?(filepath) ? filepath : File.join(File.dirname(__FILE__), "..", "..", "public", "css", filepath)
       parser = CssParser::Parser.new
       parser.load_file!(content_filepath)
-      parser.to_s
+
+      css_contents = parser.to_s
+
+      css_contents.gsub(/url\([\s"']*([^\)"'\s]*)[\s"']*\)/m) do |image_uri|
+        image_name = Regexp.last_match(1)
+        image_path = File.join File.dirname(content_filepath), image_name
+        base64_data = image_path_to_base64(image_path)
+        "url(#{base64_data})"
+      end
+
     end
 
     def erb_template_file
@@ -97,8 +112,7 @@ module ShowOff
   end
 
   #
-  # Provides a way to inline particular assets witin the content. This is used
-  # to inline the javascript and css.
+  # Inline the specified javascript
   #
   class JSTemplateGenerator < TemplateGenerator
 
