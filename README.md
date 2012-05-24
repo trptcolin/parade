@@ -20,7 +20,7 @@ ShowOff has over presentational software:
 
 * Syntax Highlighting
 
-    > Using github flavored markdown, code fences will automatically be
+    > Using GitHub flavored markdown, code fences will automatically be
     syntax highlighted making it incredibly easy to integrate code samples
 
 * Code Execution
@@ -49,67 +49,6 @@ ShowOff has over presentational software:
     > Currently the presentation system can change gradual sizes, but is not
     very capable of growing well to the full resolution of current presentation
     resolution.
-
-## Comparison Vs [schacon's ShowOff](https://github.com/schacon/showoff)
-
-This is a fork of that project and includes my attempts to remedy some design
-gaps with regards to the implementation.
-
-### The Good
-
-* Modular Design for Parsers and Renderers
-
-    > Removed most of the file and directory parsing from the core server
-      file. Also the various renderers that perform work on slides were
-      extracted giving home to be able to enable, disable, and eventually
-      add more.
-
-
-* Feature Modularity
-
-    > _Live ruby code evaluation_, _pdf_ support, and the _preshow_ features
-      are all contained in modules that are included in the server. Making it
-      easier to disable an eventually gem or disable or enable.
-
-
-* Github Flavored Markdown
-
-    > Syntax Highlighting through code fences instead of the strange
-    additional construct of using `@@@ LANGUAGE` within the code samples.
-    Essentially your markdown can now adhere to more accepted markdown
-    standards.
-
-* Static HTML and PDF
-
-    > All javascript, stylesheets, and images are embedded into the static HTML
-    and PDF output. This allows the static HTML to better represent the 
-    presentation. This includes any custom javascript, css, or images defined
-    within the presentation. This also embeds locally defined images within the
-    CSS.
-
-* Showoff File Format
-
-    > I replaced the existing *showoff.json* with *showoff* and implemented
-    a DSL to provide current support and the ability to perform future features.
-
-### The Bad
-
-* Showoff File Format
-
-    > Replacing *showoff.json* with *showoff* breaks support with all existing
-    showoff presentations.
-
-* Preshow feature changed
-
-    > The directory structure is no longer `_preshow`, I saw no reason why that
-    could not be a regularly named directory `preshow`.
-
-* Command-Line Utilities
-
-    > Removed most of the existing command-line utilities to generate slides
-      push to Heroku and push to Github. I believe the functionality could
-      be returned with a complete overhaul of the command-line interface.
-
 
 # Installation and Usage
 
