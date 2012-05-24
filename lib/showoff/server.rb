@@ -18,7 +18,7 @@ module ShowOff
       File.expand_path Dir.pwd
     end
 
-    set :presentation_file, 'showoff'
+    set :presentation_file, [ 'showoff', 'showoff.json' ]
 
 
     def initialize(app=nil)

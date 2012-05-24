@@ -59,7 +59,8 @@ module ShowOff
 
       if File.directory? filepath
         root_path = filepath
-        root_node = Parsers::PresentationDirectoryParser.parse filepath, :root_path => ".", :showoff_file => "showoff"
+        root_node = Parsers::PresentationDirectoryParser.parse filepath, :root_path => ".",
+          :showoff_file => options['showoff_file']
       else
         root_path = File.dirname filepath
         root_node = Parsers::PresentationFileParser.parse filepath, :root_path => root_path

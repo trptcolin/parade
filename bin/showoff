@@ -47,7 +47,7 @@ command [:s,:serve,:server] do |c|
   c.flag [:h,:host]
 
   c.desc 'Showoff file used to describe presentation'
-  c.default_value "showoff"
+  c.default_value [ "showoff", "showoff.json" ]
   c.flag [:f, :file]
 
   c.action do |global_options,options,args|
@@ -83,6 +83,10 @@ command [:static] do |c|
   c.desc "Force creation of the asset, even if one already exists with a similar name"
   c.switch [:f, :force]
 
+  c.desc 'Showoff file used to describe presentation'
+  c.default_value [ "showoff", "showoff.json" ]
+  c.flag [:file]
+  
   c.action do |global,local,args|
     
     format_type = args.shift
@@ -91,7 +95,7 @@ command [:static] do |c|
     parsed_arguments = Hash[*key_value_args]
     all_parameters = global.merge(local).merge(parsed_arguments)
     
-    all_parameters.merge!('filepath' => (filepath || "."))
+    all_parameters.merge!('filepath' => (filepath || "."), 'showoff_file' => local[:file])
     ShowOff::Utilities.static(format_type,all_parameters) if format_type
   end
 
