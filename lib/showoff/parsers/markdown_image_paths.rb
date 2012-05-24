@@ -30,7 +30,6 @@ module ShowOff
       #   convert the image path.
       #
       def self.parse(content,options = {})
-
         return content unless options[:path]
 
         content.gsub(/!\[([^\]]*)\]\((.+)\)/) do |match|

@@ -9,7 +9,7 @@ describe "Loading the Example Presentation", :integration => true do
 
   let(:default_title) { "Example Presentation" }
   let(:description) { "Several showoff examples to assist with showing others how to get started with ShowOff" }
-  let(:slide_count) { 24 }
+  let(:slide_count) { 25 }
   let(:section_count) { 5 }
 
   its(:title) { should eq default_title }
@@ -28,7 +28,7 @@ describe "Loading the Example Presentation", :integration => true do
     let(:section) { subject.sections.first }
 
     let(:title) { "Introduction" }
-    let(:slide_count) { 1 }
+    let(:slide_count) { 2 }
 
     it_should_behave_like "a properly parsed section"
   end
