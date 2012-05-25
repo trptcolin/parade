@@ -4,3 +4,7 @@
 .title-slide h1 {
   color: blue;
 }
+
+.slide.introduction {
+  background-color: #DDD;
+}

@@ -9,8 +9,8 @@ describe "Loading the Example Presentation", :integration => true do
 
   let(:default_title) { "Example Presentation" }
   let(:description) { "Several showoff examples to assist with showing others how to get started with ShowOff" }
-  let(:slide_count) { 25 }
-  let(:section_count) { 5 }
+  let(:slide_count) { 74 }
+  let(:section_count) { 3 }
 
   its(:title) { should eq default_title }
   its(:description) { should eq description }
@@ -28,46 +28,27 @@ describe "Loading the Example Presentation", :integration => true do
     let(:section) { subject.sections.first }
 
     let(:title) { "Introduction" }
-    let(:slide_count) { 2 }
+    let(:slide_count) { 11 }
+
+    it_should_behave_like "a properly parsed section"
+  end
+
+  describe "Advanced Features" do
+    let(:section) { subject.sections[1] }
+
+    let(:title) { "Advanced Features" }
+    let(:slide_count) { 52 }
 
     it_should_behave_like "a properly parsed section"
   end
 
   describe "Code Samples" do
-    let(:section) { subject.sections[1] }
-
-    let(:title) { "Code Samples" }
-    let(:slide_count) { 4 }
-
-    it_should_behave_like "a properly parsed section"
-  end
-
-  describe "Third Section" do
     let(:section) { subject.sections[2] }
 
-    let(:title) { default_title }
-    let(:slide_count) { 8 }
+    let(:title) { "Code Samples" }
+    let(:slide_count) { 11 }
 
     it_should_behave_like "a properly parsed section"
   end
-
-  describe "Fourth Section" do
-    let(:section) { subject.sections[3] }
-
-    let(:title) { default_title }
-    let(:slide_count) { 7 }
-
-    it_should_behave_like "a properly parsed section"
-  end
-
-  describe "Fifth Section" do
-    let(:section) { subject.sections[4] }
-
-    let(:title) { default_title }
-    let(:slide_count) { 4 }
-
-    it_should_behave_like "a properly parsed section"
-  end
-
 
 end

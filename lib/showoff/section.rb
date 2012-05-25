@@ -15,6 +15,7 @@ module ShowOff
       params.each {|k,v| send("#{k}=",v) if respond_to? "#{k}=" }
     end
 
+    # @param [String] title the new title of the section
     attr_writer :title
     
     # @return [String] the title of the section

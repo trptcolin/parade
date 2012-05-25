@@ -4,6 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <%= erb :header %>
+  <%= css '960.css' %>
+  
   <script type="text/javascript">
   $(function(){
       setupPreso(<%= slides.nil? ? "true" : "false"%>, './');
