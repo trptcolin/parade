@@ -62,20 +62,20 @@ describe ShowOff::Slide do
     end
   end
 
-  describe "#classes" do
+  describe "#content_classes" do
     context "when created with no metadata" do
-      its(:classes) { should eq "" }
+      its(:content_classes) { should eq "" }
     end
 
     context "when created with metadata" do
       context "when created with only classes" do
         subject { described_class.new :metadata => "one two three" }
-        its(:classes) { should eq "one two three" }
+        its(:content_classes) { should eq "one two three" }
       end
 
       context "when created with other non-classes metadata" do
         subject { described_class.new :metadata => "#id one two three transition=fade" }
-        its(:classes) { should eq "one two three" }
+        its(:content_classes) { should eq "one two three" }
       end
     end
   end

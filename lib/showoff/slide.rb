@@ -89,7 +89,7 @@ module ShowOff
     
     # @return [String] the CSS classes for the content section of the slide
     def content_classes
-      (metadata.classes + [ section.title.downcase ]).join(" ")
+      metadata.classes.join(" ")
     end
 
     # @return [String] the transition style for the slide
