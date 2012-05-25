@@ -35,30 +35,29 @@ module ShowOff
           columns = []
           slop = []
 
-          slide.children.each do |child|
+          chunks = slide.children.chunk {|child| child.name == html_element }
 
-            if child.name == html_element
-              columns <<  Nokogiri::XML::Node.new('div',html)
-            end
-
-            if columns.last
-              columns.last.add_child(child)
-            else
-              slop << child
-            end
-
-          end
+          slide.children = ""
 
           slide['class'] += " container_#{segments}"
+          current_column = slide
 
-          columns.each do |column|
-            column['class'] = "grid_#{ segments / columns.count }"
+          column_count = chunks.find_all {|is_column,contents| is_column }.count
+
+          chunks.each do |is_column,contents|
+
+            if is_column
+              slide.add_child current_column unless current_column == slide
+              current_column = Nokogiri::XML::Node.new('div',html)
+              current_column['class'] = "grid_#{ segments / column_count }"
+            end
+
+            contents.each {|content| current_column.add_child content }
           end
 
-          slide.children = (slop + columns).map {|c| c.to_s }.join("\n")
+          slide.add_child current_column
 
         end
-
 
         html.to_s
 
