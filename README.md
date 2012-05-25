@@ -59,10 +59,10 @@ $ gem install showoff
 ## Starting the Slide Show
 
 ```bash
-$ showoff serve [directory_name]
+$ showoff
 ```
 
-By default running `serve` with start a presentation from the current working
+By default running showoff with start a presentation from the current working
 directory. It will find all markdown files, `**/*.md`, within the directory
 and create a presentation out of them.
 
@@ -106,7 +106,7 @@ or show the end result of the code execution.
 ### Serving a specific directory
 
 ```bash
-$ showoff serve [directory]
+$ showoff [directory]
 ```
 
 This will start a presentation from the specified directory. Again, finding all

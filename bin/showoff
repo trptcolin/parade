@@ -90,12 +90,12 @@ command [:static] do |c|
 
     format_type = args.shift
     presentation_filepath = args.shift || "."
-    
+
     unless File.directory?(presentation_filepath)
       filename = File.basename(presentation_filepath)
       presentation_filepath = File.dirname(presentation_filepath)
     end
-    
+
     key_value_args = args.map {|arg| key, value = arg.split(/:|=/) ; [ key, value ] }.flatten
     parsed_arguments = Hash[*key_value_args]
     all_parameters = global.merge(local).merge(parsed_arguments)
@@ -123,4 +123,16 @@ on_error do |exception|
   true
 end
 
-exit GLI.run(ARGV)
+
+# To allow an easier command-line to launch showoff, the following format
+# 
+#     `showoff` is converted to `showoff server .`
+#     `showoff [directoryname] is convereted `showoff server [directoryname]`
+# 
+
+parameters = ARGV
+
+parameters = [ "server", "." ] if parameters.empty?
+parameters.unshift "server" if parameters.count == 1
+
+exit GLI.run(parameters)
