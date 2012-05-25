@@ -267,6 +267,10 @@ ShowOff defines a number of special CSS classes:
 > ### bullets
 > sizes and separates bullets properly (fits up to 5, generally)
 >
+> ### columns
+>
+> creates columns for every `##` markdown element in your slides (up to 4)
+>
 > ### smbullets
 > sizes and separates more bullets (smaller, closer together)
 >
