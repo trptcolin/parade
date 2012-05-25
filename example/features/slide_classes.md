@@ -27,6 +27,26 @@ centers images on a slide
 ![octocat](../images/octocat.png)
 
 
+!SLIDE columns
+
+Comparison of features
+
+## First
+
+This is the first product
+
+## Second
+
+* two
+
+## Third
+
+* three
+
+## Fourth
+
+* Features
+
 !SLIDE bullets
 
 ## bullets

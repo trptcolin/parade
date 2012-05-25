@@ -115,6 +115,16 @@
   vertical-align: middle;
 }
 
+.content.columns blockquote {
+  font-size: 150%;
+  margin: 2em;
+}
+
+.content.columns h2 {
+  padding-bottom: 10px;
+  border-bottom: 1px dotted black;
+}
+
 /* numbered lists are numbered */
 .content ol {
     margin-left: 40px;

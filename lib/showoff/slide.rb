@@ -2,6 +2,8 @@ require_relative 'helpers/metadata'
 require_relative 'renderers/html_with_pygments'
 require_relative 'renderers/command_line_renderer'
 require_relative 'renderers/special_paragraph_renderer'
+require_relative 'renderers/columns_renderer'
+
 module ShowOff
 
   #
@@ -17,7 +19,7 @@ module ShowOff
     attr_accessor :sequence
 
     attr_accessor :section
-    
+
     def title
       section ? section.title : "Slide"
     end
@@ -81,12 +83,12 @@ module ShowOff
     def metadata
       @metadata || Helpers::Metadata.new
     end
-    
+
     # @return [String] the CSS classes for the slide
     def slide_classes
       title.downcase.gsub(' ','-')
     end
-    
+
     # @return [String] the CSS classes for the content section of the slide
     def content_classes
       metadata.classes.join(" ")
@@ -108,7 +110,8 @@ module ShowOff
 
     def post_renderers
       [ Renderers::SpecialParagraphRenderer,
-        Renderers::CommandLineRenderer ]
+        Renderers::CommandLineRenderer,
+        Renderers::ColumnsRenderer.new(:css_class => 'columns',:html_element => "h2",:segments => 12) ]
     end
 
     # @return [String] HTML rendering of the slide's raw contents.
