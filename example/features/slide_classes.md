@@ -20,13 +20,12 @@ centers images on a slide
     ![octocat](../images/octocat.png) 
 ```
 
-!SLIDE full-page
+!SLIDE center full-page
 
-## full-page
+## center full-page
 
 ![octocat](../images/octocat.png)
 
-allows an image to take up the whole slide
 
 !SLIDE bullets
 
