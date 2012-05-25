@@ -29,23 +29,22 @@ centers images on a slide
 
 !SLIDE columns
 
-Comparison of features
+# Features
 
-## First
+## Markdown
 
-This is the first product
+All content is written and managed in markdown
 
-## Second
+## Code
 
-* two
+```ruby
+class ShowOff
+end
+```
 
-## Third
+## Web-Powered
 
-* three
-
-## Fourth
-
-* Features
+* Ruby, Javascript, and CSS
 
 !SLIDE bullets
 
