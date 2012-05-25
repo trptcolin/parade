@@ -1,5 +1,9 @@
 !SLIDE
 
+## Ruby
+
+!SLIDE
+
 ## Monkeypatching
 
 ```ruby
@@ -35,4 +39,12 @@ end
 class Float
   include Measurements
 end
+```
+
+!SLIDE execute
+
+# Executable Ruby #
+
+```ruby
+result = [1, 2, 3].map { |n| n*7 }
 ```

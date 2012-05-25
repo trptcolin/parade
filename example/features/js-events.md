@@ -1,5 +1,16 @@
 !SLIDE subsection
-# Custom events #
+
+# Custom events
+
+> ### showoff:show
+> will be triggered as soon as you enter a page
+> ### showoff:next
+> will be triggered when you switch to the next page
+> ### showoff:incr
+> will be triggered when you advance to the next increment on the page
+> ### showoff:prev
+> will be triggered when you switch to the previous page
+
 
 !SLIDE custom_and_unique_class
 # 1st Example h1
@@ -26,5 +37,3 @@ $(".prevent_default").bind("showoff:next", function (event) {
 });
 </script>
 
-!SLIDE
-# Switched

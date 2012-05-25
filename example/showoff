@@ -5,13 +5,9 @@ description "Several showoff examples to assist with showing others how to get s
 
 section "Introduction" do
   slides "intro.md"
+  slides "installation.md"
+  slides "navigation.md"
 end
 
-section "Code Samples" do
-  slides "code_sample.md"
-  slides "code_samples"
-end
-
-section "one"
-section "two"
-section "three"
+section "features"
+section "code_samples"

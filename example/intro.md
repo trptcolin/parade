@@ -6,4 +6,14 @@ Welcome to showoff, we're glad you're here.
 
 ShowOff is hosted on Github
 
-![octocat](one/octocat.png)
+![octocat](images/octocat.png)
+
+# Created By
+
+![chacon](images/chacon.jpg)
+
+Scott "The Dragon" Chacon
+
+# Supported By
+
+Many contributors

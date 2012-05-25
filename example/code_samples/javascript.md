@@ -1,6 +1,8 @@
 !SLIDE
-.notes notes for my slide
 
+## Javascript
+
+!SLIDE
 ```javascript
 function setupPreso() {
   if (preso_started)
@@ -15,4 +17,11 @@ function setupPreso() {
 
   document.onkeydown = keyDown
 }
+```
+!SLIDE execute
+
+# Executable JavaScript #
+
+```javascript
+result = 3 + 3;
 ```
