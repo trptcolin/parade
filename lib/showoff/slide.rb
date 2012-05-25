@@ -81,10 +81,15 @@ module ShowOff
     def metadata
       @metadata || Helpers::Metadata.new
     end
-
+    
     # @return [String] the CSS classes for the slide
-    def classes
-      metadata.classes.join(" ")
+    def slide_classes
+      title.downcase.gsub(' ','-')
+    end
+    
+    # @return [String] the CSS classes for the content section of the slide
+    def content_classes
+      (metadata.classes + [ section.title.downcase ]).join(" ")
     end
 
     # @return [String] the transition style for the slide
