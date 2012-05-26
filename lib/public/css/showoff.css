@@ -115,9 +115,30 @@
   vertical-align: middle;
 }
 
-.content.columns blockquote {
+/* Column Layout */
+
+/* Center the images when they are within a column */
+.content.columns img {
+  margin: 0 auto;
+  display: block;
+}
+
+
+.content.columns .grid_6 p {
   font-size: 150%;
-  margin: 2em;
+}
+
+.content.columns .grid_4 p {
+  font-size: 125%;
+}
+
+.content.columns pre {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.content.columns .grid_3 p {
+  font-size: 100%;
 }
 
 .content.columns h2 {

@@ -26,6 +26,20 @@ centers images on a slide
 
 ![octocat](../images/octocat.png)
 
+!SLIDE columns
+
+# Features
+
+## Markdown
+
+All content is written and managed in markdown
+
+## Code
+
+```ruby
+class ShowOff
+end
+```
 
 !SLIDE columns
 
@@ -42,9 +56,36 @@ class ShowOff
 end
 ```
 
-## Web-Powered
+## Execution
 
-* Ruby, Javascript, and CSS
+> Code will execute live
+
+
+!SLIDE columns
+
+# Features
+
+## Markdown
+
+All content is written and managed in markdown
+
+## Code
+
+```ruby
+class ShowOff
+end
+```
+
+## Execution
+
+> Code will execute live
+
+
+## Powered
+
+* Ruby
+* Javascript
+* CSS
 
 !SLIDE bullets
 
