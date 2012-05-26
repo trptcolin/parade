@@ -26,6 +26,8 @@ module ShowOff
     set :presentation_directory do
       File.expand_path Dir.pwd
     end
+    
+    set :presentation_file, 'showoff'
 
     set :default_presentation_files, [ 'showoff', 'showoff.json' ]
 
