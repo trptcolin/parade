@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency      "json"
   s.add_dependency      "gli",">= 1.3.2"
   s.add_dependency      "parslet"
+  s.add_dependency      "rubypython", "0.5.1"
   s.add_dependency      "pygments.rb", '0.1.3'
   s.add_dependency      "css_parser"
   s.add_development_dependency "mg"
