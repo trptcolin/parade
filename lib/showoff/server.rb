@@ -26,7 +26,7 @@ module ShowOff
     set :presentation_directory do
       File.expand_path Dir.pwd
     end
-    
+
     set :presentation_file, 'showoff'
 
     set :default_presentation_files, [ 'showoff', 'showoff.json' ]
@@ -83,6 +83,9 @@ module ShowOff
         presentation.to_html
       end
 
+      def pause_message
+        presentation.pause_message
+      end
     end
 
     get %r{(?:image|file)/(.*)} do

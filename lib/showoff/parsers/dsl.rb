@@ -75,6 +75,10 @@ module ShowOff
         current_section.add_template template_name, File.join(options[:current_path], template_file)
       end
       
+      def pause_message(message)
+        current_section.pause_message = message
+      end
+      
       # @return [Hash] configuration options that the DSL class will use
       #   and pass to other file and directory parsers to ensure the
       #   path information is presevered correctly.
