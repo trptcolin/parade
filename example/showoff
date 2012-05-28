@@ -3,6 +3,8 @@ title "Example Presentation"
 
 description "Several showoff examples to assist with showing others how to get started with ShowOff"
 
+pause_message "Visit github.com/schacon/showoff"
+
 section "Introduction" do
   slides "intro.md"
   slides "installation.md"

@@ -35,6 +35,7 @@ module ShowOff
 
         dsl_content << "title '#{content['name']}'\n" if content['name']
         dsl_content << "description %{#{content['description']}}\n" if content['description']
+        dsl_content << "pause_message %{#{content['pause_msg']}}" if content['pause_msg']
 
         templates = content['templates'] || {}
 
