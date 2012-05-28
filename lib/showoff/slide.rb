@@ -67,22 +67,10 @@ module ShowOff
     # A slide can contain various metadata to help define additional information
     # about it.
     #
-    # @see ShowOff::Helpers::Metadata
+    # @param [ShowOff::Helpers::Metadata] value metadata object which contains
+    #   information for the slide
     #
-    # @example Slide Metadata
-    #
-    #     !SlIDE transition=fade one two #id three
-    #
-    # @param [String] value raw metadata from the slide
-    #
-    def metadata=(value)
-      @metadata = Helpers::Metadata.parse(value)
-    end
-
-    # @return [ShowOff::Helpers::Metadata] an instance of metadata for the slide.
-    def metadata
-      @metadata || Helpers::Metadata.new
-    end
+    attr_accessor :metadata
 
     # @return [String] the CSS classes for the slide
     def slide_classes
@@ -125,7 +113,7 @@ module ShowOff
 
     # @return [ERB] an ERB template that this slide will be rendered into
     def template_file
-      erb_template_file = File.join File.dirname(__FILE__), "..", "views", "slide.erb"
+      erb_template_file = metadata.template || File.join(File.dirname(__FILE__), "..", "views", "slide.erb")
       ERB.new File.read(erb_template_file)
     end
 

@@ -10,14 +10,14 @@ module ShowOff
         relative_path = File.dirname(filepath).gsub(options[:root_path].gsub(/\/$/,''),'')
         slides_content = MarkdownImagePaths.parse(slides_content,:path => relative_path)
 
-        create_section_with slides_content
+        create_section_with slides_content, options
       end
 
       private
 
-      def self.create_section_with(slides_content)
+      def self.create_section_with(slides_content,options)
         section = Section.new
-        section.add_slides(MarkdownSlideSplitter.parse(slides_content))
+        section.add_slides(MarkdownSlideSplitter.parse(slides_content,options))
         section
       end
 

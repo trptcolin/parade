@@ -17,7 +17,7 @@ module ShowOff
 
     # @param [String] title the new title of the section
     attr_writer :title
-    
+
     # @return [String] the title of the section
     def title
       @title ? @title : (section ? section.title : "Section")
@@ -30,7 +30,6 @@ module ShowOff
     #   of Slide objects.
     attr_reader :sections
 
-
     # @return [Section] the parent section of this section. nil if this is a
     #   root section.
     attr_accessor :section
@@ -38,7 +37,7 @@ module ShowOff
     #
     # Append sections to this section.
     #
-    # @param [Section,Array<Section>] content this any section that you want to 
+    # @param [Section,Array<Section>] content this any section that you want to
     #   add to this section.
     #
     def add_section(sub_sections)
@@ -53,7 +52,7 @@ module ShowOff
     #
     # Append slides to this setion.
     #
-    # @param [Slide,Array<Slide>] content this any section that you want to 
+    # @param [Slide,Array<Slide>] content this any section that you want to
     #   add to this section.
     #
     def add_slides(slides)
@@ -61,11 +60,11 @@ module ShowOff
         slide.section = self
         slide
       end
-      
+
       @sections = @sections + sub_slides
       sub_slides
     end
-    
+
     # @return [Array<Slide>] the slides contained within this section and any
     #   sub-section.
     def slides
