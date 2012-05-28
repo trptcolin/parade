@@ -113,7 +113,7 @@ module ShowOff
 
     # @return [ERB] an ERB template that this slide will be rendered into
     def template_file
-      erb_template_file = metadata.template || File.join(File.dirname(__FILE__), "..", "views", "slide.erb")
+      erb_template_file = section.template metadata.template
       ERB.new File.read(erb_template_file)
     end
 

@@ -1,4 +1,4 @@
-!SLIDE tpl=blue.erb
+!SLIDE
 
 # Features
 

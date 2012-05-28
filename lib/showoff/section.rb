@@ -12,6 +12,8 @@ module ShowOff
       @description = ""
       @post_renderers = []
       @sections = []
+
+      @templates = {}
       params.each {|k,v| send("#{k}=",v) if respond_to? "#{k}=" }
     end
 
@@ -63,6 +65,63 @@ module ShowOff
 
       @sections = @sections + sub_slides
       sub_slides
+    end
+
+    #
+    # @example 'opening' would be the template name and 'custom_template.erb'
+    #   would be the template filename.
+    #
+    #     section "Introduction" do
+    #       template "opening", "custom_template.erb"
+    #     end
+    #
+    # @param [String] template_name the name of the template which it is
+    #   referred to by the slides.
+    #
+    # @param [Types] template_filepath the filepath to the template to be loaded
+    #
+    def add_template(template_name,template_filepath)
+      @templates[template_name] = template_filepath
+    end
+
+    #
+    # @param [String] template_name the name of the template
+    # @param [Boolean] use_default_when_nil if while searching for the template
+    #   it should use the parent section's default template. This usually wants
+    #   to be false when looking for a specific template.
+    # 
+    # @return [String] the filepath of the parent section template
+    def parent_section_template(template_name,use_default_when_nil=true)
+      section.template(template_name,use_default_when_nil) if section
+    end
+    
+    #
+    # @return [String] the filepath of the default slide template.
+    def default_template
+      File.join(File.dirname(__FILE__), "..", "views", "slide.erb")
+    end
+
+    #
+    # Given the template name return the template file name associated with it.
+    # When a template is not found with the name within the section, the section
+    # traverses parent sections until it is found.
+    # 
+    # A default template can be defined for a section which it will default
+    # to when no template name has been specified or the template name could
+    # not be found. Again the parent sections will be traversed if they have
+    # a default template.
+    # 
+    # When there is no template specified or found within then it will default
+    # to the original slide template.
+    # 
+    # @param [String] template_name the name of the template to retrieve.
+    #
+    # @return [String] the filepath to the template, given the template name.
+    #
+    def template(template_name,use_default_when_nil = true)
+      template_for_name = @templates[template_name] || parent_section_template(template_name,false)
+      template_for_name = (@templates['default'] || parent_section_template('default')) unless template_for_name and use_default_when_nil
+      template_for_name || default_template
     end
 
     # @return [Array<Slide>] the slides contained within this section and any

@@ -1,4 +1,4 @@
-!SLIDE template=custom.erb
+!SLIDE template=custom
 
 # Slide Navigation
 

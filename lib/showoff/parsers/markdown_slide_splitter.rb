@@ -39,10 +39,11 @@ module ShowOff
           line = lines.shift
 
           if line =~ /^<?!SLIDE(.*)>?/
+
             # Remove the trailing > from the metadata
             metadata_string = Regexp.last_match(1).gsub(/>$/,'')
 
-            metadata = Helpers::Metadata.parse metadata_string, options
+            metadata = Helpers::Metadata.parse metadata_string
 
             current_slide = Slide.new(:metadata => metadata)
             slides << current_slide

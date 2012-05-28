@@ -70,7 +70,11 @@ module ShowOff
       end
 
       alias_method :slides, :section
-
+      
+      def template(template_name,template_file)
+        current_section.add_template template_name, File.join(options[:current_path], template_file)
+      end
+      
       # @return [Hash] configuration options that the DSL class will use
       #   and pass to other file and directory parsers to ensure the
       #   path information is presevered correctly.
