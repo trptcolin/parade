@@ -1,6 +1,8 @@
 require 'redcarpet'
 require 'pygments.rb'
 
+RubyPython.configure :python_exe => 'python2.6'
+
 module ShowOff
   module Renderers
     class HTMLwithPygments < Redcarpet::Render::XHTML
