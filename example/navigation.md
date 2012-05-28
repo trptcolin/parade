@@ -1,4 +1,4 @@
-!SLIDE
+!SLIDE template=custom
 
 # Slide Navigation
 

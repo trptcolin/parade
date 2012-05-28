@@ -1,7 +1,11 @@
 
 title "Advanced Features"
 
-slides "highlights.md"
+section "Highlights" do
+  template "default", "fade.erb"
+  slides "highlights.md"
+end
+
 slides "default_markers.md"
 slides "slide_markers.md"
 slides "slide_classes.md"

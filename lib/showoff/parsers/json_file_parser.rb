@@ -2,14 +2,15 @@ module ShowOff
   module Parsers
 
     #
-    # Load the JSON format of a presentation, convert it to the DSL format, 
+    # Load the JSON format of a presentation, convert it to the DSL format,
     # and then send it to the DSL parser.
-    # 
+    #
     # @example showoff.json format
-    # 
+    #
     #     {
     #       "name": "Something",
     #       "description": "Example Presentation",
+    #       "templates" : { "default" : "custom.tpl" },
     #       "sections": [
     #         {"section":"one"},
     #         {"section":"two"},
@@ -34,6 +35,12 @@ module ShowOff
 
         dsl_content << "title '#{content['name']}'\n" if content['name']
         dsl_content << "description %{#{content['description']}}\n" if content['description']
+
+        templates = content['templates'] || {}
+
+        templates.each do |template_name,template_file|
+          dsl_content << "template '#{template_name}', '#{template_file}'\n"
+        end
 
         Array(content['sections']).each do |section|
 
