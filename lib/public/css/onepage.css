@@ -1,7 +1,7 @@
 /* Screen */
 @media screen {
   body {
-    overflow:visible;
+    overflow:scroll;
   }
   .slide {
       margin: 10px;
