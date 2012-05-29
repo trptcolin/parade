@@ -1,3 +1,4 @@
+require_relative '../renderers/inline_images'
 
 module ShowOff
   module Commands

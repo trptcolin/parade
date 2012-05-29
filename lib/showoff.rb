@@ -13,13 +13,13 @@ rescue LoadError
   $stderr.puts %{
 --------------------------------------------------------------------------------
   Please install RMagick:
-  
+
   $ gem install rmagick
-  
+
   RMagick is required for:
-  
+
     * Static output to ensure images are included with the documents
-    * Web rendering, auto-re-sizing of images 
+    * Web rendering, auto-re-sizing of images
 --------------------------------------------------------------------------------
 }
 end
@@ -41,4 +41,3 @@ end
 
 require_relative 'showoff/helpers/encode_image'
 require_relative 'showoff/server'
-require_relative 'showoff/utilities'
