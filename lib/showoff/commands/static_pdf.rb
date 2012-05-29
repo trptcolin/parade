@@ -4,6 +4,7 @@ module ShowOff
   module Commands
 
     class StaticPdf
+      include RenderFromTemplate
 
       def name
         "pdf"
@@ -48,16 +49,11 @@ module ShowOff
 
         root_node.add_post_renderer Renderers::InlineImages
 
-        template_options = {  'erb_template_file' => File.join(File.dirname(__FILE__), "..", "..", "views", "#{options['template']}.erb"),
+        template_options = {  'erb_template_file' => File.join(default_view_path, "#{options['template']}.erb"),
                               'custom_asset_path' => root_path,
                               'slides' => root_node.to_html }
 
         render_template template_options
-      end
-
-      def render_template(options)
-        template = TemplateGenerator.new options
-        template.render
       end
 
     end

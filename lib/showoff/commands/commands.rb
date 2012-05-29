@@ -1,4 +1,4 @@
-require_relative '../helpers/template_generator'
+require_relative 'render_from_template'
 
 require_relative 'static_html'
 require_relative 'static_pdf'

@@ -2,6 +2,7 @@ module ShowOff
   module Commands
 
     class GenerateRackup
+      include RenderFromTemplate
 
       def name
         "rackup"
@@ -20,21 +21,9 @@ module ShowOff
       end
 
       def rackup_template(options)
-        template_options = {  'erb_template_file' => File.join(File.dirname(__FILE__), "..", "..", "templates", "#{rackup_filename}.erb") }.merge(options)
+        template_options = {  'erb_template_file' => File.join(default_template_path, "#{rackup_filename}.erb") }.merge(options)
 
         render_template template_options
-      end
-
-      def render_template(options)
-        template = TemplateGenerator.new options
-        template.render
-      end
-
-      def create_file_with_template(filename,template,options)
-        return if (File.exists?(filename) and not options.key?(:force))
-        File.open(filename,'w+') do |file|
-          file.puts send(template,options)
-        end
       end
 
     end
