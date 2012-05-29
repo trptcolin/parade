@@ -3,6 +3,8 @@
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'showoff'
 require 'showoff/version'
+require 'showoff/commands/commands'
+
 require 'rubygems'
 require 'gli'
 
@@ -12,7 +14,7 @@ version ShowOff::VERSION
 
 desc 'Generate assets (e.g. sections or slides) for your presentation'
 arg_name 'asset_name'
-long_desc "#{ShowOff::Utilities.generators.map {|k,v| "#{k} - #{v}" }.join("\n\n")}"
+long_desc "#{ShowOff::Commands.generators.map {|k,v| "#{k} - #{v.description}" }.join("\n\n")}"
 command [:g,:gen,:generate] do |c|
 
   c.desc "Force creation of the asset, even if one already exists with a similar name"
@@ -25,7 +27,7 @@ command [:g,:gen,:generate] do |c|
     parsed_arguments = Hash[*key_value_args]
     all_parameters = global.merge(local).merge(parsed_arguments)
 
-    ShowOff::Utilities.generate(asset_name,all_parameters) if asset_name
+    ShowOff::Commands.execute(:generator,asset_name,all_parameters) if asset_name
   end
 
 end
@@ -80,7 +82,7 @@ end
 desc 'Output the presentation in a particular format'
 arg_name 'format_type'
 arg_name '[pres_dir]'
-long_desc "#{ShowOff::Utilities.statics.map {|k,v| "#{k} - #{v}" }.join("\n\n")}"
+long_desc "#{ShowOff::Commands.statics.map {|k,v| "#{k} - #{v.description}" }.join("\n\n")}"
 command [:static] do |c|
 
   c.desc "Force creation of the asset, even if one already exists with a similar name"
@@ -101,7 +103,7 @@ command [:static] do |c|
     all_parameters = global.merge(local).merge(parsed_arguments)
 
     all_parameters.merge!('filepath' => presentation_filepath, 'showoff_file' => filename)
-    ShowOff::Utilities.static(format_type,all_parameters) if format_type
+    ShowOff::Commands.execute(:static,format_type,all_parameters) if format_type
   end
 
 end
@@ -125,10 +127,10 @@ end
 
 
 # To allow an easier command-line to launch showoff, the following format
-# 
+#
 #     `showoff` is converted to `showoff server .`
 #     `showoff [directoryname] is convereted `showoff server [directoryname]`
-# 
+#
 
 parameters = ARGV
 
