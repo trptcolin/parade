@@ -14,6 +14,14 @@ describe ShowOff::Renderers::UpdateImagePaths do
     it "should update the img src paths correctly" do
       subject.render(content).should eq expected_content
     end
+
+    context "when the image src has single quotes" do
+      let(:content) { IMG_WITH_SINGLE_QUOTES }
+
+      it "should update the img src paths correctly" do
+        subject.render(content).should eq expected_content
+      end
+    end
   end
 
   context "when Magick has been installed" do

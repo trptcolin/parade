@@ -10,7 +10,7 @@ module ShowOff
 
       def self.render(content,options = {})
 
-        content.gsub(/img src="\/?([^\/].*?)"/) do |image_source|
+        content.gsub(/img src=["']\/?([^\/].*?)["']/) do |image_source|
           image_name = Regexp.last_match(1)
 
           base64_data = image_path_to_base64(image_name)
