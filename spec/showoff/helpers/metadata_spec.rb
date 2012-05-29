@@ -2,8 +2,8 @@ require_relative 'spec_helper'
 
 describe ShowOff::Helpers::Metadata do
 
-  let(:metadata) { "transition=fade one two #id three tpl=custom.erb" }
-  subject { described_class.parse metadata, { :current_path => 'example' } }
+  let(:metadata) { "transition=fade one two #id three tpl=custom" }
+  subject { described_class.parse metadata }
 
   let(:expected_transition) { "fade" }
   its(:transition) { should eq expected_transition }
@@ -14,7 +14,7 @@ describe ShowOff::Helpers::Metadata do
   let(:expected_id) { "id" }
   its(:id) { should eq expected_id }
 
-  let(:expected_template) { "example/custom.erb" }
+  let(:expected_template) { "custom" }
   its(:template) { should eq expected_template }
 
   context "when created with no metadata" do
