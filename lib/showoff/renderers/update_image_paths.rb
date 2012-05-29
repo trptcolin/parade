@@ -28,10 +28,9 @@ module ShowOff
       def render(content,options = {})
         render_root_path = options[:root_path] || root_path || "."
 
-        content.gsub(/img src=["']\/?([^\/].*?)["']/) do |image_source|
-
+        content.gsub(/img src=["'](?!https?:\/\/)\/?([^\/].*?)["']/) do |image_source|
           image_name = Regexp.last_match(1)
-
+          
           html_image_path = File.join("/","image",image_name)
           updated_image_source = %{img src="#{html_image_path}"}
 

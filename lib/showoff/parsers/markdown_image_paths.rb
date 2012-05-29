@@ -32,7 +32,7 @@ module ShowOff
       def self.parse(content,options = {})
         return content unless options[:path]
 
-        content.gsub(/!\[([^\]]*)\]\((.+)\)/) do |match|
+        content.gsub(/!\[([^\]]*)\]\((?!https?:\/\/)(.+)\)/) do |match|
           updated_image_path = File.join(options[:path],$2)
           %{![#{$1}](#{updated_image_path})}
         end
