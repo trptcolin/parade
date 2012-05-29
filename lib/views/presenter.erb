@@ -7,6 +7,13 @@
   <%= css '960.css' %>
   <%= css 'presenter.css'%>
   <%= js 'presenter.js' %>
+  
+  <script type="text/javascript">
+  $(function(){
+      setupPreso(<%= slides.nil? ? "true" : "false"%>, './');
+  });
+  </script>
+  
 </head>
 
 <body>
@@ -64,6 +71,9 @@
 
 <div id="slides" class="offscreen" <%= 'style="display:none;"' if slides %>>
 <%= slides %>
+</div>
+<div id="pauseScreen">
+  <%= pause_message %>
 </div>
 
 </body>
