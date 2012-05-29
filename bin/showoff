@@ -3,6 +3,8 @@
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'showoff'
 require 'showoff/version'
+require 'showoff/commands/commands'
+
 require 'rubygems'
 require 'gli'
 
@@ -12,7 +14,7 @@ version ShowOff::VERSION
 
 desc 'Generate assets (e.g. sections or slides) for your presentation'
 arg_name 'asset_name'
-long_desc "#{ShowOff::Utilities.generators.map {|k,v| "#{k} - #{v}" }.join("\n\n")}"
+long_desc "#{ShowOff::Commands::Commands.generators.map {|k,v| "#{k} - #{v.description}" }.join("\n\n")}"
 command [:g,:gen,:generate] do |c|
 
   c.desc "Force creation of the asset, even if one already exists with a similar name"
@@ -80,7 +82,7 @@ end
 desc 'Output the presentation in a particular format'
 arg_name 'format_type'
 arg_name '[pres_dir]'
-long_desc "#{ShowOff::Utilities.statics.map {|k,v| "#{k} - #{v}" }.join("\n\n")}"
+long_desc "#{ShowOff::Commands::Commands.statics.map {|k,v| "#{k} - #{v.description}" }.join("\n\n")}"
 command [:static] do |c|
 
   c.desc "Force creation of the asset, even if one already exists with a similar name"
@@ -125,10 +127,10 @@ end
 
 
 # To allow an easier command-line to launch showoff, the following format
-# 
+#
 #     `showoff` is converted to `showoff server .`
 #     `showoff [directoryname] is convereted `showoff server [directoryname]`
-# 
+#
 
 parameters = ARGV
 

@@ -27,7 +27,7 @@ module ShowOff
       end
 
       def self.statics
-        @statics.values
+        @statics
       end
 
       static "html", StaticHtml.new
@@ -44,7 +44,7 @@ module ShowOff
       end
 
       def self.generators
-        @generators.values
+        @generators
       end
 
       generator "presentation", GeneratePresentation.new
