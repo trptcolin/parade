@@ -14,7 +14,7 @@ module ShowOff
 
       def generate(options)
         outline_filename = options['outline'] || default_outline_filename
-        create_file_with_template outline_filename, "outline_template", options
+        create_file_with_contents outline_filename, outline_template(options), options
       end
 
       def default_outline_filename

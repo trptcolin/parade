@@ -13,7 +13,7 @@ module ShowOff
       end
 
       def generate(options)
-        create_file_with_template rackup_filename, "rackup_template", options
+        create_file_with_contents rackup_filename, rackup_template(options), options
       end
 
       def rackup_filename

@@ -18,11 +18,12 @@ module ShowOff
         template.render
       end
 
-      def create_file_with_template(filename,template,options)
+      def create_file_with_contents(filename,contents,options)
         return if (File.exists?(filename) and not options.key?(:force))
         File.open(filename,'w+') do |file|
-          file.puts send(template,options)
+          file.puts contents
         end
+        true
       end
 
     end
