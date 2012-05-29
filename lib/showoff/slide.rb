@@ -34,6 +34,7 @@ module ShowOff
     #
     def initialize(params={})
       @content = ""
+      @metadata = Helpers::Metadata.new
       params.each {|k,v| send("#{k}=",v) if respond_to? "#{k}=" }
     end
 
@@ -71,7 +72,7 @@ module ShowOff
     #   information for the slide
     #
     attr_accessor :metadata
-
+    
     # @return [String] the CSS classes for the slide
     def slide_classes
       title.downcase.gsub(' ','-')
