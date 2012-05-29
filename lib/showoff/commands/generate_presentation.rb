@@ -1,6 +1,10 @@
 module ShowOff
   module Commands
-
+    
+    #
+    # Generates a presentation directory and the presentation outline if it
+    # does not already exist.
+    # 
     class GeneratePresentation
       include RenderFromTemplate
 

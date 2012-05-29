@@ -3,6 +3,9 @@ require_relative 'html_output'
 module ShowOff
   module Commands
 
+    #
+    # Saves a PDF version of the presentation that is from the HtmlOutput
+    # 
     class StaticPdf
 
       def description

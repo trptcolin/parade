@@ -1,6 +1,9 @@
 module ShowOff
   module Commands
-
+    
+    # 
+    # Generate a showoff outline presentation file.
+    # 
     class GenerateOutline
       include RenderFromTemplate
 

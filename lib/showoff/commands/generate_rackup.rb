@@ -1,6 +1,10 @@
 module ShowOff
   module Commands
 
+    #
+    # Generates the a Rackup `config.ru` file to allow for presentations to
+    # be deployed to locations like Heroku.
+    #
     class GenerateRackup
       include RenderFromTemplate
 

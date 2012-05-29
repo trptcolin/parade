@@ -3,6 +3,14 @@ require_relative '../renderers/inline_images'
 module ShowOff
   module Commands
 
+    #
+    # HtmlOuput creates an HTML representation of the presentation and returns
+    # it from the generate method. This is to be consumed by other commands
+    # that my use this output to be saved or manipulated.
+    #
+    # @see StaticHtml
+    # @see StaticPdf
+    #
     class HtmlOutput
       include RenderFromTemplate
 

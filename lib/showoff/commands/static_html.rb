@@ -3,6 +3,11 @@ require_relative 'html_output'
 module ShowOff
   module Commands
 
+    #
+    # Saves an html representation of the presentation to a single HTML file.
+    # 
+    # @see HtmlOutput
+    # 
     class StaticHtml
       include RenderFromTemplate
 
