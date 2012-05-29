@@ -4,10 +4,6 @@ module ShowOff
     class GenerateOutline
       include RenderFromTemplate
 
-      def name
-        "outline"
-      end
-
       def description
         "A generic presentation file (i.e. #{default_outline_filename})"
       end

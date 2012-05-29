@@ -4,10 +4,6 @@ module ShowOff
     class GeneratePresentation
       include RenderFromTemplate
 
-      def name
-        "presentation"
-      end
-
       def description
         "A presentation folder with outline file"
       end

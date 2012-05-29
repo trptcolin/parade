@@ -4,10 +4,6 @@ module ShowOff
     class GenerateRackup
       include RenderFromTemplate
 
-      def name
-        "rackup"
-      end
-
       def description
         "A default rackup file (i.e. #{rackup_filename})"
       end

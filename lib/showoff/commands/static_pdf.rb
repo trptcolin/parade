@@ -5,10 +5,6 @@ module ShowOff
 
     class StaticPdf
 
-      def name
-        "pdf"
-      end
-
       def description
         "Output into a PDF format"
       end

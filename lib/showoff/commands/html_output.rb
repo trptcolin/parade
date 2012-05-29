@@ -6,10 +6,6 @@ module ShowOff
     class HtmlOutput
       include RenderFromTemplate
 
-      def name
-        "html"
-      end
-
       def description
         "This method returns HTML output"
       end

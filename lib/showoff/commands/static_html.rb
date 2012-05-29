@@ -6,10 +6,6 @@ module ShowOff
     class StaticHtml
       include RenderFromTemplate
 
-      def name
-        "html"
-      end
-
       def description
         "Output into a single HTML file"
       end
