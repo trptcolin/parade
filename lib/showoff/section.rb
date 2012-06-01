@@ -141,9 +141,12 @@ module ShowOff
     # @return [Array<Slide>] the slides contained within this section and any
     #   sub-section.
     def slides
-      sections.map do |section_or_slide|
+      sections_slides = sections.map do |section_or_slide|
         section_or_slide.slides
       end.flatten
+      
+      # Update the sequence on all the slides for the entire section.
+      sections_slides.each_with_index {|slide,count| slide.sequence = (count + 1) }
     end
 
     # @return [Array<#render>] returns a list of Renderers that will perform
@@ -161,7 +164,7 @@ module ShowOff
 
     # @return [String] HTML representation of the section
     def to_html
-      sections.map do |section_or_slide|
+      slides.map do |section_or_slide|
         post_renderers.inject(section_or_slide.to_html) do |content,renderer|
           renderer.render(content)
         end
