@@ -1,9 +1,13 @@
 require_relative 'helpers/metadata'
+require_relative 'renderers/html_with_pygments'
+require_relative 'renderers/command_line_renderer'
+require_relative 'renderers/special_paragraph_renderer'
+require_relative 'renderers/columns_renderer'
 
 module ShowOff
 
   #
-  # The Slide is the core class of the Presentation. The slide aggregates the 
+  # The Slide is the core class of the Presentation. The slide aggregates the
   # markdown content, the slide metadata, and the slide template to create the
   # HTML representation of the slide for ShowOff.
   #
@@ -16,6 +20,10 @@ module ShowOff
 
     attr_accessor :section
 
+    def title
+      section ? section.title : "Slide"
+    end
+
     def reference
       "#{section ? section.title : 'slide'}/#{sequence}"
     end
@@ -26,6 +34,7 @@ module ShowOff
     #
     def initialize(params={})
       @content = ""
+      @metadata = Helpers::Metadata.new
       params.each {|k,v| send("#{k}=",v) if respond_to? "#{k}=" }
     end
 
@@ -59,25 +68,18 @@ module ShowOff
     # A slide can contain various metadata to help define additional information
     # about it.
     #
-    # @see ShowOff::Helpers::Metadata
+    # @param [ShowOff::Helpers::Metadata] value metadata object which contains
+    #   information for the slide
     #
-    # @example Slide Metadata
-    #
-    #     !SlIDE transition=fade one two #id three
-    #
-    # @param [String] value raw metadata from the slide
-    #
-    def metadata=(value)
-      @metadata = Helpers::Metadata.parse(value)
-    end
-
-    # @return [ShowOff::Helpers::Metadata] an instance of metadata for the slide.
-    def metadata
-      @metadata || Helpers::Metadata.new
-    end
-
+    attr_accessor :metadata
+    
     # @return [String] the CSS classes for the slide
-    def classes
+    def slide_classes
+      title.downcase.gsub(' ','-')
+    end
+
+    # @return [String] the CSS classes for the content section of the slide
+    def content_classes
       metadata.classes.join(" ")
     end
 
@@ -91,30 +93,35 @@ module ShowOff
       metadata.id.to_s
     end
 
+    def pre_renderers
+      [ Renderers::HTMLwithPygments ]
+    end
+
+    def post_renderers
+      [ Renderers::SpecialParagraphRenderer,
+        Renderers::CommandLineRenderer,
+        Renderers::ColumnsRenderer.new(:css_class => 'columns',:html_element => "h2",:segments => 12) ]
+    end
+
     # @return [String] HTML rendering of the slide's raw contents.
     def content_as_html
-      markdown = Redcarpet::Markdown.new(Renderers::HTMLwithPygments,
-        :fenced_code_blocks => true,
-        :no_intra_emphasis => true,
-        :autolink => true,
-        :strikethrough => true,
-        :lax_html_blocks => true,
-        :superscript => true,
-        :hard_wrap => true,
-        :tables => true,
-        :xhtml => true)
-      markdown.render(content.to_s)
+      pre_renderers.inject(content) {|content,renderer| renderer.render(content) }
+    end
+
+    def slides
+      self
     end
 
     # @return [ERB] an ERB template that this slide will be rendered into
     def template_file
-      erb_template_file = File.join File.dirname(__FILE__), "..", "views", "slide.erb"
+      erb_template_file = section.template metadata.template
       ERB.new File.read(erb_template_file)
     end
 
     # @return [String] the HTML representation of the slide
     def to_html
-      template_file.result(binding)
+      content = template_file.result(binding)
+      post_renderers.inject(content) {|content,renderer| renderer.render(content) }
     end
 
   end

@@ -1,3 +1,5 @@
+require_relative '../slide'
+
 module ShowOff
   module Parsers
 
@@ -17,7 +19,7 @@ module ShowOff
       #
       # @param [String] content content that is markdown format
       # @return [Array] slides parsed from the markdown content
-      def self.parse(content)
+      def self.parse(content,options = {})
 
         # if there are no !SLIDE markers, then make every H1 define a new slide
         unless content =~ /^\<?!SLIDE/m
@@ -37,8 +39,11 @@ module ShowOff
           line = lines.shift
 
           if line =~ /^<?!SLIDE(.*)>?/
+
             # Remove the trailing > from the metadata
-            metadata = Regexp.last_match(1).gsub(/>$/,'')
+            metadata_string = Regexp.last_match(1).gsub(/>$/,'')
+
+            metadata = Helpers::Metadata.parse metadata_string
 
             current_slide = Slide.new(:metadata => metadata)
             slides << current_slide

@@ -1,18 +1,30 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <title><%= @title %></title>
+  <title><%= title %></title>
 
   <meta name="viewport" content="width=device-width"/>
+  <%= css 'reset.css' %>
+  <%= css 'showoff.css' %>
 
-  <link rel="stylesheet" href="<%= @asset_path %>css/reset.css" type="text/css"/>
-  <link rel="stylesheet" href="<%= @asset_path %>css/showoff.css" type="text/css"/>
-  
-  <link rel="stylesheet" href="<%= @asset_path %>merlot/stylesheets/core.css" media="screen"/>
-  <link rel="stylesheet" href="<%= @asset_path %>merlot/stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
-  <link rel="stylesheet" href="<%= @asset_path %>merlot/stylesheets/pygment_trac.css"/>
+  <%= js 'jquery-1.4.2.min.js' %>
+  <%= js 'jquery.cycle.all.js' %>
+  <%= js 'jquery-print.js' %>
+  <%= js 'jquery.batchImageLoad.js' %>
 
-  <link type="text/css" href="<%= @asset_path %>css/fg.menu.css" media="screen" rel="stylesheet" />
-  <link type="text/css" href="<%= @asset_path %>css/theme/ui.all.css" media="screen" rel="stylesheet" />
-  <link type="text/css" href="<%= @asset_path %>css/ghf_marked.css" media="screen" rel="stylesheet" />
+  <%= js 'jquery.doubletap-0.1.js' %>
+  <%= js 'fg.menu.js' %>
+  <%= js 'showoff.js' %>
+  <%= js 'jTypeWriter.js' %>
+  <%= js 'sh_main.min.js' %>
+  <%= js 'core.js' %>
+  <%= js 'showoffcore.js' %>
+  <%= js 'coffee-script.js' %>
+
+  <%= css 'fg.menu.css' %>
+  <%= css 'theme/ui.all.css' %>
+  <%= css 'ghf_marked.css' %>
+
+  <%= custom_css_files %>
+  <%= custom_js_files %>
 
   <style type="text/css">
   h1 { font-size: 5em; }
@@ -22,38 +34,5 @@
   blockquote p { margin-left: 20px; }
 /*  li { list-style-type: none; }*/
   blockquote { font-size: 30px; font-style: italic; }
-  
+
   </style>
-
-  <script type="text/javascript" src="<%= @asset_path %>merlot/javascripts/modernizr.js"></script>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script type="text/javascript" src="<%= @asset_path %>merlot/javascripts/headsmart.min.js"></script>
-  
-  <script type="text/javascript" src="<%= @asset_path %>js/jquery-1.4.2.min.js"></script>
-  <script type="text/javascript" src="<%= @asset_path %>js/jquery.cycle.all.js"></script>
-	<script type="text/javascript" src="<%= @asset_path %>js/jquery-print.js"></script>
-  <script type="text/javascript" src="<%= @asset_path %>js/jquery.batchImageLoad.js"></script>
-
-  <script type="text/javascript" src="<%= @asset_path %>js/jquery.doubletap-0.1.js"></script>
-
-  <script type="text/javascript" src="<%= @asset_path %>js/fg.menu.js"></script>
-  <script type="text/javascript" src="<%= @asset_path %>js/showoff.js"></script>
-  <script type="text/javascript" src="<%= @asset_path %>js/jTypeWriter.js"> </script>
-  <script type="text/javascript" src="<%= @asset_path %>js/sh_main.min.js"></script>
-  <script type="text/javascript" src="<%= @asset_path %>js/core.js"></script>
-  <script type="text/javascript" src="<%= @asset_path %>js/showoffcore.js"></script>
-  <script type="text/javascript" src="<%= @asset_path %>js/coffee-script.js"></script>
-
-  <% css_files.each do |css_file| %>
-    <link rel="stylesheet" href="<%= @asset_path %>file/<%= css_file %>" type="text/css"/>
-  <% end %>
-
-  <% js_files.each do |js_file| %>
-    <script type="text/javascript" src="<%= @asset_path %>file/<%= js_file %>"></script>
-  <% end %>
-
-  <script type="text/javascript">
-  $(function(){
-      setupPreso(<%= @slides.nil? ? "true" : "false"%>, '<%= @asset_path %>');
-  });
-  </script>

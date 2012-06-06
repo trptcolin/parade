@@ -11,7 +11,7 @@ module ShowOff
     #
     class UpdateImagePaths
 
-      attr_accessor :rootpath
+      attr_accessor :root_path
 
       def initialize(params = {})
         params.each {|k,v| send("#{k}=",v) if respond_to? "#{k}=" }
@@ -26,17 +26,15 @@ module ShowOff
       end
 
       def render(content,options = {})
+        render_root_path = options[:root_path] || root_path || "."
 
-        render_rootpath = options[:rootpath] || rootpath || "."
-
-        content.gsub(/img src="\/?([^\/].*?)"/) do |image_source|
-
+        content.gsub(/img src=["'](?!https?:\/\/)\/?([^\/].*?)["']/) do |image_source|
           image_name = Regexp.last_match(1)
-
+          
           html_image_path = File.join("/","image",image_name)
           updated_image_source = %{img src="#{html_image_path}"}
 
-          html_asset_path = File.join(render_rootpath,image_name)
+          html_asset_path = File.join(render_root_path,image_name)
           width, height = get_image_size(html_asset_path)
           updated_image_source << %( width="#{width}" height="#{height}") if width and height
 

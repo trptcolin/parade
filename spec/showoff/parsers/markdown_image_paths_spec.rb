@@ -52,6 +52,18 @@ describe ShowOff::Parsers::MarkdownImagePaths do
           subject.parse(content, :path => 'section').should eq expected_content
         end
       end
+
+      context "when an image is an external source" do
+
+        let(:content) { IMAGE_WITH_EXTERNAL_SRC }
+        let(:expected_content) { EXPECTED_IMAGE_WITH_EXTERNAL_SRC }
+
+        it "should not update the path of the image" do
+          subject.parse(content, :path => 'section').should eq expected_content
+        end
+
+      end
+
     end
   end
 

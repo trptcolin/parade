@@ -2,7 +2,7 @@ require_relative 'spec_helper'
 
 describe ShowOff::Helpers::Metadata do
 
-  let(:metadata) { "transition=fade one two #id three" }
+  let(:metadata) { "transition=fade one two #id three tpl=custom" }
   subject { described_class.parse metadata }
 
   let(:expected_transition) { "fade" }
@@ -14,9 +14,12 @@ describe ShowOff::Helpers::Metadata do
   let(:expected_id) { "id" }
   its(:id) { should eq expected_id }
 
+  let(:expected_template) { "custom" }
+  its(:template) { should eq expected_template }
+
   context "when created with no metadata" do
     subject { described_class.new }
-    
+
     its(:classes) { should eq [] }
     its(:transition) { should eq nil }
     its(:id) { should eq nil }

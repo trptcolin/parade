@@ -2,7 +2,9 @@
 
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'showoff'
-require 'showoff/version' 
+require 'showoff/version'
+require 'showoff/commands/commands'
+
 require 'rubygems'
 require 'gli'
 
@@ -10,86 +12,30 @@ include GLI
 
 version ShowOff::VERSION
 
-desc 'Create new showoff presentation'
-arg_name 'dir_name'
-long_desc 'This command helps start a new showoff presentation by setting up the proper directory structure for you.  It takes the directory name you would like showoff to create for you.'
-command [:create,:init] do |c|
+desc 'Generate assets (e.g. sections or slides) for your presentation'
+arg_name 'asset_name'
+long_desc "#{ShowOff::Commands.generators.map {|k,v| "#{k} - #{v.description}" }.join("\n\n")}"
+command [:g,:gen,:generate] do |c|
 
-  c.desc 'Don''t create sample slides'
-  c.switch [:n,:nosamples]
+  c.desc "Force creation of the asset, even if one already exists with a similar name"
+  c.switch [:f, :force]
 
-  c.desc 'sample slide directory name'
-  c.default_value 'one'
-  c.flag [:d,:slidedir]
+  c.action do |global,local,args|
 
-  c.action do |global_options,options,args|
-    raise "dir_name is required" if args.empty?
-    ShowOffUtils.create(args[0],!options[:n],options[:d])
-    if !options[:n]
-      puts "done. run 'showoff serve' in #{options[:d]}/ dir to see slideshow"
-    else
-      puts "done. add slides, modify #{ShowOffUtils.presentation_config_file} and then run 'showoff serve' in #{dirname}/ dir to see slideshow"
-    end
+    asset_name = args.shift
+    key_value_args = args.map {|arg| key, value = arg.split(/:|=/) ; [ key, value ] }.flatten
+    parsed_arguments = Hash[*key_value_args]
+    all_parameters = global.merge(local).merge(parsed_arguments)
+
+    ShowOff::Commands.execute(:generator,asset_name,all_parameters) if asset_name
   end
-end
 
-desc 'Puts your showoff presentation into a gh-pages branch'
-long_desc 'Generates a static version of your presentation into your gh-pages branch for publishing to GitHub Pages'
-command :github do |c|
-  c.action do |global_options,options,args|
-    puts "Generating static content"
-    ShowOffUtils.github
-    puts "I've updated your 'gh-pages' branch with the static version of your presentation."
-    puts "Push it to GitHub to publish it. Probably something like:"
-    puts
-    puts "  git push origin gh-pages"
-    puts
-  end
-end
-
-desc 'Serves the showoff presentation in the current directory'
-desc 'Setup your presentation to serve on Heroku'
-arg_name 'heroku_name'
-long_desc 'Creates the Gemfile and config.ru file needed to push a showoff pres to heroku.  It will then run ''heroku create'' for you to register the new project on heroku and add the remote for you.  Then all you need to do is commit the new created files and run ''git push heroku'' to deploy.'
-command :heroku do |c|
-
-  c.desc 'add password protection to your heroku site'
-  c.flag [:p,:password]
-
-  c.desc 'force overwrite of existing Gemfile/.gems and config.ru files if they exist'
-  c.switch [:f,:force]
-
-  c.desc 'Use older-style .gems file instead of bundler-style Gemfile'
-  c.switch [:g,:dotgems]
-
-  c.action do |global_options,options,args|
-    raise "heroku_name is required" if args.empty?
-    if ShowOffUtils.heroku(args[0],options[:f],options[:p],options[:g])
-      puts "herokuized. run something like this to launch your heroku presentation:
-
-      heroku create #{args[0]}"
-
-      if options[:g]
-      puts "        git add .gems config.ru"
-      else
-      puts "      bundle install"
-      puts "      git add Gemfile Gemfile.lock config.ru"
-      end
-      puts "      git commit -m 'herokuized'
-      git push heroku master
-      "
-
-      if options[:p]
-        puts "CAREFUL: you are commiting your access password - anyone with read access to the repo can access the preso\n\n"
-      end
-    end
-  end
 end
 
 desc 'Serves the showoff presentation in the specified (or current) directory'
 arg_name "[pres_dir]"
 default_value "."
-command :serve do |c|
+command [:s,:serve,:server] do |c|
 
   c.desc 'Show verbose messaging'
   c.switch :verbose
@@ -100,11 +46,7 @@ command :serve do |c|
 
   c.desc 'Host or ip to run on'
   c.default_value "localhost"
-  c.flag [:h,:host]  
-
-  c.desc 'JSON file used to describe presentation'
-  c.default_value "showoff.json"
-  c.flag [:f, :pres_file]
+  c.flag [:h,:host]
 
   c.action do |global_options,options,args|
 
@@ -121,52 +63,49 @@ To run it from presenter view, go to: [ #{url}/presenter ]
 -------------------------
 
 "
-    ShowOff::Server.run! :host => options[:h], :port => options[:p].to_i, :pres_file => options[:f], :presentation_directory => args[0], :verbose => options[:verbose]
+    presentation_filepath = args[0]
+
+    unless File.directory?(presentation_filepath)
+      filename = File.basename(presentation_filepath)
+      presentation_filepath = File.dirname(presentation_filepath)
+    end
+
+    ShowOff::Server.run! :host => options[:h],
+      :port => options[:p].to_i,
+      :presentation_directory => presentation_filepath,
+      :presentation_file => filename,
+      :verbose => options[:verbose]
+
   end
 end
 
-desc 'Add a new slide at the end in a given dir'
-arg_name '[title]'
-long_desc 'Outputs or creates a new slide.  With -d and -n, a new slide is created in the given dir, numbered to appear as the last slide in that dir (use -u to avoid numbering).  Without those, outputs the slide markdown to stdout (useful for shelling out from your editor). You may also specify a source file to use for a code slide'
-command [:add,:new] do |c|
-  c.desc 'Don''t number the slide, use the given name verbatim'
-  c.switch [:u,:nonumber]
-
-  c.desc 'Include code from the given file as the slide body'
-  c.arg_name 'path to file'
-  c.flag [:s,:source]
-
-  c.desc 'Slide Type/Style'
-  c.arg_name 'valid showoff style/type'
-  c.default_value 'title'
-  c.flag [:t,:type,:style]
-
-  c.desc 'Slide dir (where to put a new slide file)'
-  c.arg_name 'dir'
-  c.flag [:d,:dir]
-
-  c.desc 'Slide name (name of the new slide file)'
-  c.arg_name 'basename'
-  c.flag [:n,:name]
-
-  c.action do |global_options,options,args|
-    title = args.join(" ")
-    ShowOffUtils.add_slide(:dir => options[:d],
-                           :name => options[:n],
-                           :title => title,
-                           :number => !options[:u],
-                           :code => options[:s],
-                           :type => options[:t])
-  end
-end
-
-desc 'Generate static version of presentation'
-arg_name 'name'
-long_desc 'Creates a static, one page version of the presentation as {name}.html'
+desc 'Output the presentation in a particular format'
+arg_name 'format_type'
+arg_name '[pres_dir]'
+long_desc "#{ShowOff::Commands.statics.map {|k,v| "#{k} - #{v.description}" }.join("\n\n")}"
 command [:static] do |c|
-  c.action do |global_options,options,args|
-    ShowOff.do_static(args[0])
+
+  c.desc "Force creation of the asset, even if one already exists with a similar name"
+  c.switch [:f, :force]
+
+  c.action do |global,local,args|
+
+    format_type = args.shift
+    presentation_filepath = args.shift || "."
+
+    unless File.directory?(presentation_filepath)
+      filename = File.basename(presentation_filepath)
+      presentation_filepath = File.dirname(presentation_filepath)
+    end
+
+    key_value_args = args.map {|arg| key, value = arg.split(/:|=/) ; [ key, value ] }.flatten
+    parsed_arguments = Hash[*key_value_args]
+    all_parameters = global.merge(local).merge(parsed_arguments)
+
+    all_parameters.merge!('filepath' => presentation_filepath, 'showoff_file' => filename)
+    ShowOff::Commands.execute(:static,format_type,all_parameters) if format_type
   end
+
 end
 
 pre do |global,command,options,args|
@@ -186,4 +125,16 @@ on_error do |exception|
   true
 end
 
-exit GLI.run(ARGV)
+
+# To allow an easier command-line to launch showoff, the following format
+#
+#     `showoff` is converted to `showoff server .`
+#     `showoff [directoryname] is convereted `showoff server [directoryname]`
+#
+
+parameters = ARGV
+
+parameters = [ "server", "." ] if parameters.empty?
+parameters.unshift "server" if parameters.count == 1
+
+exit GLI.run(parameters)

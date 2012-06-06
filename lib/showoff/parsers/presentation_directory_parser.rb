@@ -1,25 +1,31 @@
 require_relative 'presentation_file_parser'
+require_relative 'slides_file_content_parser'
 
 module ShowOff
   module Parsers
 
     module PresentationDirectoryParser
 
-      DEFAULT_PRESENTATION_FILE = 'showoff.json'
       SLIDE_SEARCH_PATTERN = File.join('**','*.md')
 
-      def self.parse(filepath)
-        showoff_file = File.join(filepath,DEFAULT_PRESENTATION_FILE)
+      def self.parse(filepath,options = {})
 
-        if File.exists?(showoff_file)
-          PresentationFileParser.parse showoff_file
+        showoff_file = Array(options[:showoff_file]).find do |relative_filepath|
+          showoff_file = File.join(filepath,relative_filepath)
+          File.exists? showoff_file
+        end
+        
+        if showoff_file
+          PresentationFileParser.parse File.join(filepath,showoff_file), options
         else
 
-          sections = Dir[File.join(filepath,SLIDE_SEARCH_PATTERN)].map do |slide_file|
-            { 'section' => slide_file }
+          slides = Dir[File.join(filepath,SLIDE_SEARCH_PATTERN)].map do |slide_filepath|
+            SlidesFileContentParser.parse slide_filepath, options
           end
 
-          { 'sections' => sections, :filepath => filepath }
+          section = Section.new
+          section.add_section slides
+          section
 
         end
       end

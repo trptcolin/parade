@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.summary           = "The best damn presentation software a developer could ever love."
   s.homepage          = "http://github.com/schacon/showoff"
   s.email             = "schacon@gmail.com"
-  s.authors           = ["Scott Chacon"]
+  s.authors           = ["Scott Chacon", "Franklin Webber"]
   s.has_rdoc          = false
   s.require_path      = "lib"
   s.executables       = %w( showoff )
@@ -21,7 +21,9 @@ Gem::Specification.new do |s|
   s.add_dependency      "json"
   s.add_dependency      "gli",">= 1.3.2"
   s.add_dependency      "parslet"
-  s.add_dependency      "pygments.rb"
+  s.add_dependency      "rubypython", "0.5.1"
+  s.add_dependency      "pygments.rb", '0.2.3'
+  s.add_dependency      "css_parser"
   s.add_development_dependency "mg"
   s.description       = <<-desc
   ShowOff is a Sinatra web app that reads simple configuration files for a
@@ -31,7 +33,7 @@ Gem::Specification.new do |s|
 
   The idea is that you setup your slide files in section subdirectories and
   then startup the showoff server in that directory.  It will read in your
-  showoff.json file for which sections go in which order and then will give 
+  showoff.json file for which sections go in which order and then will give
   you a URL to present from.
   desc
 end

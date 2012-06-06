@@ -3,7 +3,7 @@ require_relative 'spec_helper'
 describe ShowOff::Slide do
 
   context "when initialized with content and metadata" do
-    subject { described_class.new :content => content, :metadata => 'one two three' }
+    subject { described_class.new :content => content }
 
     let(:content) { "content" }
 
@@ -62,21 +62,14 @@ describe ShowOff::Slide do
     end
   end
 
-  describe "#classes" do
+  describe "#content_classes" do
     context "when created with no metadata" do
-      its(:classes) { should eq "" }
+      its(:content_classes) { should eq "" }
     end
 
     context "when created with metadata" do
-      context "when created with only classes" do
-        subject { described_class.new :metadata => "one two three" }
-        its(:classes) { should eq "one two three" }
-      end
-
-      context "when created with other non-classes metadata" do
-        subject { described_class.new :metadata => "#id one two three transition=fade" }
-        its(:classes) { should eq "one two three" }
-      end
+      subject { described_class.new :metadata => mock('metadata', :classes => ['one', 'two', 'three']) }
+      its(:content_classes) { should eq "one two three" }
     end
   end
 
@@ -87,7 +80,7 @@ describe ShowOff::Slide do
     end
 
     context "when created with transition metadata" do
-      subject { described_class.new :metadata => '#id one two transition=slide three' }
+      subject { described_class.new :metadata => mock('metadata', :transition => 'slide') }
       let(:expected_transition) { 'slide' }
 
       its(:transition) { should eq expected_transition }
@@ -96,11 +89,11 @@ describe ShowOff::Slide do
 
   describe "#id" do
     context "when created with no id in the metadata" do
-      subject { described_class.new :metadata => 'one two three' }
+      subject { described_class.new :metadata => mock('metadata',:id => nil) }
       its(:id) { should eq "" }
     end
     context "when created with an id in the metadata" do
-      subject { described_class.new :metadata => '#slide_id' }
+      subject { described_class.new :metadata => mock('metadata',:id => 'slide_id') }
       its(:id) { should eq "slide_id" }
     end
   end
@@ -118,8 +111,21 @@ describe ShowOff::Slide do
       subject.content_as_html.should eq expected_html_content
     end
   end
-
-  its(:template_file) { should be_instance_of ERB }
+  
+  describe "#template_file" do
+    
+    subject { described_class.new :metadata => mock('metadata', :template => 'template') }
+    
+    
+    it "should be an ERB template" do
+      section = mock('section')
+      subject.stub(:section).and_return(section)
+      section.should_receive(:template).with('template').and_return('template filepath')
+      File.stub(:read).with('template filepath').and_return('template content')
+      subject.template_file.should be_kind_of ERB
+    end
+  end
+  
 
   describe "#to_html" do
     let(:template) { mock('mock ERB template', :result => expected_html) }

@@ -16,7 +16,17 @@ group :test, :development do
   gem 'ruby-debug19', :require => 'ruby-debug'
 end
 
-group :optional do
+#
+# Optional to provide image embedding and resizing functionality
+# 
+group :images do
   gem "rmagick"
+end
+
+#
+# Optional to provide PDF output support
+# 
+group :pdf do
   gem "pdfkit"
+  gem "wkhtmltopdf-binary", '0.9.5.3'
 end

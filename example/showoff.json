@@ -1,10 +1,11 @@
 {
-  "name": "Something",
-  "description": "Example Presentation",
+  "name": "Example Presentation",
+  "description": "Demonstrate ShowOff features",
   "sections": [
     {"section":"intro.md"},
-    {"section":"one"},
-    {"section":"two"},
-    {"section":"three"}
+    {"section":"installation.md"},
+    {"section":"navigation.md"},
+    {"section":"features"},
+    {"section":"code_samples"}
   ]
 }

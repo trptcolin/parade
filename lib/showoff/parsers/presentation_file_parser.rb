@@ -1,32 +1,24 @@
-require_relative 'presentation_directory_parser'
+require_relative 'dsl_file_parser'
+require_relative 'json_file_parser'
 
 module ShowOff
   module Parsers
-
+    
+    #
+    # The Presentation File Parser allows for the JSON formatted file or the
+    # DSL formatted files. The determination of which to use is solely based
+    # on the file extension.
+    # 
     class PresentationFileParser
 
-      def self.parse(filepath)
-
-        file_rootpath = File.dirname(filepath)
-
-        presentation_data = JSON.parse(File.read(filepath))
-        presentation_data.merge!(:filepath => file_rootpath)
-        presentation_data
-
-        presentation_data['sections'].each do |section|
-
-          if section.is_a?(Hash) and section['section']
-            section_path = File.join(file_rootpath, section['section'])
-
-            if File.exists?(section_path) and File.directory?(section_path)
-              section['section'] = PresentationDirectoryParser.parse(section_path)
-            end
-
-          end
+      def self.parse(filepath,options = {})
+        options = options.merge(:current_path => File.dirname(filepath))
+        
+        if File.extname(filepath) == ".json"
+          JsonFileParser.parse(filepath,options)
+        else
+          DslFileParser.parse(filepath,options)
         end
-
-        presentation_data
-
       end
 
     end

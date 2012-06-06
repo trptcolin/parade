@@ -9,12 +9,13 @@ module ShowOff
     class Metadata
 
       #
-      # @example Raw Metadata that contains CSS Class, ID, and a transition
+      # @example Raw Metadata that contains CSS Class, ID, transitions, and template data
       #
-      #     metadata = Metadata.parse "transition=fade one two #id three"
+      #     metadata = Metadata.parse "transition=fade one two #id three tpl=template_name"
       #     metadata.classes # => [ 'one', 'two', 'three' ]
       #     metadata.transition # => 'fade'
       #     metadata.id # => 'id'
+      #     metadata.template # => 'template_name'
       #
       # @param [String] metadata a single string that contains all the raw metadata.
       #
@@ -23,7 +24,10 @@ module ShowOff
         metadata_hash = {}
 
         metadata.to_s.split(' ').each do |term|
-          if term =~ /.+=.+/
+          if term =~ /^(?:tpl|template)=(.+)$/
+            template_name = Regexp.last_match(1)
+            metadata_hash[:template] = template_name
+          elsif term =~ /.+=.+/
             key, value = term.split('=')
             metadata_hash[key] = value
           elsif term =~ /#.+/
@@ -48,6 +52,7 @@ module ShowOff
 
       attr_accessor :id
       attr_accessor :transition
+      attr_accessor :template
 
     end
   end

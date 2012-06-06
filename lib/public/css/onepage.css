@@ -1,5 +1,8 @@
 /* Screen */
 @media screen {
+  body {
+    overflow:scroll;
+  }
   .slide {
       margin: 10px;
       padding: 0;
@@ -10,7 +13,7 @@
       margin-right:auto;
       overflow:hidden;
       border: 1px solid #333;
-      page-break-after: always
+      page-break-after: always;
   }
 }
 
@@ -23,7 +26,8 @@
       height: 600px;
       overflow:hidden;
       border: none;
-      page-break-after: always
+      page-break-before: always;
+      page-break-after: always;
   }
 }
 
@@ -38,9 +42,8 @@
       min-height: 480px;
       margin-left:auto; 
       margin-right:auto;
-/*      overflow:hidden;*/
       border: 1px solid #333;
-      page-break-after: always
+      page-break-after: always;
   }
 }
 /* Landscape */
@@ -53,8 +56,7 @@
       min-height: 320px;
       margin-left:auto; 
       margin-right:auto;
-/*      overflow:hidden;*/
       border: 1px solid #333;
-      page-break-after: always
+      page-break-after: always;
   }
 }

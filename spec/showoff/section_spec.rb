@@ -2,62 +2,45 @@ require_relative 'spec_helper'
 
 describe ShowOff::Section do
 
-  let(:filepath) { "path/filepath" }
-  let(:presentation) { mock('Presentation') }
-
-  subject { described_class.new :presentation => presentation }
-
-  its(:presentation) { should eq presentation }
-
-  describe "#sections" do
-    context "when given a sections with file sections" do
-
-      let(:sections) do
-        [ {'section' => 'slidesA.md'},{'section' => 'slidesB.md'} ]
-      end
-
-      it "should create slides files for each section" do
-        ShowOff::SlidesFile.should_receive(:new).with(:filepath => 'slidesA.md', :section => subject)
-        ShowOff::SlidesFile.should_receive(:new).with(:filepath => 'slidesB.md', :section => subject)
-        subject.sections = sections
-      end
-
-    end
-    context "when given sections with sub-sections" do
-
-      let(:sections) do
-        [ {'section' => {'sections' => subsection} } ]
-      end
-
-      let(:subsection) do
-        [ {'section' => 'slidesA.md'},{'section' => 'slidesB.md'} ]
-      end
-
-      let(:expected_data_for_subsection) do
-        sections.first['section'].merge(:presentation => presentation)
-      end
-
-      it "should create slides files for each section" do
-        subject.should_receive(:create_subsection).with(expected_data_for_subsection)
-        subject.sections = sections
-      end
-
-    end
+  subject do
+    described_class.new :title => expected_title
   end
 
-  describe "#to_html" do
+  let(:expected_title) { "Section Title" }
+
+  its(:title) { should eq expected_title }
+  its(:sections) { should be_empty }
+
+  describe "#add_section" do
     before do
-      subject.stub(:slides).and_return(slides)
-      subject.stub(:renderers).and_return([])
-    end
-    
-    let(:slides) do
-      [ mock('Slide',:to_html => 'slide A html'), mock('Slide2',:to_html => 'slide B html')]
+      slide.stub(:to_a) { [ slide ] }
+      slide.stub(:section=)
+      section.stub(:to_a) { [ section ] }
+      section.stub(:section=)
     end
 
-    let(:expected_html) { "slide A html\nslide B html" }
+    let(:slide) { mock('Slide') }
+    let(:section) { mock('Section') }
+    let(:slides_and_sections) { [ slide, section ] }
 
-    its(:to_html) { should eq expected_html }
-
+    context "when given a slide" do
+      it "should be appended to the sections" do
+        subject.add_section(slide)
+        subject.sections.should eq [ slide ]
+      end
+    end
+    context "when give a section" do
+      it "should be appended to the sections" do
+        subject.add_section(section)
+        subject.sections.should eq [ section ]
+      end
+    end
+    context "when given an array of slides and sections" do
+      it "should be appended to the sections" do
+        subject.add_section(slides_and_sections)
+        subject.sections.should eq slides_and_sections
+      end
+    end
   end
+
 end

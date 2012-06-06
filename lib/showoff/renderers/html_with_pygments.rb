@@ -1,5 +1,4 @@
 require 'redcarpet'
-require 'pathname'
 require 'pygments.rb'
 
 module ShowOff
@@ -22,6 +21,20 @@ module ShowOff
           :options => {:encoding => 'utf-8'}
 
         syntax_highlighted_html.gsub('class="highlight"',"class=\"highlight sh_#{language}\"")
+      end
+
+      def self.render(content)
+        markdown = Redcarpet::Markdown.new(Renderers::HTMLwithPygments,
+          :fenced_code_blocks => true,
+          :no_intra_emphasis => true,
+          :autolink => true,
+          :strikethrough => true,
+          :lax_html_blocks => true,
+          :superscript => true,
+          :hard_wrap => true,
+          :tables => true,
+          :xhtml => true)
+        markdown.render(content)
       end
 
     end
