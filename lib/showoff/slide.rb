@@ -1,4 +1,4 @@
-require_relative 'helpers/metadata'
+require_relative 'metadata'
 require_relative 'renderers/html_with_pygments'
 require_relative 'renderers/command_line_renderer'
 require_relative 'renderers/special_paragraph_renderer'
@@ -34,7 +34,7 @@ module ShowOff
     #
     def initialize(params={})
       @content = ""
-      @metadata = Helpers::Metadata.new
+      @metadata = Metadata.new
       params.each {|k,v| send("#{k}=",v) if respond_to? "#{k}=" }
     end
 
@@ -68,7 +68,7 @@ module ShowOff
     # A slide can contain various metadata to help define additional information
     # about it.
     #
-    # @param [ShowOff::Helpers::Metadata] value metadata object which contains
+    # @param [ShowOff::Metadata] value metadata object which contains
     #   information for the slide
     #
     attr_accessor :metadata
