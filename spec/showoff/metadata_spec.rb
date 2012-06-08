@@ -1,6 +1,6 @@
 require_relative 'spec_helper'
 
-describe ShowOff::Helpers::Metadata do
+describe ShowOff::Metadata do
 
   let(:metadata) { "transition=fade one two #id three tpl=custom" }
   subject { described_class.parse metadata }

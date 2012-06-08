@@ -8,7 +8,7 @@ describe ShowOff::Slide do
     let(:content) { "content" }
 
     its(:content) { should eq "#{content}\n" }
-    its(:metadata) { should be_instance_of ShowOff::Helpers::Metadata }
+    its(:metadata) { should be_instance_of ShowOff::Metadata }
   end
 
   describe "#sequence" do
