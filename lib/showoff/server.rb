@@ -56,7 +56,7 @@ module ShowOff
       def custom_css_files
         Dir.glob("#{settings.presentation_directory}/*.css").map do |path|
 
-          relative_path = path.gsub(settings.presentation_directory,'file')
+          relative_path = path.sub(settings.presentation_directory,'file')
 
           %{<link rel="stylesheet" href="#{relative_path}" type="text/css"/>}
         end.join("\n")
@@ -65,7 +65,7 @@ module ShowOff
       def custom_js_files
         Dir.glob("#{settings.presentation_directory}/*.js").map do |path|
 
-          relative_path = path.gsub(settings.presentation_directory,'file')
+          relative_path = path.sub(settings.presentation_directory,'file')
 
           %{<script type="text/javascript" src="#{relative_path}"></script>}
         end.join("\n")
