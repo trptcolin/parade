@@ -45,29 +45,43 @@ module ShowOff
 
     helpers do
 
+      #
+      # A shortcut to define a CSS resource file within a view template
+      #
       def css(filepath)
         %{<link rel="stylesheet" href="css/#{filepath}" type="text/css"/>}
       end
 
+      #
+      # A shortcut to define a Javascript resource file within a view template
+      #
       def js(filepath)
         %{<script type="text/javascript" src="js/#{filepath}"></script>}
       end
 
+      #
+      # Create resources links to all the CSS files found at the root of
+      # presentation directory.
+      #
       def custom_css_files
         Dir.glob("#{settings.presentation_directory}/*.css").map do |path|
 
           relative_path = path.sub(settings.presentation_directory,'file')
+          css relative_path
 
-          %{<link rel="stylesheet" href="#{relative_path}" type="text/css"/>}
         end.join("\n")
       end
 
+      #
+      # Create resources links to all the Javascript files found at the root of
+      # presentation directory.
+      #
       def custom_js_files
         Dir.glob("#{settings.presentation_directory}/*.js").map do |path|
 
           relative_path = path.sub(settings.presentation_directory,'file')
+          js relative_path
 
-          %{<script type="text/javascript" src="#{relative_path}"></script>}
         end.join("\n")
       end
 
@@ -88,12 +102,19 @@ module ShowOff
       end
     end
 
+    #
+    # Path requests for files that match the prefix will be returned.
+    #
     get %r{(?:image|file)/(.*)} do
       path = params[:captures].first
       full_path = File.join(settings.presentation_directory, path)
       send_file full_path
     end
 
+    #
+    # The request for slides is used by the client-side javascript presentation
+    # and returns all the slides HTML.
+    #
     get "/slides" do
       slides
     end
