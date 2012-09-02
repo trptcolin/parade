@@ -49,14 +49,23 @@ module ShowOff
       # A shortcut to define a CSS resource file within a view template
       #
       def css(filepath)
-        %{<link rel="stylesheet" href="css/#{filepath}" type="text/css"/>}
+        %{<link rel="stylesheet" href="#{File.join "css", filepath}" type="text/css"/>}
       end
 
       #
       # A shortcut to define a Javascript resource file within a view template
       #
       def js(filepath)
-        %{<script type="text/javascript" src="js/#{filepath}"></script>}
+        %{<script type="text/javascript" src="#{File.join "js", filepath}"></script>}
+      end
+
+      def custom_resource(resource_extension)
+        load_presentation.resources.map do |resource_path|
+          Dir.glob("#{resource_path}/*.#{resource_extension}").map do |path|
+            relative_path = path.sub(settings.presentation_directory,'')
+            yield relative_path if block_given?
+          end.join("\n")
+        end.join("\n")
       end
 
       #
@@ -64,12 +73,9 @@ module ShowOff
       # presentation directory.
       #
       def custom_css_files
-        load_presentation.resources.map do |resource_path|
-          Dir.glob("#{resource_path}/*.css").map do |path|
-            relative_path = path.sub(settings.presentation_directory,'file')
-            css relative_path
-          end.join("\n")
-        end.join("\n")
+        custom_resource "css" do |path| 
+          css path
+        end
       end
 
       #
@@ -77,12 +83,9 @@ module ShowOff
       # presentation directory.
       #
       def custom_js_files
-        load_presentation.resources.map do |resource_path|
-          Dir.glob("#{resource_path}/*.js").map do |path|
-            relative_path = path.sub(settings.presentation_directory,'file')
-            js relative_path
-          end.join("\n")
-        end.join("\n")
+        custom_resource "js" do |path| 
+          js path
+        end
       end
 
       def presentation
@@ -105,7 +108,7 @@ module ShowOff
     #
     # Path requests for files that match the prefix will be returned.
     #
-    get %r{(?:image|file)/(.*)} do
+    get %r{(?:image|file|js|css)/(.*)} do
       path = params[:captures].first
       full_path = File.join(settings.presentation_directory, path)
       send_file full_path
