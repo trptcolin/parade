@@ -15,7 +15,7 @@ module ShowOff
       def self.parse(contents,options = {})
         builder = new
         builder.options = options
-
+        
         config = Proc.new { eval(contents) }
         builder.instance_eval(&config)
 
@@ -70,15 +70,22 @@ module ShowOff
       end
 
       alias_method :slides, :section
-      
+
       def template(template_name,template_file)
         current_section.add_template template_name, File.join(options[:current_path], template_file)
       end
-      
+
+      #
+      # This is used by the DSL to specify the resources used by the presentation
+      #
+      def resources(resource_filepath)
+        current_section.add_resource File.join(options[:current_path], resource_filepath)
+      end
+
       def pause_message(message)
         current_section.pause_message = message
       end
-      
+
       # @return [Hash] configuration options that the DSL class will use
       #   and pass to other file and directory parsers to ensure the
       #   path information is presevered correctly.
@@ -107,7 +114,9 @@ module ShowOff
       # @return [Section] the current section being built.
       def current_section
         @current_section ||= begin
-          Section.new
+          new_section = Section.new
+          new_section.add_resource current_path
+          new_section
         end
       end
 
