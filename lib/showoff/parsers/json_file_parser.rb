@@ -3,7 +3,8 @@ module ShowOff
 
     #
     # Load the JSON format of a presentation, convert it to the DSL format,
-    # and then send it to the DSL parser.
+    # and then send it to the DSL parser. This parser is to provide backwards
+    # compatabiliy to the previously defined JSON format of a Showoff presentation.
     #
     # @example showoff.json format
     #

@@ -7,6 +7,9 @@ module ShowOff
     class Dsl
 
       #
+      # The showoff DSL parse method is used to convert the showoff file contents
+      # into executable ruby code.
+      #
       # @param [String] contents the showoff dsl contents to parse to convert
       #   into a section with subsections and slides.
       # @param [Hash] options additional options to provide additional
@@ -22,6 +25,14 @@ module ShowOff
         builder.current_section
       end
 
+      #
+      # Currently this method is called internally when a section exists
+      # within the showoff DSL file.
+      #
+      # @note the functionality here is very similar to the parse method defined
+      #   above save for a few differences. This should likely be refactored so
+      #   remove this redundancy.
+      #
       def self.build(section,options = {},&config)
         builder = new
         builder.options = options
@@ -70,15 +81,15 @@ module ShowOff
       end
 
       alias_method :slides, :section
-      
+
       def template(template_name,template_file)
         current_section.add_template template_name, File.join(options[:current_path], template_file)
       end
-      
+
       def pause_message(message)
         current_section.pause_message = message
       end
-      
+
       # @return [Hash] configuration options that the DSL class will use
       #   and pass to other file and directory parsers to ensure the
       #   path information is presevered correctly.
