@@ -8,36 +8,37 @@ module ShowOff
 
       #
       # The showoff DSL parse method is used to convert the showoff file contents
-      # into executable ruby code.
+      # into executable ruby code. This method is also called recursively when
+      # a section contains sub-sections to properly parse that data as well.
       #
-      # @param [String] contents the showoff dsl contents to parse to convert
-      #   into a section with subsections and slides.
+      # @param [String,Section] contents the string representation of the showoff 
+      #   dsl contents to be parsed or the current section to be used as the 
+      #   current context.
       # @param [Hash] options additional options to provide additional
       #   configuration to the parsing process.
       #
-      def self.parse(contents,options = {})
+      # def self.parse(contents,options = {})
+      #   builder = new
+      #   builder.options = options
+      #
+      #   config = Proc.new { eval(contents) }
+      #   builder.instance_eval(&config)
+      #
+      #   builder.current_section
+      # end
+
+      def self.parse(contents,options = {},&config)
         builder = new
         builder.options = options
 
-        config = Proc.new { eval(contents) }
+        if contents.is_a? Section
+          builder.current_section = contents
+        else
+          config = Proc.new { eval(contents) }
+        end
+
         builder.instance_eval(&config)
 
-        builder.current_section
-      end
-
-      #
-      # Currently this method is called internally when a section exists
-      # within the showoff DSL file.
-      #
-      # @note the functionality here is very similar to the parse method defined
-      #   above save for a few differences. This should likely be refactored so
-      #   remove this redundancy.
-      #
-      def self.build(section,options = {},&config)
-        builder = new
-        builder.options = options
-        builder.current_section = section
-        builder.instance_eval(&config)
         builder.current_section
       end
 
@@ -68,7 +69,7 @@ module ShowOff
 
         if block
           sub_section = Section.new :title => filepaths.flatten.compact.join(" ")
-          section_content = self.class.build sub_section, options, &block
+          section_content = self.class.parse sub_section, options, &block
         else
           section_content = Array(filepaths).flatten.compact.map do |filepath|
             filepath = File.join(current_path,filepath)
