@@ -137,6 +137,14 @@ module ShowOff
       ""
     end
 
+    def resources
+      @resources || []
+    end
+
+    def add_resource(resource_filepath)
+      @resources ||= []
+      @resources << resource_filepath
+    end
 
     # @return [Array<Slide>] the slides contained within this section and any
     #   sub-section.
@@ -144,7 +152,7 @@ module ShowOff
       sections_slides = sections.map do |section_or_slide|
         section_or_slide.slides
       end.flatten
-      
+
       # Update the sequence on all the slides for the entire section.
       sections_slides.each_with_index {|slide,count| slide.sequence = (count + 1) }
     end

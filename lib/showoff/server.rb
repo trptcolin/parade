@@ -64,11 +64,11 @@ module ShowOff
       # presentation directory.
       #
       def custom_css_files
-        Dir.glob("#{settings.presentation_directory}/*.css").map do |path|
-
-          relative_path = path.sub(settings.presentation_directory,'file')
-          css relative_path
-
+        load_presentation.resources.map do |resource_path|
+          Dir.glob("#{resource_path}/*.css").map do |path|
+            relative_path = path.sub(settings.presentation_directory,'file')
+            css relative_path
+          end.join("\n")
         end.join("\n")
       end
 
@@ -77,11 +77,11 @@ module ShowOff
       # presentation directory.
       #
       def custom_js_files
-        Dir.glob("#{settings.presentation_directory}/*.js").map do |path|
-
-          relative_path = path.sub(settings.presentation_directory,'file')
-          js relative_path
-
+        load_presentation.resources.map do |resource_path|
+          Dir.glob("#{resource_path}/*.js").map do |path|
+            relative_path = path.sub(settings.presentation_directory,'file')
+            js relative_path
+          end.join("\n")
         end.join("\n")
       end
 

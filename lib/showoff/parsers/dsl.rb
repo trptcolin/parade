@@ -11,8 +11,8 @@ module ShowOff
       # into executable ruby code. This method is also called recursively when
       # a section contains sub-sections to properly parse that data as well.
       #
-      # @param [String,Section] contents the string representation of the showoff 
-      #   dsl contents to be parsed or the current section to be used as the 
+      # @param [String,Section] contents the string representation of the showoff
+      #   dsl contents to be parsed or the current section to be used as the
       #   current context.
       # @param [Hash] options additional options to provide additional
       #   configuration to the parsing process.
@@ -87,6 +87,13 @@ module ShowOff
         current_section.add_template template_name, File.join(options[:current_path], template_file)
       end
 
+      #
+      # This is used by the DSL to specify the resources used by the presentation
+      #
+      def resources(resource_filepath)
+        current_section.add_resource File.join(options[:current_path], resource_filepath)
+      end
+
       def pause_message(message)
         current_section.pause_message = message
       end
@@ -119,7 +126,9 @@ module ShowOff
       # @return [Section] the current section being built.
       def current_section
         @current_section ||= begin
-          Section.new
+          new_section = Section.new
+          new_section.add_resource current_path
+          new_section
         end
       end
 
