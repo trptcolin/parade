@@ -1,6 +1,12 @@
 module ShowOff
   class Metadata
 
+    #
+    # The Template metadata allows the specification of a template to use for
+    # the slide. This is extremely similar to the {Assignment} parser, except
+    # it allows for the previously supported abbreviation *tpl* for representing
+    # template.
+    # 
     class Template
 
       def match?(term)

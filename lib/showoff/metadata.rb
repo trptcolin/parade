@@ -4,6 +4,7 @@ require_relative 'metadata/html_id'
 require_relative 'metadata/template'
 
 module ShowOff
+
   #
   # Slides within ShowOff contain metadata. This metadata allows you to set
   # CSS classes and IDs. You are also able, as well to assigna unique
@@ -34,6 +35,9 @@ module ShowOff
       self.new metadata_hash
     end
 
+    #
+    # The list of the parsers that are used to parse the metadata string.
+    # 
     def self.parsers
       [ Template.new,
         Assignment.new,
@@ -41,6 +45,15 @@ module ShowOff
         CSSClasses.new ]
     end
 
+    #
+    # The initialize method is generally not called directly and instead is
+    # used through the `Metadata.parse` method.
+    # 
+    # @param [Hash] params this hash contains the key-value pairs that map
+    #   directly to accessor methods within the Metadata class.
+    #
+    # @see Metadata.parse
+    # 
     def initialize(params = {})
       params.each {|k,v| send("#{k}=",v) if respond_to? "#{k}=" }
     end

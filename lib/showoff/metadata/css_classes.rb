@@ -1,6 +1,10 @@
 module ShowOff
   class Metadata
 
+    #
+    # By default the CSS Class metadata parser is a catch all parser that will
+    # use all the terms and create CSS classes.
+    # 
     class CSSClasses
 
       def match?(term)
