@@ -87,6 +87,23 @@ module ShowOff
     def transition
       metadata.transition || "none"
     end
+    
+    def data_x
+      (1500 * sequence).to_s
+    end
+    
+    def data_y
+      "0"
+    end
+    
+    def data_scale
+      @data_scale ||= rand(4) + 1
+      @data_scale
+    end
+    
+    def data_rotation
+      [ 0, 0, 0, 0, 45, 90, 90, 180 ].sample
+    end
 
     # @return [String] an id for the slide
     def id

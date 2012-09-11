@@ -103,17 +103,12 @@
 }
 
 /* plain (non-bullet) text */
-.content > p {
-	font-size: 2em;
-    margin: 1em;
-	text-align: center;
-}
+.content > p { }
 
 .content > pre {
-    font-size: 300%;
 }
 .content > blockquote {
-    font-size: 250%;
+/*    font-size: 250%;*/
     margin: 2em;
 }
 
@@ -141,11 +136,11 @@
 
 
 .content.columns .grid_6 p {
-  font-size: 150%;
+/*  font-size: 150%;*/
 }
 
 .content.columns .grid_4 p {
-  font-size: 125%;
+/*  font-size: 125%;*/
 }
 
 .content.columns pre {
