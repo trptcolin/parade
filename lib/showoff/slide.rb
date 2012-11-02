@@ -99,7 +99,7 @@ module ShowOff
 
     def post_renderers
       [ Renderers::SpecialParagraphRenderer,
-        Renderers::CommandLineRenderer,
+        # Renderers::CommandLineRenderer,
         Renderers::ColumnsRenderer.new(:css_class => 'columns',:html_element => "h2",:segments => 12) ]
     end
 

@@ -28,7 +28,7 @@ module ShowOff
       def render(content)
 
         html = Nokogiri::XML.fragment(content)
-        parser = CommandlineParser.new
+        # parser = CommandlineParser.new
 
         html.css(".#{css_class}").each do |slide|
 
