@@ -12,6 +12,12 @@
 
   <%= js 'jquery-1.4.2.js' %>
 
+  <!-- The ShowOff JS uses a lot of publish and subscribe event structure -->
+  <%= js 'jquery-pubsub.js' %>
+
+  <!-- Provide a sane interface for defining keyboard events -->
+  <%= js 'keyboard.js' %>
+
   <!-- Giving Structure to the Javascript - this powers a lot of the Showoff
        code that is defined. -->
 
@@ -40,6 +46,7 @@
   <!-- Core ShowOFf Library Code -->
 
   <%= js 'showoff.js' %>
+  <%= js 'showoff-keyboard-input.js' %>
 
   <!-- Powers the Table of Contents Menu - this allows you to move through
        the slides  -->
