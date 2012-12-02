@@ -3,30 +3,54 @@
 
   <meta name="viewport" content="width=device-width"/>
 
+  <!-- Set up the initial stylesheet -->
+
   <%= css 'reset.css' %>
   <%= css 'showoff.css' %>
 
+  <!-- JavaScript Powers This Ship! -->
+
   <%= js 'jquery-1.4.2.min.js' %>
-  <%= js 'jquery.cycle.all.js' %>
-  <%= js 'jquery-print.js' %>
-  <%= js 'jquery.batchImageLoad.js' %>
-  <%= js 'jquery.doubletap-0.1.js' %>
+
+  <!-- Giving Structure to the Javascript - this powers a lot of the Showoff
+       code that is defined. -->
 
   <%= js 'spine.js' %>
 
-  <%= js 'fg.menu.js' %>
+  <!-- Slide Transition support provided by jquery-cycle ... -->
 
-  <%= js 'showoff.js' %>
+  <%= js 'jquery.cycle.all.js' %>
+
+  <!-- Ensures that all images in the presentation have been loaded before
+       the presentation is ready to start. -->
+
+  <%= js 'jquery.batchImageLoad.js' %>
+
+  <!-- Results from the live executed code is powered by this little js -->
+  <%= js 'jquery-print.js' %>
+
+
+  <!-- Provides Command-Line Console Example Support -->
   <%= js 'jTypeWriter.js' %>
-  <%= js 'sh_main.min.js' %>
-  <%= js 'core.js' %>
-  <%= js 'showoffcore.js' %>
+
+  <!-- Provides Executable CoffeeScript Support -->
+
   <%= js 'coffee-script.js' %>
 
+  <!-- Core ShowOFf Library Code -->
+
+  <%= js 'showoff.js' %>
+
+  <!-- Powers the Table of Contents Menu - this allows you to move through
+       the slides  -->
+
+  <%= js 'fg.menu.js' %>
   <%= css 'fg.menu.css' %>
   <%= css 'theme/ui.all.css' %>
-  <%= css 'ghf_marked.css' %>
 
+  <!-- Required for the Syntax Highlighting of Code to Work -->
+
+  <%= css 'ghf_marked.css' %>
 
   <%= custom_css_files %>
   <%= custom_js_files %>
