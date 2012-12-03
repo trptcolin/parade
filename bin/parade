@@ -106,24 +106,6 @@ command [:static] do |c|
 
 end
 
-pre do |global,command,options,args|
-  # Pre logic here
-  # Return true to proceed; false to abourt and not call the
-  # chosen command
-  true
-end
-
-post do |global,command,options,args|
-  # Post logic here
-end
-
-on_error do |exception|
-  # Error logic here
-  # return false to skip default error handling
-  true
-end
-
-
 # To allow an easier command-line to launch parade, the following format
 #
 #     `parade` is converted to `parade server .`
@@ -133,6 +115,6 @@ end
 parameters = ARGV
 
 parameters = [ "server", "." ] if parameters.empty?
-parameters.unshift "server" if parameters.count == 1
+parameters.unshift "server" if parameters.count == 1 and not parameters.include?("help")
 
 exit GLI.run(parameters)
