@@ -35,7 +35,7 @@ module ShowOff
       #
       def self.render(html_content)
 
-        html = Nokogiri::XML.fragment(html_content)
+        html = Nokogiri::HTML.fragment(html_content)
         parser = CommandlineParser.new
 
         html.css('.commandline pre').each do |code|
