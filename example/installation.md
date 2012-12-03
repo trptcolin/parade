@@ -3,12 +3,12 @@
 # Installation
 
 ```bash
-$ gem install showoff
+$ gem install parade
 ```
 
 !SLIDE
 
 ```bash
-$ showoff server [filepath]
-$ showoff server presentation/
+$ parade server [filepath]
+$ parade server presentation/
 ```

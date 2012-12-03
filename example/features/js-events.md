@@ -2,13 +2,13 @@
 
 # Custom events
 
-> ### showoff:show
+> ### parade:show
 > will be triggered as soon as you enter a page
-> ### showoff:next
+> ### parade:next
 > will be triggered when you switch to the next page
-> ### showoff:incr
+> ### parade:incr
 > will be triggered when you advance to the next increment on the page
-> ### showoff:prev
+> ### parade:prev
 > will be triggered when you switch to the previous page
 
 
@@ -16,7 +16,7 @@
 # 1st Example h1
 <script>
 // bind to custom event
-$(".custom_and_unique_class").bind("showoff:show", function (event) {
+$(".custom_and_unique_class").bind("parade:show", function (event) {
   // animate the h1
   var h1 = $(event.target).find("h1");
   h1.delay(500)
@@ -28,7 +28,7 @@ $(".custom_and_unique_class").bind("showoff:show", function (event) {
 !SLIDE prevent_default
 # 2nd Example h1
 <script>
-$(".prevent_default").bind("showoff:next", function (event) {
+$(".prevent_default").bind("parade:next", function (event) {
   var h1 = $(event.target).find("h1");
   if (h1.css("text-decoration") === "none") {
     event.preventDefault();

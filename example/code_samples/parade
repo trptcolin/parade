@@ -1,0 +1,9 @@
+
+title "Code Samples"
+
+description "Using parade to show off syntax-highlighted code"
+
+slides "code_sample.md"
+slides "javascript.md"
+slides "coffeescript.md"
+slides "ruby.md"

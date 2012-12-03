@@ -3,12 +3,12 @@ require_relative 'spec_helper'
 describe "Loading the Example Presentation", :integration => true do
 
   subject do
-    ShowOff::Parsers::PresentationDirectoryParser.parse "example",
-      :root_path => "example", :showoff_file => "showoff"
+    Parade::Parsers::PresentationDirectoryParser.parse "example",
+      :root_path => "example", :parade_file => "parade"
   end
 
   let(:default_title) { "Example Presentation" }
-  let(:description) { "Several showoff examples to assist with showing others how to get started with ShowOff" }
+  let(:description) { "Several parade examples to assist with showing others how to get started with Parade" }
   let(:slide_count) { 76 }
   let(:section_count) { 3 }
 

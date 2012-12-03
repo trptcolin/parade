@@ -2,7 +2,7 @@
 
 # Transitions
 
-Demonstration of all the transitions that ShowOff supports
+Demonstration of all the transitions that Parade supports
 
 !SLIDE transition=blindX
 

@@ -1,14 +1,14 @@
-# ShowOff Presentation Software
+# Parade Presentation Software
 
-ShowOff is a Sinatra web app that reads serves up markdown files in a
-presentation format. Showoff can serve a directory or be configured to run with
+Parade is a Sinatra web app that reads serves up markdown files in a
+presentation format. Parade can serve a directory or be configured to run with
 a simple configuration file.
 
 ## Comparison Vs PowerPoint / Keynote
 
-Showoff is easily out-done by professional presentation software packages as
+Parade is easily out-done by professional presentation software packages as
 far as out-of-the-box style and design. However, there are benefits that
-ShowOff has over presentational software:
+Parade has over presentational software:
 
 ### The Good
 
@@ -53,20 +53,20 @@ ShowOff has over presentational software:
 # Installation and Usage
 
 ```bash
-$ gem install showoff
+$ gem install parade
 ```
 
 ## Starting the Slide Show
 
 ```bash
-$ showoff
+$ parade
 ```
 
-By default running showoff with start a presentation from the current working
+By default running parade with start a presentation from the current working
 directory. It will find all markdown files, `**/*.md`, within the directory
 and create a presentation out of them.
 
->  By default showoff will split slides along lines that start with a single `#`
+>  By default parade will split slides along lines that start with a single `#`
 
 
 ## Slide Show Commands
@@ -106,7 +106,7 @@ or show the end result of the code execution.
 ### Serving a specific directory
 
 ```bash
-$ showoff [directory]
+$ parade [directory]
 ```
 
 This will start a presentation from the specified directory. Again, finding all
@@ -115,7 +115,7 @@ markdown files contained within the directories or sub-directories.
 ### Serving specific files
 
 To include certain files, specify an order, duplicate slides, you will need to
-define a `showoff` file. Within that file, you may define specific files,
+define a `parade` file. Within that file, you may define specific files,
 specific folders, and the order of the presentation.
 
 ```ruby
@@ -126,7 +126,7 @@ section "directory_name"
 
 > **slides** and **section** are exactly the same, however you may choose to
   use one over the other depending of you are mentioning a specific file of
-  slides or a directory which could contain another `showoff` or be considered
+  slides or a directory which could contain another `parade` or be considered
   a section.
 
 You can so define sub sections with a title and slides or additional sections.
@@ -259,7 +259,7 @@ All remaining single terms are added as css classes to the slide's `div`.
 
 ##### Defined Classes
 
-ShowOff defines a number of special CSS classes:
+Parade defines a number of special CSS classes:
 
 > ### center
 > centers images on a slide
@@ -318,13 +318,13 @@ If you want to trigger some JavaScript as soon as a certain page is shown or
 when you switch to the next or previous slide, you can bind a callback to a
 custom event:
 
-> ### showoff:show
+> ### parade:show
 > will be triggered as soon as you enter a page
-> ### showoff:next
+> ### parade:next
 > will be triggered when you switch to the next page
-> ### showoff:incr
+> ### parade:incr
 > will be triggered when you advance to the next increment on the page
-> ### showoff:prev
+> ### parade:prev
 > will be triggered when you switch to the previous page
 
 These events are triggered on the "div.content" child of the slide, so you must
@@ -335,7 +335,7 @@ add a custom and unique class to your SLIDE to identify it:
 # 1st Example h1
 <script>
 // bind to custom event
-$(".custom_and_unique_class").bind("showoff:show", function (event) {
+$(".custom_and_unique_class").bind("parade:show", function (event) {
   // animate the h1
   var h1 = $(event.target).find("h1");
   h1.delay(500)
@@ -345,18 +345,18 @@ $(".custom_and_unique_class").bind("showoff:show", function (event) {
 </script>
 ```
 
-This will bind an event handler for *showoff:show* to your slide. The
+This will bind an event handler for *parade:show* to your slide. The
 h1-element will be animated, as soon as this event is triggered on that slide.
 
-If you bind an event handler to the custom events *showoff:next* or
-*showoff:prev*, you can prevent the default action (that is switching to the
+If you bind an event handler to the custom events *parade:next* or
+*parade:prev*, you can prevent the default action (that is switching to the
 appropriate slide) by calling *event.preventDefault()*:
 
 ```markdown
 !SLIDE prevent_default
 # 2nd Example h1
 <script>
-$(".prevent_default").bind("showoff:next", function (event) {
+$(".prevent_default").bind("parade:next", function (event) {
   var h1 = $(event.target).find("h1");
   if (h1.css("text-decoration") === "none") {
     event.preventDefault();
@@ -366,11 +366,11 @@ $(".prevent_default").bind("showoff:next", function (event) {
 </script>
 ```
 
-This will bind an event handler for *showoff:next* to your slide. When you press
+This will bind an event handler for *parade:next* to your slide. When you press
 the right arrow key the first time, the h1-element will be decorated. When you
 press the right array key another time, you will switch to the next slide.
 
-The same applies to the *showoff:prev* event, of course.
+The same applies to the *parade:prev* event, of course.
 
 ## Custom Stylesheets
 
@@ -415,22 +415,22 @@ Note that the example above uses CSS3 styling with ::*after* and the *content*
 # Command Line Interface
 
 ```bash
-showoff command_name [command-specific options] [--] arguments...
+parade command_name [command-specific options] [--] arguments...
 ```
 
 * Use the command __help__ to get a summary of commands
 * Use the command `help command_name` to get a help for _command_name_
 * Use `--` to stop command line argument processing; useful if your arguments have dashes in them
 
-## showoff help [command]
+## parade help [command]
 
 Shows list of commands or help for one command
 
-## showoff generate presentation
+## parade generate presentation
 
-Create new showoff presentation
+Create new parade presentation
 
-This command helps start a new showoff presentation by setting up the proper directory structure for you.  It takes the directory name you would like showoff to create for you.
+This command helps start a new parade presentation by setting up the proper directory structure for you.  It takes the directory name you would like parade to create for you.
 
 > ### Options
 >
@@ -441,11 +441,11 @@ This command helps start a new showoff presentation by setting up the proper dir
 >
 > description:"Presentation Description" - a description of the presentation
 
-## showoff generate outline
+## parade generate outline
 
-Create new showoff outline file
+Create new parade outline file
 
-Within the existing directory create a **showoff** file that contains some
+Within the existing directory create a **parade** file that contains some
 sample sections and slide references to get you started with creating
 your customized presentation.
 
@@ -456,24 +456,24 @@ your customized presentation.
 > description:"Presentation Description" - a description of the presentation
 >
 > outline:"custom outline filename" - if you want to specify a custom outline
->   filename (i.e. override the default **showoff** filename).
+>   filename (i.e. override the default **parade** filename).
 
-## showoff generate rackup
+## parade generate rackup
 
 Create new rackup file
 
 Within the existing directory create a **config.ru** file that contains the
 default code necessary to serve this code on Heroku and other destinations.
 
-## showoff server
+## parade server
 
-Serves the showoff presentation in the current directory
+Serves the parade presentation in the current directory
 
 > ### Options
 >
 > These options are specified *after* the command.
 >
-> *-f, --file=arg* Presentation file (default: *showoff*)
+> *-f, --file=arg* Presentation file (default: *parade*)
 >
 > *-h, --host=arg* Host or IP to serve on (default *localhost*)
 >
@@ -481,9 +481,9 @@ Serves the showoff presentation in the current directory
 >
 > ### Aliases
 >
-> showoff s
+> parade s
 >
-> showoff serve
+> parade serve
 
 # Future Plans
 

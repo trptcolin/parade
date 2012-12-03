@@ -1,0 +1,11 @@
+{
+  "name": "Example Presentation",
+  "description": "Demonstrate Parade features",
+  "sections": [
+    {"section":"intro.md"},
+    {"section":"installation.md"},
+    {"section":"navigation.md"},
+    {"section":"features"},
+    {"section":"code_samples"}
+  ]
+}

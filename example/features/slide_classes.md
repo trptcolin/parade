@@ -37,7 +37,7 @@ All content is written and managed in markdown
 ## Code
 
 ```ruby
-class ShowOff
+class Parade
 end
 ```
 
@@ -52,7 +52,7 @@ All content is written and managed in markdown
 ## Code
 
 ```ruby
-class ShowOff
+class Parade
 end
 ```
 
@@ -72,7 +72,7 @@ All content is written and managed in markdown
 ## Code
 
 ```ruby
-class ShowOff
+class Parade
 end
 ```
 

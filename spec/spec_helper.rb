@@ -1,1 +1,1 @@
-require_relative '../lib/showoff'
+require_relative '../lib/parade'
