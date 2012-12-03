@@ -1,17 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <%= erb :header %>
   <%= css '960.css' %>
-  
-  <script type="text/javascript">
-  $(function(){
-      setupPreso(<%= slides.nil? ? "true" : "false"%>, './');
-  });
-  </script>
-  
 </head>
 
 <body>
@@ -21,11 +14,11 @@
 
 <div id="help">
   <table>
-    <tr><td class="key">z, ?</td><td>toggle help (this)</td></tr>
+    <tr><td class="key">h, ?</td><td>toggle help (this)</td></tr>
     <tr><td class="key">space, &rarr;</td><td>next slide</td></tr>
     <tr><td class="key">shift-space, &larr;</td><td>previous slide</td></tr>
+    <tr><td class="key">`</td><td>open/close command visor</td></tr>
     <tr><td class="key">d</td><td>toggle debug mode</td></tr>
-    <tr><td class="key">## &lt;ret&gt;</td><td>go to slide #</td></tr>
     <tr><td class="key">c, t</td><td>table of contents (vi)</td></tr>
     <tr><td class="key">f</td><td>toggle footer</td></tr>
     <tr><td class="key">r</td><td>reload slides</td></tr>
@@ -35,9 +28,12 @@
 </div>
 
 <div class="buttonNav">
-  <input type="submit" onClick="prevStep();" value="prev"/>
-  <input type="submit" onClick="nextStep();" value="next"/>
+  <input class="prev" type="submit" value="prev"/>
+  <input class="next" type="submit" value="next"/>
 </div>
+
+<div id="tilda"></div>
+<div id="codeResults" class='results' style='display: none;'></div>
 
 <div id="preso">loading presentation...</div>
 <div id="footer">
@@ -52,7 +48,6 @@
 <div id="pauseScreen">
   <%= pause_message %>
 </div>
-
 
 </body>
 </html>

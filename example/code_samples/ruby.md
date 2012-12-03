@@ -46,5 +46,5 @@ end
 # Executable Ruby #
 
 ```ruby
-result = [1, 2, 3].map { |n| n*7 }
+[1, 2, 3].map { |n| n*7 }
 ```

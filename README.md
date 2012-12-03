@@ -182,6 +182,8 @@ additional metadata with your slides and presentation.
 
 You can define special notes that are shown in presenter mode.
 
+> Presenter mode has been removed until it can be rebuilt
+
 Add a line that starts with .notes:
 
 ```markdown
@@ -194,8 +196,9 @@ Add a line that starts with .notes:
 ```
 
 > In this example, the HTML output will contain a `<p class='notes'>`
-Toggle presenter notes with the n key while in the presentation.
+Toggle presenter notes with the `n` key while in the presentation.
 
+> Presenter mode has been removed until it can be rebuilt
 
 ### Metadata
 

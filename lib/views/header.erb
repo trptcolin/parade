@@ -3,27 +3,71 @@
 
   <meta name="viewport" content="width=device-width"/>
 
+  <!-- Set up the initial stylesheet -->
+
   <%= css 'reset.css' %>
   <%= css 'showoff.css' %>
 
-  <%= js 'jquery-1.4.2.min.js' %>
+  <!-- JavaScript Powers This Ship! -->
+
+  <%= js 'jquery-1.4.2.js' %>
+
+  <!-- The ShowOff JS uses a lot of publish and subscribe event structure -->
+  <%= js 'jquery-pubsub.js' %>
+
+  <!-- Provide a sane interface for defining keyboard events -->
+  <%= js 'keyboard.js' %>
+
+  <!-- Giving Structure to the Javascript - this powers a lot of the Showoff
+       code that is defined. -->
+
+  <%= js 'spine.js' %>
+
+  <!-- Slide Transition support provided by jquery-cycle ... -->
+
   <%= js 'jquery.cycle.all.js' %>
-  <%= js 'jquery-print.js' %>
+
+  <!-- Ensures that all images in the presentation have been loaded before
+       the presentation is ready to start. -->
+
   <%= js 'jquery.batchImageLoad.js' %>
 
-  <%= js 'jquery.doubletap-0.1.js' %>
-  <%= js 'fg.menu.js' %>
-  <%= js 'showoff.js' %>
+  <!-- Results from the live executed code is powered by this little js -->
+  <%= js 'jquery-print.js' %>
+
+
+  <!-- Provides Command-Line Console Example Support -->
   <%= js 'jTypeWriter.js' %>
-  <%= js 'sh_main.min.js' %>
-  <%= js 'core.js' %>
-  <%= js 'showoffcore.js' %>
+
+  <!-- Provides Executable CoffeeScript Support -->
+
   <%= js 'coffee-script.js' %>
 
+  <!-- Provides the command visor functionality to showoff -->
+
+  <%= js 'jquery-terminal.js' %>
+
+  <!-- Core ShowOFf Library Code -->
+
+  <%= js 'showoff.js' %>
+  <%= js 'showoff-code-execution.js' %>
+
+  <%= js 'showoff-keyboard-input.js' %>
+
+  <%= js 'showoff-command-input.js' %>
+  <%= js 'showoff-command-visor.js' %>
+
+  <!-- Powers the Table of Contents Menu - this allows you to move through
+       the slides  -->
+
+  <%= js 'fg.menu.js' %>
   <%= css 'fg.menu.css' %>
   <%= css 'theme/ui.all.css' %>
-  <%= css 'ghf_marked.css' %>
+  <%= css 'jquery-terminal.css' %>
 
+  <!-- Required for the Syntax Highlighting of Code to Work -->
+
+  <%= css 'ghf_marked.css' %>
 
   <%= custom_css_files %>
   <%= custom_js_files %>

@@ -126,10 +126,6 @@ module ShowOff
       erb :index
     end
 
-    get "/presenter" do
-      erb :presenter
-    end
-
     get "/onepage" do
       erb :onepage
     end
