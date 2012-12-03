@@ -46,7 +46,21 @@ module Parade
             rule(:prompt => simple(:prompt), :input => simple(:input), :output => simple(:output)) do
               command = Nokogiri::XML::Node.new('pre', html)
               command.set_attribute('class', 'command')
-              command.content = "#{prompt} #{input}"
+
+              node_prompt = Nokogiri::XML::Node.new('span', html)
+              node_prompt.set_attribute('class','prompt')
+              node_prompt.content = prompt
+
+              separator = Nokogiri::XML::Text.new(' ',html)
+
+              node_input = Nokogiri::XML::Node.new('span',html)
+              node_input.content = input
+              node_input.set_attribute('class','input')
+
+              command << node_prompt
+              command << separator
+              command << node_input
+
               code << command
 
               # Add newline after the input so that users can
