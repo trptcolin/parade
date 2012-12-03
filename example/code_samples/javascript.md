@@ -23,5 +23,5 @@ function setupPreso() {
 # Executable JavaScript #
 
 ```javascript
-result = 3 + 3;
+3 + 3;
 ```
