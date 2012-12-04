@@ -7,6 +7,7 @@ require_relative 'features/pdf_presentation'
 require_relative 'features/preshow'
 
 require_relative 'slide_post_renderers'
+require_relative 'slide_pre_renderers'
 
 module Parade
 

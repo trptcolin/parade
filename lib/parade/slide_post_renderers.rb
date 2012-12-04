@@ -1,3 +1,7 @@
+require_relative 'renderers/command_line_renderer'
+require_relative 'renderers/special_paragraph_renderer'
+require_relative 'renderers/columns_renderer'
+
 module Parade
 
   module SlidePostRenderers

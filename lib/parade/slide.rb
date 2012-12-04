@@ -1,8 +1,4 @@
 require_relative 'metadata'
-require_relative 'renderers/html_with_pygments'
-require_relative 'renderers/command_line_renderer'
-require_relative 'renderers/special_paragraph_renderer'
-require_relative 'renderers/columns_renderer'
 
 module Parade
 
@@ -94,7 +90,7 @@ module Parade
     end
 
     def pre_renderers
-      [ Renderers::HTMLwithPygments ]
+      SlidePreRenderers.renderers
     end
 
     def post_renderers
