@@ -1,9 +1,12 @@
+require_relative 'section'
 require_relative "parsers/dsl"
 require_relative 'renderers/update_image_paths'
 
 require_relative 'features/live_ruby'
 require_relative 'features/pdf_presentation'
 require_relative 'features/preshow'
+
+require_relative 'slide_post_renderers'
 
 module Parade
 
@@ -73,7 +76,7 @@ module Parade
       # presentation directory.
       #
       def custom_css_files
-        custom_resource "css" do |path| 
+        custom_resource "css" do |path|
           css path
         end
       end
@@ -83,7 +86,7 @@ module Parade
       # presentation directory.
       #
       def custom_js_files
-        custom_resource "js" do |path| 
+        custom_resource "js" do |path|
           js path
         end
       end

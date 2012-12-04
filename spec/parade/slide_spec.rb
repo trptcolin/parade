@@ -64,12 +64,12 @@ describe Parade::Slide do
 
   describe "#content_classes" do
     context "when created with no metadata" do
-      its(:content_classes) { should eq "" }
+      its(:content_classes) { should eq [] }
     end
 
     context "when created with metadata" do
       subject { described_class.new :metadata => mock('metadata', :classes => ['one', 'two', 'three']) }
-      its(:content_classes) { should eq "one two three" }
+      its(:content_classes) { should eq %w[ one two three ] }
     end
   end
 
@@ -111,12 +111,12 @@ describe Parade::Slide do
       subject.content_as_html.should eq expected_html_content
     end
   end
-  
+
   describe "#template_file" do
-    
+
     subject { described_class.new :metadata => mock('metadata', :template => 'template') }
-    
-    
+
+
     it "should be an ERB template" do
       section = mock('section')
       subject.stub(:section).and_return(section)
@@ -125,7 +125,7 @@ describe Parade::Slide do
       subject.template_file.should be_kind_of ERB
     end
   end
-  
+
 
   describe "#to_html" do
     let(:template) { mock('mock ERB template', :result => expected_html) }

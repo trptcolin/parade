@@ -1,4 +1,3 @@
-require_relative '../section'
 require_relative 'presentation_filepath_parser'
 
 module Parade

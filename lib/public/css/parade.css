@@ -1,6 +1,6 @@
 @media screen {
   body {
-			font-size: 100%;
+      font-size: 100%;
       font-family: "Gill Sans", Helvetica, Arial, sans-serif;
       background:#333;
       overflow:hidden;
@@ -39,7 +39,7 @@
       border-top-right-radius: 3px;
       z-index: 2147483647; /* max, see http://www.puidokas.com/max-z-index/ */
   }
-  
+
   #pauseScreen {
       background: rgba(0, 0, 0, 0.85);
       width: 100%;
@@ -104,9 +104,9 @@
 
 /* plain (non-bullet) text */
 .content > p {
-	font-size: 2em;
+  font-size: 2em;
     margin: 1em;
-	text-align: center;
+  text-align: center;
 }
 
 .content > pre {
@@ -165,9 +165,9 @@
 /* numbered lists are numbered */
 .content ol {
     margin-left: 40px;
-	font-size: 3em;
-	text-align: left;
-	padding-left: 40px;
+  font-size: 3em;
+  text-align: left;
+  padding-left: 40px;
 }
 .content ol > li {
     list-style: decimal;
@@ -180,9 +180,9 @@
     list-style: disc;
 }
 .content > ul {
-	font-size: 3em;
-	text-align: left;
-	padding-left: 40px;
+  font-size: 3em;
+  text-align: left;
+  padding-left: 40px;
 }
 .content > ul > li {
     padding: .5em;
@@ -192,8 +192,8 @@
 /* ironically, normal lists have bullets and 'bullets' lists don't */
 .bullets > ul {
     list-style: none;
-	font-size: 3em;
-	padding-left: 0px;
+  font-size: 3em;
+  padding-left: 0px;
 }
 .bullets > ul > li {
     text-align: center;
@@ -243,7 +243,7 @@
 .subsection h1 {
     background: #008;
     color: #fff;
-	padding: .25em;
+  padding: .25em;
 }
 
 .small {

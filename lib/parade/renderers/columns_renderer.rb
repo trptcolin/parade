@@ -28,8 +28,7 @@ module Parade
       def render(content)
 
         html = Nokogiri::XML.fragment(content)
-
-        html.css(".#{css_class}").each do |slide|
+        html.css(".content.#{css_class}").each do |slide|
 
           columns = []
           slop = []

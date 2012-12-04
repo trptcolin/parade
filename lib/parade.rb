@@ -39,5 +39,5 @@ rescue LoadError
 }
 end
 
-require_relative 'parade/helpers/encode_image'
-require_relative 'parade/server'
+require 'parade/helpers/encode_image'
+require 'parade/server'

@@ -72,15 +72,15 @@ module Parade
     #   information for the slide
     #
     attr_accessor :metadata
-    
+
     # @return [String] the CSS classes for the slide
     def slide_classes
-      title.downcase.gsub(' ','-')
+      [ title.downcase.gsub(' ','-') ] + content_classes
     end
 
     # @return [String] the CSS classes for the content section of the slide
     def content_classes
-      metadata.classes.join(" ")
+      metadata.classes
     end
 
     # @return [String] the transition style for the slide
@@ -98,9 +98,7 @@ module Parade
     end
 
     def post_renderers
-      [ Renderers::SpecialParagraphRenderer,
-        Renderers::CommandLineRenderer,
-        Renderers::ColumnsRenderer.new(:css_class => 'columns',:html_element => "h2",:segments => 12) ]
+      SlidePostRenderers.renderers
     end
 
     # @return [String] HTML rendering of the slide's raw contents.
