@@ -5,6 +5,8 @@ description "Several parade examples to assist with showing others how to get st
 
 pause_message "Visit github.com/burtlo/parade"
 
+template "default", "centered_slide.erb"
+
 section "Introduction" do
   slides "intro.md"
   slides "installation.md"
