@@ -1,8 +1,34 @@
-!SLIDE
+!SLIDE columns
 
 # Transitions
 
 Demonstration of all the transitions that Parade supports
+
+## &nbsp;
+
+* none (this is the default)
+* blindX, blindY, blindZ
+* cover
+* curtainX, curtainY
+* fade
+* fadeZoom
+
+## &nbsp;
+
+* growX, growY
+* scrollUp, scrollDown, scrollLeft, scrollRight
+* scrollHorz, scrollVert
+* shuffle
+* slideX, slideY
+
+## &nbsp;
+
+* toss
+* turnUp, turnDown, turnLeft, turnRight
+* uncover
+* wipe
+* zoom
+
 
 !SLIDE transition=blindX
 
