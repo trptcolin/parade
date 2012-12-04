@@ -318,14 +318,40 @@ If you want to trigger some JavaScript as soon as a certain page is shown or
 when you switch to the next or previous slide, you can bind a callback to a
 custom event:
 
-> ### parade:show
-> will be triggered as soon as you enter a page
-> ### parade:next
-> will be triggered when you switch to the next page
-> ### parade:incr
-> will be triggered when you advance to the next increment on the page
-> ### parade:prev
-> will be triggered when you switch to the previous page
+### Appearance
+
+* parade:willAppear
+
+> triggered before the slide is presented
+
+* parade:didAppear
+
+> triggered after the slide is presented
+
+* parade:show
+
+### Disappearance
+
+> triggered after the slide is presented
+
+* parade:willDisappear
+
+> triggered before the slide disappears
+
+* parade:didDisappear
+
+> triggered after the slide disppeared
+
+### Navigation
+
+* parade:next
+
+> triggered when an attempt to move to the next slide or incremental bullet point
+
+* parade:prev
+
+> triggered when an attempt to move back a slide or incremental bullet point
+
 
 These events are triggered on the "div.content" child of the slide, so you must
 add a custom and unique class to your SLIDE to identify it:
