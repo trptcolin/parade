@@ -28,7 +28,15 @@ centers images on a slide
 
 !SLIDE columns
 
-# Features
+# Columns
+
+## One Column
+
+The content will space the length of the entire slide.
+
+!SLIDE columns
+
+# Columns
 
 ## Markdown
 
@@ -43,7 +51,7 @@ end
 
 !SLIDE columns
 
-# Features
+# Columns
 
 ## Markdown
 
@@ -63,7 +71,7 @@ end
 
 !SLIDE columns
 
-# Features
+# Columns
 
 ## Markdown
 

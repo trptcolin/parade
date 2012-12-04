@@ -139,6 +139,9 @@
   display: block;
 }
 
+.content.columns .grid_12 p {
+  font-size: 200%;
+}
 
 .content.columns .grid_6 p {
   font-size: 150%;
