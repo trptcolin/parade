@@ -2,10 +2,6 @@
 
 ## Ruby
 
-!SLIDE
-
-## Monkeypatching
-
 ```ruby
 class Fixnum
 
@@ -18,26 +14,6 @@ class Fixnum
     # conversion to ounces
     self * 16
   end
-end
-```
-
-!SLIDE
-
-## Sharing with Modules
-
-```ruby
-module Measurements
-  def ounces
-    self
-  end
-end
-
-class Fixnum
-  include Measurements
-end
-
-class Float
-  include Measurements
 end
 ```
 

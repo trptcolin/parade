@@ -10,8 +10,6 @@ Github Flavored Markdown
 
 ## Erlang
 
-!SLIDE
-
 ```erlang
 Output = process(Input, []).
 
