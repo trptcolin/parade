@@ -9,8 +9,8 @@ describe "Loading the Example Presentation", :integration => true do
 
   let(:default_title) { "Example Presentation" }
   let(:description) { "Several parade examples to assist with showing others how to get started with Parade" }
-  let(:slide_count) { 73 }
-  let(:section_count) { 3 }
+  let(:slide_count) { 74 }
+  let(:section_count) { 4 }
 
   its(:title) { should eq default_title }
   its(:description) { should eq description }

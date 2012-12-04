@@ -13,3 +13,5 @@ end
 
 section "features"
 section "code_samples"
+
+slides "conclusion.md"
