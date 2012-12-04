@@ -23,7 +23,7 @@ or show the end result of the code execution.
 
 ## Help
 
-### *z* or *?*
+### *h* or *?*
 
 > Toggle help
 
