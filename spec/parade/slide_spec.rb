@@ -18,7 +18,6 @@ describe Parade::Slide do
 
     let(:expected_sequence) { 1 }
     its(:sequence) { should eq expected_sequence }
-    its(:reference) { should eq "slide/#{expected_sequence}" }
   end
 
   describe "#<<" do

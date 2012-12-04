@@ -1,5 +1,8 @@
-<div id='<%= id %>' class='slide <%= slide_classes.join(' ') %>' data-transition='fade'>
-  <div class='content vertical-center <%= content_classes.join(' ') %>' ref='<%= reference %>'>
+<div id='<%= id %>' class='slide <%= slide_classes.join(' ') %>' 
+  data-transition='fade'
+  data-sections="<%= hierarchy.reverse.join(',') %>"
+  data-sequence="<%= sequence %>">
+  <div class='content vertical-center <%= content_classes.join(' ') %>'>
     <%= content_as_html %>
   </div>
 </div>

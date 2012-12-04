@@ -25,6 +25,14 @@ module Parade
       @title ? @title : (section ? section.title : "Section")
     end
 
+    # @return [Array<String>] the name of all the parent sections. In this
+    #   instance we are not interested in sections without names. These are
+    #   the lowest level sections and are usually within a parent section that
+    #   they are acurrately named.
+    def hierarchy
+      Array(@title) + (section ? section.hierarchy : [])
+    end
+
     # @return [String] the description of the section
     attr_accessor :description
 

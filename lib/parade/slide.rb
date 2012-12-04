@@ -20,8 +20,8 @@ module Parade
       section ? section.title : "Slide"
     end
 
-    def reference
-      "#{section ? section.title : 'slide'}/#{sequence}"
+    def hierarchy
+      section.hierarchy
     end
 
     #
