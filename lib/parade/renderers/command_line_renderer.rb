@@ -48,14 +48,16 @@ module Parade
               command.set_attribute('class', 'command')
 
               node_prompt = Nokogiri::XML::Node.new('span', html)
-              node_prompt.set_attribute('class','prompt')
+              # The 'nv' class specifically gives it the same code syntax highlighting
+              node_prompt.set_attribute('class','prompt nv')
               node_prompt.content = prompt
 
               separator = Nokogiri::XML::Text.new(' ',html)
 
               node_input = Nokogiri::XML::Node.new('span',html)
               node_input.content = input
-              node_input.set_attribute('class','input')
+              # The 'nb' class specifically gives it the same syntax highlighting
+              node_input.set_attribute('class','input nb')
 
               command << node_prompt
               command << separator
