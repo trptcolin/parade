@@ -335,12 +335,14 @@ add a custom and unique class to your SLIDE to identify it:
 # 1st Example h1
 <script>
 // bind to custom event
-$(".custom_and_unique_class").bind("parade:show", function (event) {
+$(".custom_and_unique_class").live("parade:show", function (event) {
   // animate the h1
   var h1 = $(event.target).find("h1");
   h1.delay(500)
     .slideUp(300, function () { $(this).css({textDecoration: "line-through"}); })
     .slideDown(300);
+
+    return false;
 });
 </script>
 ```
@@ -350,17 +352,17 @@ h1-element will be animated, as soon as this event is triggered on that slide.
 
 If you bind an event handler to the custom events *parade:next* or
 *parade:prev*, you can prevent the default action (that is switching to the
-appropriate slide) by calling *event.preventDefault()*:
+appropriate slide) by returning *false*:
 
 ```markdown
 !SLIDE prevent_default
 # 2nd Example h1
 <script>
-$(".prevent_default").bind("parade:next", function (event) {
+$(".prevent_default").live("parade:next", function (event) {
   var h1 = $(event.target).find("h1");
   if (h1.css("text-decoration") === "none") {
-    event.preventDefault();
     h1.css({textDecoration: "line-through"})
+    return false;
   }
 });
 </script>
@@ -368,7 +370,7 @@ $(".prevent_default").bind("parade:next", function (event) {
 
 This will bind an event handler for *parade:next* to your slide. When you press
 the right arrow key the first time, the h1-element will be decorated. When you
-press the right array key another time, you will switch to the next slide.
+press the right arrow key another time, you will switch to the next slide.
 
 The same applies to the *parade:prev* event, of course.
 
