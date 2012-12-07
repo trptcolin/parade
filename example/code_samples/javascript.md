@@ -1,8 +1,7 @@
 !SLIDE
 
-## Javascript
+## JavaScript
 
-!SLIDE
 ```javascript
 function setupPreso() {
   if (preso_started)
@@ -20,7 +19,7 @@ function setupPreso() {
 ```
 !SLIDE execute
 
-# Executable JavaScript #
+# Executable JavaScript
 
 ```javascript
 3 + 3;

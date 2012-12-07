@@ -6,19 +6,19 @@
   <!-- Set up the initial stylesheet -->
 
   <%= css 'reset.css' %>
-  <%= css 'showoff.css' %>
+  <%= css 'parade.css' %>
 
   <!-- JavaScript Powers This Ship! -->
 
   <%= js 'jquery-1.4.2.js' %>
 
-  <!-- The ShowOff JS uses a lot of publish and subscribe event structure -->
+  <!-- The Parade JS uses a lot of publish and subscribe event structure -->
   <%= js 'jquery-pubsub.js' %>
 
   <!-- Provide a sane interface for defining keyboard events -->
   <%= js 'keyboard.js' %>
 
-  <!-- Giving Structure to the Javascript - this powers a lot of the Showoff
+  <!-- Giving Structure to the Javascript - this powers a lot of the Parade
        code that is defined. -->
 
   <%= js 'spine.js' %>
@@ -43,19 +43,19 @@
 
   <%= js 'coffee-script.js' %>
 
-  <!-- Provides the command visor functionality to showoff -->
+  <!-- Provides the command visor functionality to parade -->
 
   <%= js 'jquery-terminal.js' %>
 
-  <!-- Core ShowOFf Library Code -->
+  <!-- Core Parade Library Code -->
 
-  <%= js 'showoff.js' %>
-  <%= js 'showoff-code-execution.js' %>
+  <%= js 'parade.js' %>
+  <%= js 'parade-code-execution.js' %>
 
-  <%= js 'showoff-keyboard-input.js' %>
+  <%= js 'parade-keyboard-input.js' %>
 
-  <%= js 'showoff-command-input.js' %>
-  <%= js 'showoff-command-visor.js' %>
+  <%= js 'parade-command-input.js' %>
+  <%= js 'parade-command-visor.js' %>
 
   <!-- Powers the Table of Contents Menu - this allows you to move through
        the slides  -->
@@ -68,6 +68,8 @@
   <!-- Required for the Syntax Highlighting of Code to Work -->
 
   <%= css 'ghf_marked.css' %>
+
+  <%= css 'default.css' %>
 
   <%= custom_css_files %>
   <%= custom_js_files %>

@@ -28,7 +28,15 @@ centers images on a slide
 
 !SLIDE columns
 
-# Features
+# Columns
+
+## One Column
+
+The content will space the length of the entire slide.
+
+!SLIDE columns
+
+# Columns
 
 ## Markdown
 
@@ -37,13 +45,13 @@ All content is written and managed in markdown
 ## Code
 
 ```ruby
-class ShowOff
+class Parade
 end
 ```
 
 !SLIDE columns
 
-# Features
+# Columns
 
 ## Markdown
 
@@ -52,7 +60,7 @@ All content is written and managed in markdown
 ## Code
 
 ```ruby
-class ShowOff
+class Parade
 end
 ```
 
@@ -63,7 +71,7 @@ end
 
 !SLIDE columns
 
-# Features
+# Columns
 
 ## Markdown
 
@@ -72,7 +80,7 @@ All content is written and managed in markdown
 ## Code
 
 ```ruby
-class ShowOff
+class Parade
 end
 ```
 

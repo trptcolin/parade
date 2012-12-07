@@ -1,0 +1,17 @@
+
+title "Example Presentation"
+
+description "Several parade examples to assist with showing others how to get started with Parade"
+
+pause_message "Visit github.com/burtlo/parade"
+
+section "Introduction" do
+  slides "intro.md"
+  slides "installation.md"
+  slides "navigation.md"
+end
+
+section "features"
+section "code_samples"
+
+slides "conclusion.md"

@@ -13,7 +13,7 @@ group :test, :development do
   gem 'guard'
   gem 'guard-rspec'
   gem "rack-test"
-  gem 'ruby-debug19', :require => 'ruby-debug'
+  gem 'debugger'
 end
 
 #

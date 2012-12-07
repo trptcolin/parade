@@ -1,10 +1,10 @@
-# Showoff
+# Parade
 
-Welcome to showoff, we're glad you're here.
+Welcome to parade, we're glad you're here.
 
 # GitHub
 
-ShowOff is hosted on Github
+Parade is hosted on Github
 
 ![octocat](images/octocat.png)
 
@@ -14,6 +14,6 @@ ShowOff is hosted on Github
 
 Scott "The Dragon" Chacon
 
-# Supported By
+# Redesigned By
 
-Many contributors
+![burtlo](images/biggest-fan.png)
